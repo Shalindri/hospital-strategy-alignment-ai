@@ -1,0 +1,1167 @@
+    INFO: 2026-02-14 01:10:42,185:               log.py:   20: Logging to /Users/shalindri/Documents/MSc/Information_Retrival/hospital-strategy-alignment-ai/mdpdf.log
+   DEBUG: 2026-02-14 01:10:42,185:               cli.py:  103: data/action_plan.md
+    INFO: 2026-02-14 01:10:42,185:         converter.py:   14: data/action_plan.md
+   DEBUG: 2026-02-14 01:10:42,194:      pdf_renderer.py:  470: printSegment: Nawaloka Hospital Negombo — Annual Action Plan 2025
+   DEBUG: 2026-02-14 01:10:42,201:      pdf_renderer.py:  470: printSegment: "
+   DEBUG: 2026-02-14 01:10:42,202:      pdf_renderer.py:  470: printSegment: Laying the Foundation for Strategic Transformation
+   DEBUG: 2026-02-14 01:10:42,203:      pdf_renderer.py:  470: printSegment: "
+   DEBUG: 2026-02-14 01:10:42,203:      pdf_renderer.py:  470: printSegment: Document Classification:
+   DEBUG: 2026-02-14 01:10:42,204:      pdf_renderer.py:  470: printSegment:  Confidential — Senior Leadership 
+   DEBUG: 2026-02-14 01:10:42,214:      pdf_renderer.py:  470: printSegment: &
+   DEBUG: 2026-02-14 01:10:42,215:      pdf_renderer.py:  470: printSegment:  Department Heads
+   DEBUG: 2026-02-14 01:10:42,215:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,216:      pdf_renderer.py:  470: printSegment: Prepared By:
+   DEBUG: 2026-02-14 01:10:42,216:      pdf_renderer.py:  470: printSegment:  Office of the Chief
+   DEBUG: 2026-02-14 01:10:42,216:      pdf_renderer.py:  470: printSegment: Executive Officer
+   DEBUG: 2026-02-14 01:10:42,217:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,217:      pdf_renderer.py:  470: printSegment: Approved By:
+   DEBUG: 2026-02-14 01:10:42,217:      pdf_renderer.py:  470: printSegment:  Board of Directors, Nawaloka Medicare Group
+   DEBUG: 2026-02-14 01:10:42,217:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,218:      pdf_renderer.py:  470: printSegment: Effective Period:
+   DEBUG: 2026-02-14 01:10:42,218:      pdf_renderer.py:  470: printSegment:  January 2025 –
+   DEBUG: 2026-02-14 01:10:42,218:      pdf_renderer.py:  470: printSegment: December 2025
+   DEBUG: 2026-02-14 01:10:42,219:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,219:      pdf_renderer.py:  470: printSegment: Version:
+   DEBUG: 2026-02-14 01:10:42,219:      pdf_renderer.py:  470: printSegment:  1.0 | January 2025
+   DEBUG: 2026-02-14 01:10:42,220:      pdf_renderer.py:  470: printSegment: 1. Introduction 
+   DEBUG: 2026-02-14 01:10:42,220:      pdf_renderer.py:  470: printSegment: &
+   DEBUG: 2026-02-14 01:10:42,220:      pdf_renderer.py:  470: printSegment:  Purpose
+   DEBUG: 2026-02-14 01:10:42,225:      pdf_renderer.py:  470: printSegment: This Annual Action Plan for 2025 translates the Nawaloka Hospital Negombo Strategic Plan (2026–2030) into
+   DEBUG: 2026-02-14 01:10:42,225:      pdf_renderer.py:  470: printSegment: concrete, measurable operational activities for the preparatory year. The year 2025 is designated as a 
+   DEBUG: 2026-02-14 01:10:42,226:      pdf_renderer.py:  470: printSegment: foundational
+   DEBUG: 2026-02-14 01:10:42,226:      pdf_renderer.py:  470: printSegment: year
+   DEBUG: 2026-02-14 01:10:42,227:      pdf_renderer.py:  470: printSegment:  — the period during which critical groundwork must be completed to enable the hospital
+   DEBUG: 2026-02-14 01:10:42,227:      pdf_renderer.py:  470: printSegment: '
+   DEBUG: 2026-02-14 01:10:42,228:      pdf_renderer.py:  470: printSegment: s five-year
+   DEBUG: 2026-02-14 01:10:42,229:      pdf_renderer.py:  470: printSegment: transformation into a regional centre of healthcare excellence and medical tourism hub.
+   DEBUG: 2026-02-14 01:10:42,229:      pdf_renderer.py:  470: printSegment: The 24 actions detailed in this plan are distributed across the five strategic objectives endorsed by the Board:
+   DEBUG: 2026-02-14 01:10:42,229:      pdf_renderer.py:  470: printSegment: l
+   DEBUG: 2026-02-14 01:10:42,230:      pdf_renderer.py:  470: printSegment: A.
+   DEBUG: 2026-02-14 01:10:42,231:      pdf_renderer.py:  470: printSegment:  Patient Care Excellence
+   DEBUG: 2026-02-14 01:10:42,231:      pdf_renderer.py:  470: printSegment: l
+   DEBUG: 2026-02-14 01:10:42,231:      pdf_renderer.py:  470: printSegment: B.
+   DEBUG: 2026-02-14 01:10:42,232:      pdf_renderer.py:  470: printSegment:  Digital Health Transformation
+   DEBUG: 2026-02-14 01:10:42,232:      pdf_renderer.py:  470: printSegment: l
+   DEBUG: 2026-02-14 01:10:42,232:      pdf_renderer.py:  470: printSegment: C.
+   DEBUG: 2026-02-14 01:10:42,233:      pdf_renderer.py:  470: printSegment:  Research 
+   DEBUG: 2026-02-14 01:10:42,233:      pdf_renderer.py:  470: printSegment: &
+   DEBUG: 2026-02-14 01:10:42,233:      pdf_renderer.py:  470: printSegment:  Innovation
+   DEBUG: 2026-02-14 01:10:42,234:      pdf_renderer.py:  470: printSegment: l
+   DEBUG: 2026-02-14 01:10:42,234:      pdf_renderer.py:  470: printSegment: D.
+   DEBUG: 2026-02-14 01:10:42,234:      pdf_renderer.py:  470: printSegment:  Workforce Development
+   DEBUG: 2026-02-14 01:10:42,234:      pdf_renderer.py:  470: printSegment: l
+   DEBUG: 2026-02-14 01:10:42,235:      pdf_renderer.py:  470: printSegment: E.
+   DEBUG: 2026-02-14 01:10:42,235:      pdf_renderer.py:  470: printSegment:  Community 
+   DEBUG: 2026-02-14 01:10:42,235:      pdf_renderer.py:  470: printSegment: &
+   DEBUG: 2026-02-14 01:10:42,236:      pdf_renderer.py:  470: printSegment:  Regional Health Expansion
+   DEBUG: 2026-02-14 01:10:42,239:      pdf_renderer.py:  470: printSegment: Each action is assigned a clear owner, quarterly timeline, budget allocation, expected outcomes, and measurable
+   DEBUG: 2026-02-14 01:10:42,240:      pdf_renderer.py:  470: printSegment: KPIs. The total operational action budget for 2025 is estimated at 
+   DEBUG: 2026-02-14 01:10:42,240:      pdf_renderer.py:  470: printSegment: LKR 985 million
+   DEBUG: 2026-02-14 01:10:42,241:      pdf_renderer.py:  470: printSegment: , within the Board-approved
+   DEBUG: 2026-02-14 01:10:42,241:      pdf_renderer.py:  470: printSegment: envelope of LKR 800M–1.2B.
+   DEBUG: 2026-02-14 01:10:42,242:      pdf_renderer.py:  470: printSegment: Progress will be reviewed monthly by the Senior Leadership Team and quarterly by the Board of Directors.
+   DEBUG: 2026-02-14 01:10:42,242:      pdf_renderer.py:  470: printSegment: 2. Action Plan by Strategic Objective
+   DEBUG: 2026-02-14 01:10:42,243:      pdf_renderer.py:  470: printSegment: Strategic Objective A: Patient Care Excellence
+   DEBUG: 2026-02-14 01:10:42,244:      pdf_renderer.py:  470: printSegment: Action 1: Adjacent Land Acquisition Due Diligence 
+   DEBUG: 2026-02-14 01:10:42,244:      pdf_renderer.py:  470: printSegment: &
+   DEBUG: 2026-02-14 01:10:42,244:      pdf_renderer.py:  470: printSegment:  Negotiation
+   DEBUG: 2026-02-14 01:10:42,245:      pdf_renderer.py:  470: printSegment: Strategic Objective:
+   DEBUG: 2026-02-14 01:10:42,245:      pdf_renderer.py:  470: printSegment:  A — Patient Care Excellence
+   DEBUG: 2026-02-14 01:10:42,246:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,246:      pdf_renderer.py:  470: printSegment: Description:
+   DEBUG: 2026-02-14 01:10:42,268:      pdf_renderer.py:  470: printSegment:  Conduct comprehensive due diligence on the adjacent
+   DEBUG: 2026-02-14 01:10:42,285:      pdf_renderer.py:  470: printSegment: land parcel identified for hospital expansion. This includes commissioning an independent land valuation,
+   DEBUG: 2026-02-14 01:10:42,295:      pdf_renderer.py:  470: printSegment: environmental impact assessment, legal title verification, and preliminary town planning approvals. Negotiate terms
+   DEBUG: 2026-02-14 01:10:42,298:      pdf_renderer.py:  470: printSegment: of purchase with the landowner and prepare the Board submission for acquisition approval, targeting completion of
+   DEBUG: 2026-02-14 01:10:42,299:      pdf_renderer.py:  470: printSegment: the purchase agreement by Q4 2025 to enable construction commencement in Q1 2026.
+   DEBUG: 2026-02-14 01:10:42,299:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,300:      pdf_renderer.py:  470: printSegment: Action Owner:
+   DEBUG: 2026-02-14 01:10:42,300:      pdf_renderer.py:  470: printSegment:  Facilities 
+   DEBUG: 2026-02-14 01:10:42,301:      pdf_renderer.py:  470: printSegment: &
+   DEBUG: 2026-02-14 01:10:42,301:      pdf_renderer.py:  470: printSegment: 
+   DEBUG: 2026-02-14 01:10:42,301:      pdf_renderer.py:  470: printSegment: Projects Director (with Legal Counsel)
+   DEBUG: 2026-02-14 01:10:42,302:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,302:      pdf_renderer.py:  470: printSegment: Timeline:
+   DEBUG: 2026-02-14 01:10:42,303:      pdf_renderer.py:  470: printSegment:  Q1–Q4 2025
+   DEBUG: 2026-02-14 01:10:42,303:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,303:      pdf_renderer.py:  470: printSegment: Budget Allocation:
+   DEBUG: 2026-02-14 01:10:42,305:      pdf_renderer.py:  470: printSegment:  LKR 35M (valuation, legal fees,
+   DEBUG: 2026-02-14 01:10:42,305:      pdf_renderer.py:  470: printSegment: environmental assessment, survey costs; excludes land purchase price)
+   DEBUG: 2026-02-14 01:10:42,306:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,306:      pdf_renderer.py:  470: printSegment: Expected Outcome:
+   DEBUG: 2026-02-14 01:10:42,308:      pdf_renderer.py:  470: printSegment:  Board-approved land
+   DEBUG: 2026-02-14 01:10:42,308:      pdf_renderer.py:  470: printSegment: acquisition agreement ready for execution in Q1 2026, with all regulatory clearances obtained.
+   DEBUG: 2026-02-14 01:10:42,309:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,309:      pdf_renderer.py:  470: printSegment: KPIs:
+   DEBUG: 2026-02-14 01:10:42,309:      pdf_renderer.py:  470: printSegment: l
+   DEBUG: 2026-02-14 01:10:42,310:      pdf_renderer.py:  470: printSegment: Land valuation report completed by Q2 2025
+   DEBUG: 2026-02-14 01:10:42,310:      pdf_renderer.py:  470: printSegment: l
+   DEBUG: 2026-02-14 01:10:42,311:      pdf_renderer.py:  470: printSegment: Environmental clearance obtained by Q3 2025
+   DEBUG: 2026-02-14 01:10:42,311:      pdf_renderer.py:  470: printSegment: l
+   DEBUG: 2026-02-14 01:10:42,312:      pdf_renderer.py:  470: printSegment: Board approval for purchase secured by Q4 2025
+   DEBUG: 2026-02-14 01:10:42,312:      pdf_renderer.py:  470: printSegment: Action 2: Architectural Master Plan for 150-Bed Expansion
+   DEBUG: 2026-02-14 01:10:42,313:      pdf_renderer.py:  470: printSegment: Strategic Objective:
+   DEBUG: 2026-02-14 01:10:42,313:      pdf_renderer.py:  470: printSegment:  A — Patient Care Excellence
+   DEBUG: 2026-02-14 01:10:42,314:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,314:      pdf_renderer.py:  470: printSegment: Description:
+   DEBUG: 2026-02-14 01:10:42,335:      pdf_renderer.py:  470: printSegment:  Engage a healthcare-specialised architectural firm to
+   DEBUG: 2026-02-14 01:10:42,351:      pdf_renderer.py:  470: printSegment: develop the master plan for the phased expansion from 75 to 150 beds. The plan must incorporate dedicated wards
+   DEBUG: 2026-02-14 01:10:42,360:      pdf_renderer.py:  470: printSegment: for cardiac care, nephrology, elderly care, maternity, the Daycare Medical Centre, and aesthetic medicine facilities.
+   DEBUG: 2026-02-14 01:10:42,363:      pdf_renderer.py:  470: printSegment: Deliverables include preliminary designs, construction phasing schedules, MEP (mechanical, electrical, plumbing)
+   DEBUG: 2026-02-14 01:10:42,364:      pdf_renderer.py:  470: printSegment: specifications, and cost estimates for Phase 1 (2026–2027) and Phase 2 (2028–2029).
+   DEBUG: 2026-02-14 01:10:42,364:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,364:      pdf_renderer.py:  470: printSegment: Action Owner:
+   DEBUG: 2026-02-14 01:10:42,364:      pdf_renderer.py:  470: printSegment:  Facilities 
+   DEBUG: 2026-02-14 01:10:42,365:      pdf_renderer.py:  470: printSegment: &
+   DEBUG: 2026-02-14 01:10:42,365:      pdf_renderer.py:  470: printSegment:  Projects
+   DEBUG: 2026-02-14 01:10:42,365:      pdf_renderer.py:  470: printSegment: Director
+   DEBUG: 2026-02-14 01:10:42,365:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,366:      pdf_renderer.py:  470: printSegment: Timeline:
+   DEBUG: 2026-02-14 01:10:42,366:      pdf_renderer.py:  470: printSegment:  Q1–Q3 2025
+   DEBUG: 2026-02-14 01:10:42,366:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,366:      pdf_renderer.py:  470: printSegment: Budget Allocation:
+   DEBUG: 2026-02-14 01:10:42,367:      pdf_renderer.py:  470: printSegment:  LKR 28M (architectural fees, structural engineering, MEP
+   DEBUG: 2026-02-14 01:10:42,367:      pdf_renderer.py:  470: printSegment: consultancy)
+   DEBUG: 2026-02-14 01:10:42,367:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,368:      pdf_renderer.py:  470: printSegment: Expected Outcome:
+   DEBUG: 2026-02-14 01:10:42,369:      pdf_renderer.py:  470: printSegment:  Finalised master plan with Board-approved construction timeline and budget
+   DEBUG: 2026-02-14 01:10:42,369:      pdf_renderer.py:  470: printSegment: envelope for Phase 1.
+   DEBUG: 2026-02-14 01:10:42,369:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,370:      pdf_renderer.py:  470: printSegment: KPIs:
+   DEBUG: 2026-02-14 01:10:42,370:      pdf_renderer.py:  470: printSegment: l
+   DEBUG: 2026-02-14 01:10:42,370:      pdf_renderer.py:  470: printSegment: Architect appointed by end of Q1 2025
+   DEBUG: 2026-02-14 01:10:42,371:      pdf_renderer.py:  470: printSegment: l
+   DEBUG: 2026-02-14 01:10:42,371:      pdf_renderer.py:  470: printSegment: Preliminary design submission by Q2 2025
+   DEBUG: 2026-02-14 01:10:42,371:      pdf_renderer.py:  470: printSegment: l
+   DEBUG: 2026-02-14 01:10:42,372:      pdf_renderer.py:  470: printSegment: Final master plan approved by Board by end of Q3 2025
+   DEBUG: 2026-02-14 01:10:42,372:      pdf_renderer.py:  470: printSegment: Action 3: Cardiac Catheterisation Laboratory Feasibility 
+   DEBUG: 2026-02-14 01:10:42,373:      pdf_renderer.py:  470: printSegment: &
+   DEBUG: 2026-02-14 01:10:42,373:      pdf_renderer.py:  470: printSegment:  Equipment Specification
+   DEBUG: 2026-02-14 01:10:42,373:      pdf_renderer.py:  470: printSegment: Strategic Objective:
+   DEBUG: 2026-02-14 01:10:42,374:      pdf_renderer.py:  470: printSegment:  A — Patient Care Excellence
+   DEBUG: 2026-02-14 01:10:42,374:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,374:      pdf_renderer.py:  470: printSegment: Description:
+   DEBUG: 2026-02-14 01:10:42,390:      pdf_renderer.py:  470: printSegment:  Commission a clinical and financial feasibility study
+   DEBUG: 2026-02-14 01:10:42,403:      pdf_renderer.py:  470: printSegment: for the proposed cardiac catheterisation laboratory. Identify equipment requirements (angiography system,
+   DEBUG: 2026-02-14 01:10:42,408:      pdf_renderer.py:  470: printSegment: haemodynamic monitoring, ancillary devices), evaluate vendors, and prepare a procurement timeline aligned with
+   DEBUG: 2026-02-14 01:10:42,410:      pdf_renderer.py:  470: printSegment: Phase 1 construction. Engage a visiting interventional cardiologist from Nawaloka Colombo to advise on clinical
+   DEBUG: 2026-02-14 01:10:42,410:      pdf_renderer.py:  470: printSegment: specifications and workflow design.
+   DEBUG: 2026-02-14 01:10:42,411:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,411:      pdf_renderer.py:  470: printSegment: Action Owner:
+   DEBUG: 2026-02-14 01:10:42,411:      pdf_renderer.py:  470: printSegment:  Medical Director
+   DEBUG: 2026-02-14 01:10:42,412:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,412:      pdf_renderer.py:  470: printSegment: Timeline:
+   DEBUG: 2026-02-14 01:10:42,412:      pdf_renderer.py:  470: printSegment:  Q2–Q4 2025
+   DEBUG: 2026-02-14 01:10:42,413:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,413:      pdf_renderer.py:  470: printSegment: Budget Allocation:
+   DEBUG: 2026-02-14 01:10:42,414:      pdf_renderer.py:  470: printSegment: 
+   DEBUG: 2026-02-14 01:10:42,414:      pdf_renderer.py:  470: printSegment: LKR 12M (feasibility study, consultant fees, vendor evaluation travel)
+   DEBUG: 2026-02-14 01:10:42,415:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,415:      pdf_renderer.py:  470: printSegment: Expected Outcome:
+   DEBUG: 2026-02-14 01:10:42,417:      pdf_renderer.py:  470: printSegment:  Board-approved
+   DEBUG: 2026-02-14 01:10:42,418:      pdf_renderer.py:  470: printSegment: equipment specification and procurement plan with vendor shortlist for cardiac lab commissioning in 2027–2028.
+   DEBUG: 2026-02-14 01:10:42,418:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,418:      pdf_renderer.py:  470: printSegment: KPIs:
+   DEBUG: 2026-02-14 01:10:42,419:      pdf_renderer.py:  470: printSegment: l
+   DEBUG: 2026-02-14 01:10:42,419:      pdf_renderer.py:  470: printSegment: Feasibility report submitted to Board by Q3 2025
+   DEBUG: 2026-02-14 01:10:42,419:      pdf_renderer.py:  470: printSegment: l
+   DEBUG: 2026-02-14 01:10:42,420:      pdf_renderer.py:  470: printSegment: Equipment specification document finalised by Q4 2025
+   DEBUG: 2026-02-14 01:10:42,420:      pdf_renderer.py:  470: printSegment: l
+   DEBUG: 2026-02-14 01:10:42,421:      pdf_renderer.py:  470: printSegment: Minimum 3 vendor proposals received and evaluated by Q4 2025
+   DEBUG: 2026-02-14 01:10:42,421:      pdf_renderer.py:  470: printSegment: Action 4: Elderly Care Unit Pilot Programme Design
+   DEBUG: 2026-02-14 01:10:42,422:      pdf_renderer.py:  470: printSegment: Strategic Objective:
+   DEBUG: 2026-02-14 01:10:42,422:      pdf_renderer.py:  470: printSegment:  A — Patient Care Excellence
+   DEBUG: 2026-02-14 01:10:42,423:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,423:      pdf_renderer.py:  470: printSegment: Description:
+   DEBUG: 2026-02-14 01:10:42,438:      pdf_renderer.py:  470: printSegment:  Develop the operational model for the 10-bed Elderly
+   DEBUG: 2026-02-14 01:10:42,449:      pdf_renderer.py:  470: printSegment: Care Unit pilot, including clinical protocols for long-term residential care, staffing requirements (geriatric nursing,
+   DEBUG: 2026-02-14 01:10:42,454:      pdf_renderer.py:  470: printSegment: physiotherapy, occupational therapy), pricing structure, insurance partnerships, and admission criteria. Benchmark
+   DEBUG: 2026-02-14 01:10:42,455:      pdf_renderer.py:  470: printSegment: against established elderly care facilities in Colombo and regionally. Prepare for pilot launch in Q1 2026.
+   DEBUG: 2026-02-14 01:10:42,455:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,455:      pdf_renderer.py:  470: printSegment: Action
+   DEBUG: 2026-02-14 01:10:42,456:      pdf_renderer.py:  470: printSegment: Owner:
+   DEBUG: 2026-02-14 01:10:42,456:      pdf_renderer.py:  470: printSegment:  Medical Director (with Director of Nursing)
+   DEBUG: 2026-02-14 01:10:42,457:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,457:      pdf_renderer.py:  470: printSegment: Timeline:
+   DEBUG: 2026-02-14 01:10:42,458:      pdf_renderer.py:  470: printSegment:  Q2–Q4 2025
+   DEBUG: 2026-02-14 01:10:42,458:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,458:      pdf_renderer.py:  470: printSegment: Budget Allocation:
+   DEBUG: 2026-02-14 01:10:42,459:      pdf_renderer.py:  470: printSegment:  LKR 8M
+   DEBUG: 2026-02-14 01:10:42,460:      pdf_renderer.py:  470: printSegment: (benchmarking visits, protocol development, consultant engagement)
+   DEBUG: 2026-02-14 01:10:42,460:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,461:      pdf_renderer.py:  470: printSegment: Expected Outcome:
+   DEBUG: 2026-02-14 01:10:42,463:      pdf_renderer.py:  470: printSegment:  Fully documented
+   DEBUG: 2026-02-14 01:10:42,464:      pdf_renderer.py:  470: printSegment: operational model and staffing plan for the Elderly Care Unit, ready for recruitment and fit-out in early 2026.
+   DEBUG: 2026-02-14 01:10:42,464:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,464:      pdf_renderer.py:  470: printSegment: KPIs:
+   DEBUG: 2026-02-14 01:10:42,465:      pdf_renderer.py:  470: printSegment: l
+   DEBUG: 2026-02-14 01:10:42,465:      pdf_renderer.py:  470: printSegment: Clinical protocol manual completed by Q3 2025
+   DEBUG: 2026-02-14 01:10:42,466:      pdf_renderer.py:  470: printSegment: l
+   DEBUG: 2026-02-14 01:10:42,466:      pdf_renderer.py:  470: printSegment: Insurance partner discussions initiated with at least 3 providers by Q4 2025
+   DEBUG: 2026-02-14 01:10:42,467:      pdf_renderer.py:  470: printSegment: l
+   DEBUG: 2026-02-14 01:10:42,467:      pdf_renderer.py:  470: printSegment: Staffing plan finalised with HR by Q4 2025
+   DEBUG: 2026-02-14 01:10:42,468:      pdf_renderer.py:  470: printSegment: Action 5: Aesthetic 
+   DEBUG: 2026-02-14 01:10:42,468:      pdf_renderer.py:  470: printSegment: &
+   DEBUG: 2026-02-14 01:10:42,469:      pdf_renderer.py:  470: printSegment:  Cosmetic Medicine Service Feasibility Study
+   DEBUG: 2026-02-14 01:10:42,469:      pdf_renderer.py:  470: printSegment: Strategic Objective:
+   DEBUG: 2026-02-14 01:10:42,470:      pdf_renderer.py:  470: printSegment:  A — Patient Care Excellence
+   DEBUG: 2026-02-14 01:10:42,470:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,470:      pdf_renderer.py:  470: printSegment: Description:
+   DEBUG: 2026-02-14 01:10:42,472:      pdf_renderer.py:  470: printSegment:  Conduct a market analysis and clinical feasibility
+   DEBUG: 2026-02-14 01:10:42,472:      pdf_renderer.py:  470: printSegment: study for the proposed Aesthetic 
+   DEBUG: 2026-02-14 01:10:42,472:      pdf_renderer.py:  470: printSegment: &
+   DEBUG: 2026-02-14 01:10:42,484:      pdf_renderer.py:  470: printSegment:  Cosmetic Medical Services line. Assess demand from local, expatriate, and
+   DEBUG: 2026-02-14 01:10:42,491:      pdf_renderer.py:  470: printSegment: tourist populations. Define service scope (dermatological aesthetics, minor cosmetic procedures, laser treatments,
+   DEBUG: 2026-02-14 01:10:42,493:      pdf_renderer.py:  470: printSegment: anti-ageing), identify equipment needs, and evaluate potential consultant dermatologists and plastic surgeons for
+   DEBUG: 2026-02-14 01:10:42,493:      pdf_renderer.py:  470: printSegment: engagement. Prepare a business case for Board review.
+   DEBUG: 2026-02-14 01:10:42,494:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,494:      pdf_renderer.py:  470: printSegment: Action Owner:
+   DEBUG: 2026-02-14 01:10:42,495:      pdf_renderer.py:  470: printSegment:  Medical Director (with Marketing Director)
+   DEBUG: 2026-02-14 01:10:42,495:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,496:      pdf_renderer.py:  470: printSegment: Timeline:
+   DEBUG: 2026-02-14 01:10:42,496:      pdf_renderer.py:  470: printSegment:  Q1–Q3 2025
+   DEBUG: 2026-02-14 01:10:42,496:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,497:      pdf_renderer.py:  470: printSegment: Budget Allocation:
+   DEBUG: 2026-02-14 01:10:42,497:      pdf_renderer.py:  470: printSegment:  LKR 6M (market research, consultant fees, benchmarking)
+   DEBUG: 2026-02-14 01:10:42,498:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,498:      pdf_renderer.py:  470: printSegment: Expected
+   DEBUG: 2026-02-14 01:10:42,499:      pdf_renderer.py:  470: printSegment: Outcome:
+   DEBUG: 2026-02-14 01:10:42,500:      pdf_renderer.py:  470: printSegment:  Board-approved business case with defined service scope, revenue projections, and launch timeline for
+   DEBUG: 2026-02-14 01:10:42,500:      pdf_renderer.py:  470: printSegment: Q2 2026.
+   DEBUG: 2026-02-14 01:10:42,501:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,501:      pdf_renderer.py:  470: printSegment: KPIs:
+   DEBUG: 2026-02-14 01:10:42,502:      pdf_renderer.py:  470: printSegment: l
+   DEBUG: 2026-02-14 01:10:42,502:      pdf_renderer.py:  470: printSegment: Market analysis report completed by Q2 2025
+   DEBUG: 2026-02-14 01:10:42,502:      pdf_renderer.py:  470: printSegment: l
+   DEBUG: 2026-02-14 01:10:42,503:      pdf_renderer.py:  470: printSegment: Business case presented to Board by Q3 2025
+   DEBUG: 2026-02-14 01:10:42,503:      pdf_renderer.py:  470: printSegment: l
+   DEBUG: 2026-02-14 01:10:42,503:      pdf_renderer.py:  470: printSegment: At least 2 specialist practitioners identified for engagement by Q3 2025
+   DEBUG: 2026-02-14 01:10:42,504:      pdf_renderer.py:  470: printSegment: Action 6: Fertility Centre Laboratory Upgrade Planning
+   DEBUG: 2026-02-14 01:10:42,504:      pdf_renderer.py:  470: printSegment: Strategic Objective:
+   DEBUG: 2026-02-14 01:10:42,505:      pdf_renderer.py:  470: printSegment:  A — Patient Care Excellence
+   DEBUG: 2026-02-14 01:10:42,505:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,505:      pdf_renderer.py:  470: printSegment: Description:
+   DEBUG: 2026-02-14 01:10:42,524:      pdf_renderer.py:  470: printSegment:  Assess current Fertility Centre laboratory
+   DEBUG: 2026-02-14 01:10:42,539:      pdf_renderer.py:  470: printSegment: infrastructure against international best-practice standards for IVF laboratories. Develop a detailed upgrade plan
+   DEBUG: 2026-02-14 01:10:42,547:      pdf_renderer.py:  470: printSegment: covering embryology lab environment controls (air quality, temperature, VOC filtration), cryopreservation storage
+   DEBUG: 2026-02-14 01:10:42,552:      pdf_renderer.py:  470: printSegment: expansion, and new equipment procurement (time-lapse incubators, micromanipulation systems). Align upgrade
+   DEBUG: 2026-02-14 01:10:42,552:      pdf_renderer.py:  470: printSegment: timeline with the strategic target of 800 IVF cycles per annum by 2030.
+   DEBUG: 2026-02-14 01:10:42,552:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,553:      pdf_renderer.py:  470: printSegment: Action Owner:
+   DEBUG: 2026-02-14 01:10:42,553:      pdf_renderer.py:  470: printSegment:  Medical Director (Fertility
+   DEBUG: 2026-02-14 01:10:42,553:      pdf_renderer.py:  470: printSegment: Centre Lead)
+   DEBUG: 2026-02-14 01:10:42,554:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,554:      pdf_renderer.py:  470: printSegment: Timeline:
+   DEBUG: 2026-02-14 01:10:42,554:      pdf_renderer.py:  470: printSegment:  Q1–Q3 2025
+   DEBUG: 2026-02-14 01:10:42,555:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,555:      pdf_renderer.py:  470: printSegment: Budget Allocation:
+   DEBUG: 2026-02-14 01:10:42,555:      pdf_renderer.py:  470: printSegment:  LKR 10M (laboratory audit, environmental assessment,
+   DEBUG: 2026-02-14 01:10:42,556:      pdf_renderer.py:  470: printSegment: equipment specification)
+   DEBUG: 2026-02-14 01:10:42,556:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,556:      pdf_renderer.py:  470: printSegment: Expected Outcome:
+   DEBUG: 2026-02-14 01:10:42,558:      pdf_renderer.py:  470: printSegment:  Detailed Fertility Centre upgrade plan with equipment specifications,
+   DEBUG: 2026-02-14 01:10:42,559:      pdf_renderer.py:  470: printSegment: vendor quotes, and phased implementation schedule for 2026–2028.
+   DEBUG: 2026-02-14 01:10:42,559:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,559:      pdf_renderer.py:  470: printSegment: KPIs:
+   DEBUG: 2026-02-14 01:10:42,559:      pdf_renderer.py:  470: printSegment: l
+   DEBUG: 2026-02-14 01:10:42,560:      pdf_renderer.py:  470: printSegment: Laboratory audit completed by Q1 2025
+   DEBUG: 2026-02-14 01:10:42,560:      pdf_renderer.py:  470: printSegment: l
+   DEBUG: 2026-02-14 01:10:42,561:      pdf_renderer.py:  470: printSegment: Upgrade specification document finalised by Q2 2025
+   DEBUG: 2026-02-14 01:10:42,561:      pdf_renderer.py:  470: printSegment: l
+   DEBUG: 2026-02-14 01:10:42,561:      pdf_renderer.py:  470: printSegment: Vendor quotes for priority equipment received by Q3 2025
+   DEBUG: 2026-02-14 01:10:42,562:      pdf_renderer.py:  470: printSegment: Action 7: Nephrology Service Development Roadmap
+   DEBUG: 2026-02-14 01:10:42,562:      pdf_renderer.py:  470: printSegment: Strategic Objective:
+   DEBUG: 2026-02-14 01:10:42,563:      pdf_renderer.py:  470: printSegment:  A — Patient Care Excellence
+   DEBUG: 2026-02-14 01:10:42,563:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,563:      pdf_renderer.py:  470: printSegment: Description:
+   DEBUG: 2026-02-14 01:10:42,575:      pdf_renderer.py:  470: printSegment:  Develop a clinical and operational roadmap for
+   DEBUG: 2026-02-14 01:10:42,583:      pdf_renderer.py:  470: printSegment: introducing a nephrology dialysis unit (targeted at 12 stations by 2029). This includes needs assessment for the
+   DEBUG: 2026-02-14 01:10:42,586:      pdf_renderer.py:  470: printSegment: Negombo–Gampaha region, clinical protocol development for haemodialysis and peritoneal dialysis, water treatment
+   DEBUG: 2026-02-14 01:10:42,587:      pdf_renderer.py:  470: printSegment: plant specifications, and workforce planning for nephrology nurses and technicians.
+   DEBUG: 2026-02-14 01:10:42,587:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,588:      pdf_renderer.py:  470: printSegment: Action Owner:
+   DEBUG: 2026-02-14 01:10:42,588:      pdf_renderer.py:  470: printSegment:  Medical
+   DEBUG: 2026-02-14 01:10:42,588:      pdf_renderer.py:  470: printSegment: Director
+   DEBUG: 2026-02-14 01:10:42,589:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,589:      pdf_renderer.py:  470: printSegment: Timeline:
+   DEBUG: 2026-02-14 01:10:42,589:      pdf_renderer.py:  470: printSegment:  Q2–Q4 2025
+   DEBUG: 2026-02-14 01:10:42,590:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,590:      pdf_renderer.py:  470: printSegment: Budget Allocation:
+   DEBUG: 2026-02-14 01:10:42,591:      pdf_renderer.py:  470: printSegment:  LKR 5M (needs assessment, clinical consultancy, water treatment
+   DEBUG: 2026-02-14 01:10:42,591:      pdf_renderer.py:  470: printSegment: feasibility)
+   DEBUG: 2026-02-14 01:10:42,591:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,592:      pdf_renderer.py:  470: printSegment: Expected Outcome:
+   DEBUG: 2026-02-14 01:10:42,593:      pdf_renderer.py:  470: printSegment:  Comprehensive nephrology roadmap approved by the Medical Advisory
+   DEBUG: 2026-02-14 01:10:42,594:      pdf_renderer.py:  470: printSegment: Committee, with clear milestones for 2026–2029.
+   DEBUG: 2026-02-14 01:10:42,594:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,594:      pdf_renderer.py:  470: printSegment: KPIs:
+   DEBUG: 2026-02-14 01:10:42,595:      pdf_renderer.py:  470: printSegment: l
+   DEBUG: 2026-02-14 01:10:42,595:      pdf_renderer.py:  470: printSegment: Regional needs assessment completed by Q3 2025
+   DEBUG: 2026-02-14 01:10:42,595:      pdf_renderer.py:  470: printSegment: l
+   DEBUG: 2026-02-14 01:10:42,596:      pdf_renderer.py:  470: printSegment: Clinical protocol framework drafted by Q4 2025
+   DEBUG: 2026-02-14 01:10:42,596:      pdf_renderer.py:  470: printSegment: l
+   DEBUG: 2026-02-14 01:10:42,597:      pdf_renderer.py:  470: printSegment: Water treatment feasibility study completed by Q4 2025
+   DEBUG: 2026-02-14 01:10:42,597:      pdf_renderer.py:  470: printSegment: Action 8: Administrative Office Refurbishment Programme
+   DEBUG: 2026-02-14 01:10:42,598:      pdf_renderer.py:  470: printSegment: Strategic Objective:
+   DEBUG: 2026-02-14 01:10:42,598:      pdf_renderer.py:  470: printSegment:  A — Patient Care Excellence
+   DEBUG: 2026-02-14 01:10:42,599:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,599:      pdf_renderer.py:  470: printSegment: Description:
+   DEBUG: 2026-02-14 01:10:42,600:      pdf_renderer.py:  470: printSegment:  Undertake a comprehensive refurbishment of the
+   DEBUG: 2026-02-14 01:10:42,600:      pdf_renderer.py:  470: printSegment: hospital
+   DEBUG: 2026-02-14 01:10:42,600:      pdf_renderer.py:  470: printSegment: '
+   DEBUG: 2026-02-14 01:10:42,613:      pdf_renderer.py:  470: printSegment: s administrative wing, including repainting, replacement of floor coverings, installation of new ergonomic
+   DEBUG: 2026-02-14 01:10:42,618:      pdf_renderer.py:  470: printSegment: office furniture, upgraded lighting fixtures, and modernisation of the executive boardroom. The programme aims to
+   DEBUG: 2026-02-14 01:10:42,619:      pdf_renderer.py:  470: printSegment: improve the working environment for administrative and support staff and present a refreshed corporate image to
+   DEBUG: 2026-02-14 01:10:42,620:      pdf_renderer.py:  470: printSegment: visiting stakeholders.
+   DEBUG: 2026-02-14 01:10:42,620:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,620:      pdf_renderer.py:  470: printSegment: Action Owner:
+   DEBUG: 2026-02-14 01:10:42,621:      pdf_renderer.py:  470: printSegment:  Facilities 
+   DEBUG: 2026-02-14 01:10:42,621:      pdf_renderer.py:  470: printSegment: &
+   DEBUG: 2026-02-14 01:10:42,622:      pdf_renderer.py:  470: printSegment:  Projects Director
+   DEBUG: 2026-02-14 01:10:42,622:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,622:      pdf_renderer.py:  470: printSegment: Timeline:
+   DEBUG: 2026-02-14 01:10:42,623:      pdf_renderer.py:  470: printSegment:  Q2–Q3 2025
+   DEBUG: 2026-02-14 01:10:42,623:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,624:      pdf_renderer.py:  470: printSegment: Budget Allocation:
+   DEBUG: 2026-02-14 01:10:42,624:      pdf_renderer.py:  470: printSegment:  LKR
+   DEBUG: 2026-02-14 01:10:42,625:      pdf_renderer.py:  470: printSegment: 22M (construction, furniture, fixtures, fittings)
+   DEBUG: 2026-02-14 01:10:42,625:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,625:      pdf_renderer.py:  470: printSegment: Expected Outcome:
+   DEBUG: 2026-02-14 01:10:42,627:      pdf_renderer.py:  470: printSegment:  Fully refurbished administrative wing with
+   DEBUG: 2026-02-14 01:10:42,627:      pdf_renderer.py:  470: printSegment: modernised boardroom and improved staff workspace amenities.
+   DEBUG: 2026-02-14 01:10:42,628:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,628:      pdf_renderer.py:  470: printSegment: KPIs:
+   DEBUG: 2026-02-14 01:10:42,628:      pdf_renderer.py:  470: printSegment: l
+   DEBUG: 2026-02-14 01:10:42,629:      pdf_renderer.py:  470: printSegment: Refurbishment design approved by Q2 2025
+   DEBUG: 2026-02-14 01:10:42,629:      pdf_renderer.py:  470: printSegment: l
+   DEBUG: 2026-02-14 01:10:42,630:      pdf_renderer.py:  470: printSegment: Construction and fit-out completed by end of Q3 2025
+   DEBUG: 2026-02-14 01:10:42,630:      pdf_renderer.py:  470: printSegment: l
+   DEBUG: 2026-02-14 01:10:42,631:      pdf_renderer.py:  470: printSegment: Staff workspace satisfaction survey score improvement of 10%
+   DEBUG: 2026-02-14 01:10:42,632:      pdf_renderer.py:  470: printSegment: Strategic Objective B: Digital Health Transformation
+   DEBUG: 2026-02-14 01:10:42,633:      pdf_renderer.py:  470: printSegment: Action 9: EHR Vendor Selection 
+   DEBUG: 2026-02-14 01:10:42,633:      pdf_renderer.py:  470: printSegment: &
+   DEBUG: 2026-02-14 01:10:42,634:      pdf_renderer.py:  470: printSegment:  Contract Negotiation
+   DEBUG: 2026-02-14 01:10:42,634:      pdf_renderer.py:  470: printSegment: Strategic Objective:
+   DEBUG: 2026-02-14 01:10:42,634:      pdf_renderer.py:  470: printSegment:  B — Digital Health Transformation
+   DEBUG: 2026-02-14 01:10:42,635:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,635:      pdf_renderer.py:  470: printSegment: Description:
+   DEBUG: 2026-02-14 01:10:42,653:      pdf_renderer.py:  470: printSegment:  Issue a Request for Proposal (RFP) to qualified
+   DEBUG: 2026-02-14 01:10:42,667:      pdf_renderer.py:  470: printSegment: EHR vendors for a unified cloud-based Electronic Health Record system. Evaluate proposals against criteria
+   DEBUG: 2026-02-14 01:10:42,675:      pdf_renderer.py:  470: printSegment: including HL7 FHIR interoperability, local language support (Sinhala, Tamil), telemedicine module integration,
+   DEBUG: 2026-02-14 01:10:42,677:      pdf_renderer.py:  470: printSegment: clinical decision support, and total cost of ownership. Conduct vendor demonstrations, reference site visits, and
+   DEBUG: 2026-02-14 01:10:42,678:      pdf_renderer.py:  470: printSegment: negotiate contract terms for deployment commencing Q1 2026.
+   DEBUG: 2026-02-14 01:10:42,678:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,678:      pdf_renderer.py:  470: printSegment: Action Owner:
+   DEBUG: 2026-02-14 01:10:42,678:      pdf_renderer.py:  470: printSegment:  Chief Information Officer (CIO)
+   DEBUG: 2026-02-14 01:10:42,679:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,679:      pdf_renderer.py:  470: printSegment: Timeline:
+   DEBUG: 2026-02-14 01:10:42,679:      pdf_renderer.py:  470: printSegment:  Q1–Q4 2025
+   DEBUG: 2026-02-14 01:10:42,680:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,680:      pdf_renderer.py:  470: printSegment: Budget Allocation:
+   DEBUG: 2026-02-14 01:10:42,680:      pdf_renderer.py:  470: printSegment:  LKR 15M (RFP process, vendor evaluation, legal review, reference visits)
+   DEBUG: 2026-02-14 01:10:42,681:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,681:      pdf_renderer.py:  470: printSegment: Expected Outcome:
+   DEBUG: 2026-02-14 01:10:42,682:      pdf_renderer.py:  470: printSegment:  Signed EHR vendor contract with agreed implementation roadmap, SLAs, and pricing for
+   DEBUG: 2026-02-14 01:10:42,682:      pdf_renderer.py:  470: printSegment: 2026–2027 deployment.
+   DEBUG: 2026-02-14 01:10:42,682:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,683:      pdf_renderer.py:  470: printSegment: KPIs:
+   DEBUG: 2026-02-14 01:10:42,683:      pdf_renderer.py:  470: printSegment: l
+   DEBUG: 2026-02-14 01:10:42,683:      pdf_renderer.py:  470: printSegment: RFP issued by end of Q1 2025
+   DEBUG: 2026-02-14 01:10:42,684:      pdf_renderer.py:  470: printSegment: l
+   DEBUG: 2026-02-14 01:10:42,684:      pdf_renderer.py:  470: printSegment: Vendor shortlist (3 candidates) finalised by Q2 2025
+   DEBUG: 2026-02-14 01:10:42,684:      pdf_renderer.py:  470: printSegment: l
+   DEBUG: 2026-02-14 01:10:42,685:      pdf_renderer.py:  470: printSegment: Contract signed by Q4 2025
+   DEBUG: 2026-02-14 01:10:42,685:      pdf_renderer.py:  470: printSegment: Action 10: IT Infrastructure Assessment 
+   DEBUG: 2026-02-14 01:10:42,686:      pdf_renderer.py:  470: printSegment: &
+   DEBUG: 2026-02-14 01:10:42,686:      pdf_renderer.py:  470: printSegment:  Network Upgrade
+   DEBUG: 2026-02-14 01:10:42,686:      pdf_renderer.py:  470: printSegment: Strategic Objective:
+   DEBUG: 2026-02-14 01:10:42,687:      pdf_renderer.py:  470: printSegment:  B — Digital Health Transformation
+   DEBUG: 2026-02-14 01:10:42,687:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,687:      pdf_renderer.py:  470: printSegment: Description:
+   DEBUG: 2026-02-14 01:10:42,688:      pdf_renderer.py:  470: printSegment:  Conduct a comprehensive assessment of the
+   DEBUG: 2026-02-14 01:10:42,688:      pdf_renderer.py:  470: printSegment: hospital
+   DEBUG: 2026-02-14 01:10:42,688:      pdf_renderer.py:  470: printSegment: '
+   DEBUG: 2026-02-14 01:10:42,708:      pdf_renderer.py:  470: printSegment: s current IT infrastructure, including network architecture, server capacity, Wi-Fi coverage, endpoint
+   DEBUG: 2026-02-14 01:10:42,719:      pdf_renderer.py:  470: printSegment: devices, and disaster recovery capabilities. Develop and execute an upgrade plan to ensure readiness for EHR
+   DEBUG: 2026-02-14 01:10:42,724:      pdf_renderer.py:  470: printSegment: deployment, telemedicine operations, and AI-assisted diagnostic tools. Priority investments include redundant
+   DEBUG: 2026-02-14 01:10:42,725:      pdf_renderer.py:  470: printSegment: fibre-optic backbone, upgraded Wi-Fi access points across all clinical areas, and a secondary data centre for business
+   DEBUG: 2026-02-14 01:10:42,726:      pdf_renderer.py:  470: printSegment: continuity.
+   DEBUG: 2026-02-14 01:10:42,726:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,726:      pdf_renderer.py:  470: printSegment: Action Owner:
+   DEBUG: 2026-02-14 01:10:42,727:      pdf_renderer.py:  470: printSegment:  CIO (with IT Department)
+   DEBUG: 2026-02-14 01:10:42,727:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,727:      pdf_renderer.py:  470: printSegment: Timeline:
+   DEBUG: 2026-02-14 01:10:42,728:      pdf_renderer.py:  470: printSegment:  Q1–Q4 2025
+   DEBUG: 2026-02-14 01:10:42,728:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,728:      pdf_renderer.py:  470: printSegment: Budget Allocation:
+   DEBUG: 2026-02-14 01:10:42,729:      pdf_renderer.py:  470: printSegment:  LKR 45M (network
+   DEBUG: 2026-02-14 01:10:42,730:      pdf_renderer.py:  470: printSegment: hardware, cabling, Wi-Fi, server upgrades, DR site)
+   DEBUG: 2026-02-14 01:10:42,730:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,730:      pdf_renderer.py:  470: printSegment: Expected Outcome:
+   DEBUG: 2026-02-14 01:10:42,732:      pdf_renderer.py:  470: printSegment:  Hospital-wide IT infrastructure upgraded
+   DEBUG: 2026-02-14 01:10:42,733:      pdf_renderer.py:  470: printSegment: to support cloud-based EHR, telemedicine, and AI workloads with 99.9% uptime target.
+   DEBUG: 2026-02-14 01:10:42,733:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,734:      pdf_renderer.py:  470: printSegment: KPIs:
+   DEBUG: 2026-02-14 01:10:42,734:      pdf_renderer.py:  470: printSegment: l
+   DEBUG: 2026-02-14 01:10:42,735:      pdf_renderer.py:  470: printSegment: Infrastructure audit report completed by Q1 2025
+   DEBUG: 2026-02-14 01:10:42,735:      pdf_renderer.py:  470: printSegment: l
+   DEBUG: 2026-02-14 01:10:42,735:      pdf_renderer.py:  470: printSegment: Network upgrade 80% complete by Q3 2025
+   DEBUG: 2026-02-14 01:10:42,736:      pdf_renderer.py:  470: printSegment: l
+   DEBUG: 2026-02-14 01:10:42,736:      pdf_renderer.py:  470: printSegment: Wi-Fi coverage across 100% of clinical areas by Q4 2025
+   DEBUG: 2026-02-14 01:10:42,737:      pdf_renderer.py:  470: printSegment: Action 11: Telemedicine Platform Requirements 
+   DEBUG: 2026-02-14 01:10:42,737:      pdf_renderer.py:  470: printSegment: &
+   DEBUG: 2026-02-14 01:10:42,738:      pdf_renderer.py:  470: printSegment:  Vendor Engagement
+   DEBUG: 2026-02-14 01:10:42,738:      pdf_renderer.py:  470: printSegment: Strategic Objective:
+   DEBUG: 2026-02-14 01:10:42,738:      pdf_renderer.py:  470: printSegment:  B — Digital Health Transformation
+   DEBUG: 2026-02-14 01:10:42,739:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,739:      pdf_renderer.py:  470: printSegment: Description:
+   DEBUG: 2026-02-14 01:10:42,740:      pdf_renderer.py:  470: printSegment:  Define functional and technical requirements for
+   DEBUG: 2026-02-14 01:10:42,740:      pdf_renderer.py:  470: printSegment: the hospital
+   DEBUG: 2026-02-14 01:10:42,741:      pdf_renderer.py:  470: printSegment: '
+   DEBUG: 2026-02-14 01:10:42,746:      pdf_renderer.py:  470: printSegment: s telemedicine platform, incorporating domestic specialist consultations, Maldives outreach capability,
+   DEBUG: 2026-02-14 01:10:42,748:      pdf_renderer.py:  470: printSegment: and post-discharge follow-up. Engage potential platform vendors for demonstrations and pilot feasibility. Ensure
+   DEBUG: 2026-02-14 01:10:42,748:      pdf_renderer.py:  470: printSegment: platform compliance with Sri Lanka
+   DEBUG: 2026-02-14 01:10:42,749:      pdf_renderer.py:  470: printSegment: '
+   DEBUG: 2026-02-14 01:10:42,750:      pdf_renderer.py:  470: printSegment: s data protection regulations and international standards (HIPAA-aligned for
+   DEBUG: 2026-02-14 01:10:42,750:      pdf_renderer.py:  470: printSegment: Maldives cross-border use).
+   DEBUG: 2026-02-14 01:10:42,750:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,751:      pdf_renderer.py:  470: printSegment: Action Owner:
+   DEBUG: 2026-02-14 01:10:42,751:      pdf_renderer.py:  470: printSegment:  CIO (with International Unit Director)
+   DEBUG: 2026-02-14 01:10:42,752:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,752:      pdf_renderer.py:  470: printSegment: Timeline:
+   DEBUG: 2026-02-14 01:10:42,752:      pdf_renderer.py:  470: printSegment:  Q2–Q4 2025
+   DEBUG: 2026-02-14 01:10:42,753:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,753:      pdf_renderer.py:  470: printSegment: Budget
+   DEBUG: 2026-02-14 01:10:42,754:      pdf_renderer.py:  470: printSegment: Allocation:
+   DEBUG: 2026-02-14 01:10:42,754:      pdf_renderer.py:  470: printSegment:  LKR 8M (requirements analysis, vendor engagement, compliance review)
+   DEBUG: 2026-02-14 01:10:42,755:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,755:      pdf_renderer.py:  470: printSegment: Expected Outcome:
+   DEBUG: 2026-02-14 01:10:42,757:      pdf_renderer.py:  470: printSegment: 
+   DEBUG: 2026-02-14 01:10:42,757:      pdf_renderer.py:  470: printSegment: Finalised telemedicine platform requirements document and vendor shortlist, ready for procurement in Q1 2026.
+   DEBUG: 2026-02-14 01:10:42,758:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,758:      pdf_renderer.py:  470: printSegment: KPIs:
+   DEBUG: 2026-02-14 01:10:42,759:      pdf_renderer.py:  470: printSegment: l
+   DEBUG: 2026-02-14 01:10:42,759:      pdf_renderer.py:  470: printSegment: Requirements document approved by Q3 2025
+   DEBUG: 2026-02-14 01:10:42,759:      pdf_renderer.py:  470: printSegment: l
+   DEBUG: 2026-02-14 01:10:42,760:      pdf_renderer.py:  470: printSegment: Minimum 3 vendor demonstrations completed by Q4 2025
+   DEBUG: 2026-02-14 01:10:42,760:      pdf_renderer.py:  470: printSegment: l
+   DEBUG: 2026-02-14 01:10:42,761:      pdf_renderer.py:  470: printSegment: Data protection compliance assessment completed by Q4 2025
+   DEBUG: 2026-02-14 01:10:42,762:      pdf_renderer.py:  470: printSegment: Action 12: Cybersecurity Baseline Assessment 
+   DEBUG: 2026-02-14 01:10:42,762:      pdf_renderer.py:  470: printSegment: &
+   DEBUG: 2026-02-14 01:10:42,763:      pdf_renderer.py:  470: printSegment:  Policy Development
+   DEBUG: 2026-02-14 01:10:42,763:      pdf_renderer.py:  470: printSegment: Strategic Objective:
+   DEBUG: 2026-02-14 01:10:42,764:      pdf_renderer.py:  470: printSegment:  B — Digital Health Transformation
+   DEBUG: 2026-02-14 01:10:42,764:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,764:      pdf_renderer.py:  470: printSegment: Description:
+   DEBUG: 2026-02-14 01:10:42,770:      pdf_renderer.py:  470: printSegment:  Engage an external cybersecurity firm to
+   DEBUG: 2026-02-14 01:10:42,773:      pdf_renderer.py:  470: printSegment: conduct a baseline vulnerability assessment of all hospital IT systems. Develop a comprehensive Information
+   DEBUG: 2026-02-14 01:10:42,773:      pdf_renderer.py:  470: printSegment: Security Policy aligned with ISO 27001 requirements and Sri Lanka
+   DEBUG: 2026-02-14 01:10:42,774:      pdf_renderer.py:  470: printSegment: '
+   DEBUG: 2026-02-14 01:10:42,777:      pdf_renderer.py:  470: printSegment: s Personal Data Protection Act (PDPA).
+   DEBUG: 2026-02-14 01:10:42,779:      pdf_renderer.py:  470: printSegment: Implement priority remediation measures and establish a cybersecurity incident response plan. Deploy mandatory
+   DEBUG: 2026-02-14 01:10:42,779:      pdf_renderer.py:  470: printSegment: awareness training for all staff.
+   DEBUG: 2026-02-14 01:10:42,780:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,780:      pdf_renderer.py:  470: printSegment: Action Owner:
+   DEBUG: 2026-02-14 01:10:42,781:      pdf_renderer.py:  470: printSegment:  CIO
+   DEBUG: 2026-02-14 01:10:42,781:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,782:      pdf_renderer.py:  470: printSegment: Timeline:
+   DEBUG: 2026-02-14 01:10:42,782:      pdf_renderer.py:  470: printSegment:  Q1–Q3 2025
+   DEBUG: 2026-02-14 01:10:42,783:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,783:      pdf_renderer.py:  470: printSegment: Budget Allocation:
+   DEBUG: 2026-02-14 01:10:42,784:      pdf_renderer.py:  470: printSegment:  LKR 12M (external
+   DEBUG: 2026-02-14 01:10:42,784:      pdf_renderer.py:  470: printSegment: audit, policy development, remediation, training)
+   DEBUG: 2026-02-14 01:10:42,785:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,785:      pdf_renderer.py:  470: printSegment: Expected Outcome:
+   DEBUG: 2026-02-14 01:10:42,788:      pdf_renderer.py:  470: printSegment:  Documented cybersecurity baseline,
+   DEBUG: 2026-02-14 01:10:42,790:      pdf_renderer.py:  470: printSegment: approved Information Security Policy, and trained workforce, establishing the foundation for ISO 27001
+   DEBUG: 2026-02-14 01:10:42,790:      pdf_renderer.py:  470: printSegment: certification by 2029.
+   DEBUG: 2026-02-14 01:10:42,790:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,791:      pdf_renderer.py:  470: printSegment: KPIs:
+   DEBUG: 2026-02-14 01:10:42,791:      pdf_renderer.py:  470: printSegment: l
+   DEBUG: 2026-02-14 01:10:42,791:      pdf_renderer.py:  470: printSegment: Vulnerability assessment completed by Q2 2025
+   DEBUG: 2026-02-14 01:10:42,792:      pdf_renderer.py:  470: printSegment: l
+   DEBUG: 2026-02-14 01:10:42,792:      pdf_renderer.py:  470: printSegment: Information Security Policy approved by Q3 2025
+   DEBUG: 2026-02-14 01:10:42,792:      pdf_renderer.py:  470: printSegment: l
+   DEBUG: 2026-02-14 01:10:42,793:      pdf_renderer.py:  470: printSegment: 90% of staff completing cybersecurity training by Q3 2025
+   DEBUG: 2026-02-14 01:10:42,793:      pdf_renderer.py:  470: printSegment: Strategic Objective C: Research 
+   DEBUG: 2026-02-14 01:10:42,794:      pdf_renderer.py:  470: printSegment: &
+   DEBUG: 2026-02-14 01:10:42,794:      pdf_renderer.py:  470: printSegment:  Innovation
+   DEBUG: 2026-02-14 01:10:42,794:      pdf_renderer.py:  470: printSegment: Action 13: Establishment of Ethics Review Committee
+   DEBUG: 2026-02-14 01:10:42,795:      pdf_renderer.py:  470: printSegment: Strategic Objective:
+   DEBUG: 2026-02-14 01:10:42,795:      pdf_renderer.py:  470: printSegment:  C — Research 
+   DEBUG: 2026-02-14 01:10:42,795:      pdf_renderer.py:  470: printSegment: &
+   DEBUG: 2026-02-14 01:10:42,796:      pdf_renderer.py:  470: printSegment:  Innovation
+   DEBUG: 2026-02-14 01:10:42,796:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,796:      pdf_renderer.py:  470: printSegment: Description:
+   DEBUG: 2026-02-14 01:10:42,812:      pdf_renderer.py:  470: printSegment:  Constitute a hospital Ethics Review Committee (ERC)
+   DEBUG: 2026-02-14 01:10:42,824:      pdf_renderer.py:  470: printSegment: to oversee and approve clinical research activities. Recruit committee members including external independent
+   DEBUG: 2026-02-14 01:10:42,829:      pdf_renderer.py:  470: printSegment: reviewers, legal representation, and community representatives as per national research ethics guidelines. Develop
+   DEBUG: 2026-02-14 01:10:42,830:      pdf_renderer.py:  470: printSegment: the ERC charter, standard operating procedures, and submission templates. Register the committee with the Sri
+   DEBUG: 2026-02-14 01:10:42,831:      pdf_renderer.py:  470: printSegment: Lanka Medical Association.
+   DEBUG: 2026-02-14 01:10:42,831:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,831:      pdf_renderer.py:  470: printSegment: Action Owner:
+   DEBUG: 2026-02-14 01:10:42,832:      pdf_renderer.py:  470: printSegment:  Medical Director
+   DEBUG: 2026-02-14 01:10:42,832:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,832:      pdf_renderer.py:  470: printSegment: Timeline:
+   DEBUG: 2026-02-14 01:10:42,833:      pdf_renderer.py:  470: printSegment:  Q1–Q2 2025
+   DEBUG: 2026-02-14 01:10:42,833:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,833:      pdf_renderer.py:  470: printSegment: Budget Allocation:
+   DEBUG: 2026-02-14 01:10:42,834:      pdf_renderer.py:  470: printSegment:  LKR 3M
+   DEBUG: 2026-02-14 01:10:42,834:      pdf_renderer.py:  470: printSegment: (committee setup, training, legal consultation)
+   DEBUG: 2026-02-14 01:10:42,835:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,835:      pdf_renderer.py:  470: printSegment: Expected Outcome:
+   DEBUG: 2026-02-14 01:10:42,837:      pdf_renderer.py:  470: printSegment:  Fully constituted and registered Ethics Review
+   DEBUG: 2026-02-14 01:10:42,838:      pdf_renderer.py:  470: printSegment: Committee operational by Q2 2025, capable of reviewing research proposals within a 30-day turnaround.
+   DEBUG: 2026-02-14 01:10:42,838:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,839:      pdf_renderer.py:  470: printSegment: KPIs:
+   DEBUG: 2026-02-14 01:10:42,839:      pdf_renderer.py:  470: printSegment: l
+   DEBUG: 2026-02-14 01:10:42,839:      pdf_renderer.py:  470: printSegment: ERC membership finalised by Q1 2025
+   DEBUG: 2026-02-14 01:10:42,840:      pdf_renderer.py:  470: printSegment: l
+   DEBUG: 2026-02-14 01:10:42,840:      pdf_renderer.py:  470: printSegment: ERC charter and SOPs approved by Q2 2025
+   DEBUG: 2026-02-14 01:10:42,840:      pdf_renderer.py:  470: printSegment: l
+   DEBUG: 2026-02-14 01:10:42,841:      pdf_renderer.py:  470: printSegment: Registration with Sri Lanka Medical Association completed by Q2 2025
+   DEBUG: 2026-02-14 01:10:42,842:      pdf_renderer.py:  470: printSegment: Action 14: University Research Partnership MOU
+   DEBUG: 2026-02-14 01:10:42,842:      pdf_renderer.py:  470: printSegment: Strategic Objective:
+   DEBUG: 2026-02-14 01:10:42,842:      pdf_renderer.py:  470: printSegment:  C — Research 
+   DEBUG: 2026-02-14 01:10:42,843:      pdf_renderer.py:  470: printSegment: &
+   DEBUG: 2026-02-14 01:10:42,843:      pdf_renderer.py:  470: printSegment:  Innovation
+   DEBUG: 2026-02-14 01:10:42,843:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,844:      pdf_renderer.py:  470: printSegment: Description:
+   DEBUG: 2026-02-14 01:10:42,858:      pdf_renderer.py:  470: printSegment:  Initiate formal discussions with the University of
+   DEBUG: 2026-02-14 01:10:42,868:      pdf_renderer.py:  470: printSegment: Kelaniya Faculty of Medicine for a collaborative research and clinical training partnership. Negotiate a
+   DEBUG: 2026-02-14 01:10:42,873:      pdf_renderer.py:  470: printSegment: Memorandum of Understanding (MOU) covering joint research projects, student clinical placements, shared access
+   DEBUG: 2026-02-14 01:10:42,874:      pdf_renderer.py:  470: printSegment: to research facilities, and co-supervision of postgraduate dissertations. Identify inaugural research topics aligned
+   DEBUG: 2026-02-14 01:10:42,875:      pdf_renderer.py:  470: printSegment: with the hospital
+   DEBUG: 2026-02-14 01:10:42,875:      pdf_renderer.py:  470: printSegment: '
+   DEBUG: 2026-02-14 01:10:42,876:      pdf_renderer.py:  470: printSegment: s strategic priorities in fertility, cardiac care, and community health.
+   DEBUG: 2026-02-14 01:10:42,876:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,876:      pdf_renderer.py:  470: printSegment: Action Owner:
+   DEBUG: 2026-02-14 01:10:42,877:      pdf_renderer.py:  470: printSegment:  Medical
+   DEBUG: 2026-02-14 01:10:42,877:      pdf_renderer.py:  470: printSegment: Director
+   DEBUG: 2026-02-14 01:10:42,877:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,878:      pdf_renderer.py:  470: printSegment: Timeline:
+   DEBUG: 2026-02-14 01:10:42,878:      pdf_renderer.py:  470: printSegment:  Q1–Q3 2025
+   DEBUG: 2026-02-14 01:10:42,878:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,879:      pdf_renderer.py:  470: printSegment: Budget Allocation:
+   DEBUG: 2026-02-14 01:10:42,880:      pdf_renderer.py:  470: printSegment:  LKR 4M (engagement activities, legal review, inaugural project
+   DEBUG: 2026-02-14 01:10:42,880:      pdf_renderer.py:  470: printSegment: seed funding)
+   DEBUG: 2026-02-14 01:10:42,880:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,881:      pdf_renderer.py:  470: printSegment: Expected Outcome:
+   DEBUG: 2026-02-14 01:10:42,882:      pdf_renderer.py:  470: printSegment:  Signed MOU with University of Kelaniya and at least one collaborative research
+   DEBUG: 2026-02-14 01:10:42,883:      pdf_renderer.py:  470: printSegment: project initiated by Q4 2025.
+   DEBUG: 2026-02-14 01:10:42,883:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,883:      pdf_renderer.py:  470: printSegment: KPIs:
+   DEBUG: 2026-02-14 01:10:42,884:      pdf_renderer.py:  470: printSegment: l
+   DEBUG: 2026-02-14 01:10:42,884:      pdf_renderer.py:  470: printSegment: Formal partnership discussions initiated by Q1 2025
+   DEBUG: 2026-02-14 01:10:42,884:      pdf_renderer.py:  470: printSegment: l
+   DEBUG: 2026-02-14 01:10:42,885:      pdf_renderer.py:  470: printSegment: MOU signed by Q3 2025
+   DEBUG: 2026-02-14 01:10:42,885:      pdf_renderer.py:  470: printSegment: l
+   DEBUG: 2026-02-14 01:10:42,886:      pdf_renderer.py:  470: printSegment: First collaborative research proposal submitted to ERC by Q4 2025
+   DEBUG: 2026-02-14 01:10:42,887:      pdf_renderer.py:  470: printSegment: Action 15: Appointment of Research Coordinator
+   DEBUG: 2026-02-14 01:10:42,887:      pdf_renderer.py:  470: printSegment: Strategic Objective:
+   DEBUG: 2026-02-14 01:10:42,887:      pdf_renderer.py:  470: printSegment:  C — Research 
+   DEBUG: 2026-02-14 01:10:42,888:      pdf_renderer.py:  470: printSegment: &
+   DEBUG: 2026-02-14 01:10:42,888:      pdf_renderer.py:  470: printSegment:  Innovation
+   DEBUG: 2026-02-14 01:10:42,888:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,889:      pdf_renderer.py:  470: printSegment: Description:
+   DEBUG: 2026-02-14 01:10:42,890:      pdf_renderer.py:  470: printSegment:  Recruit a dedicated Research Coordinator to manage
+   DEBUG: 2026-02-14 01:10:42,890:      pdf_renderer.py:  470: printSegment: the hospital
+   DEBUG: 2026-02-14 01:10:42,890:      pdf_renderer.py:  470: printSegment: '
+   DEBUG: 2026-02-14 01:10:42,902:      pdf_renderer.py:  470: printSegment: s emerging clinical research portfolio. The role will be responsible for coordinating ethics submissions,
+   DEBUG: 2026-02-14 01:10:42,907:      pdf_renderer.py:  470: printSegment: managing research databases, liaising with university partners, supporting grant applications, and tracking research
+   DEBUG: 2026-02-14 01:10:42,908:      pdf_renderer.py:  470: printSegment: output. The position reports to the Medical Director and will form the nucleus of the future Clinical Research Unit.
+   DEBUG: 2026-02-14 01:10:42,909:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,909:      pdf_renderer.py:  470: printSegment: Action Owner:
+   DEBUG: 2026-02-14 01:10:42,909:      pdf_renderer.py:  470: printSegment:  HR Director (with Medical Director)
+   DEBUG: 2026-02-14 01:10:42,910:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,910:      pdf_renderer.py:  470: printSegment: Timeline:
+   DEBUG: 2026-02-14 01:10:42,911:      pdf_renderer.py:  470: printSegment:  Q1–Q2 2025
+   DEBUG: 2026-02-14 01:10:42,911:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,911:      pdf_renderer.py:  470: printSegment: Budget Allocation:
+   DEBUG: 2026-02-14 01:10:42,912:      pdf_renderer.py:  470: printSegment:  LKR 4M (salary,
+   DEBUG: 2026-02-14 01:10:42,913:      pdf_renderer.py:  470: printSegment: benefits, office setup, training)
+   DEBUG: 2026-02-14 01:10:42,913:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,913:      pdf_renderer.py:  470: printSegment: Expected Outcome:
+   DEBUG: 2026-02-14 01:10:42,915:      pdf_renderer.py:  470: printSegment:  Research Coordinator in post by Q2 2025, actively managing
+   DEBUG: 2026-02-14 01:10:42,916:      pdf_renderer.py:  470: printSegment: the research pipeline and supporting the first observational study.
+   DEBUG: 2026-02-14 01:10:42,916:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,917:      pdf_renderer.py:  470: printSegment: KPIs:
+   DEBUG: 2026-02-14 01:10:42,917:      pdf_renderer.py:  470: printSegment: l
+   DEBUG: 2026-02-14 01:10:42,918:      pdf_renderer.py:  470: printSegment: Job description approved and advertised by Q1 2025
+   DEBUG: 2026-02-14 01:10:42,918:      pdf_renderer.py:  470: printSegment: l
+   DEBUG: 2026-02-14 01:10:42,918:      pdf_renderer.py:  470: printSegment: Research Coordinator appointed by Q2 2025
+   DEBUG: 2026-02-14 01:10:42,919:      pdf_renderer.py:  470: printSegment: l
+   DEBUG: 2026-02-14 01:10:42,919:      pdf_renderer.py:  470: printSegment: Research project tracking system established by Q3 2025
+   DEBUG: 2026-02-14 01:10:42,920:      pdf_renderer.py:  470: printSegment: Strategic Objective D: Workforce Development
+   DEBUG: 2026-02-14 01:10:42,921:      pdf_renderer.py:  470: printSegment: Action 16: Specialist Clinician Recruitment Drive
+   DEBUG: 2026-02-14 01:10:42,921:      pdf_renderer.py:  470: printSegment: Strategic Objective:
+   DEBUG: 2026-02-14 01:10:42,922:      pdf_renderer.py:  470: printSegment:  D — Workforce Development
+   DEBUG: 2026-02-14 01:10:42,922:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,922:      pdf_renderer.py:  470: printSegment: Description:
+   DEBUG: 2026-02-14 01:10:42,939:      pdf_renderer.py:  470: printSegment:  Launch a targeted recruitment campaign for specialist
+   DEBUG: 2026-02-14 01:10:42,952:      pdf_renderer.py:  470: printSegment: clinicians required for the 2026 expansion, focusing on interventional cardiology, nephrology, geriatric medicine,
+   DEBUG: 2026-02-14 01:10:42,959:      pdf_renderer.py:  470: printSegment: reproductive medicine, and dermatological aesthetics. Develop competitive remuneration packages including
+   DEBUG: 2026-02-14 01:10:42,961:      pdf_renderer.py:  470: printSegment: performance incentives, academic titles, and research time. Engage with the Nawaloka Colombo consultant network,
+   DEBUG: 2026-02-14 01:10:42,962:      pdf_renderer.py:  470: printSegment: Sri Lankan medical diaspora, and specialist recruitment agencies.
+   DEBUG: 2026-02-14 01:10:42,962:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,963:      pdf_renderer.py:  470: printSegment: Action Owner:
+   DEBUG: 2026-02-14 01:10:42,963:      pdf_renderer.py:  470: printSegment:  HR Director (with Medical
+   DEBUG: 2026-02-14 01:10:42,963:      pdf_renderer.py:  470: printSegment: Director)
+   DEBUG: 2026-02-14 01:10:42,963:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,964:      pdf_renderer.py:  470: printSegment: Timeline:
+   DEBUG: 2026-02-14 01:10:42,964:      pdf_renderer.py:  470: printSegment:  Q2–Q4 2025
+   DEBUG: 2026-02-14 01:10:42,964:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,965:      pdf_renderer.py:  470: printSegment: Budget Allocation:
+   DEBUG: 2026-02-14 01:10:42,965:      pdf_renderer.py:  470: printSegment:  LKR 18M (recruitment agency fees, advertising, relocation
+   DEBUG: 2026-02-14 01:10:42,966:      pdf_renderer.py:  470: printSegment: packages, signing incentives)
+   DEBUG: 2026-02-14 01:10:42,966:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,966:      pdf_renderer.py:  470: printSegment: Expected Outcome:
+   DEBUG: 2026-02-14 01:10:42,969:      pdf_renderer.py:  470: printSegment:  Conditional appointment offers extended to at least 5 priority
+   DEBUG: 2026-02-14 01:10:42,969:      pdf_renderer.py:  470: printSegment: specialists by Q4 2025, with start dates aligned to Phase 1 commissioning.
+   DEBUG: 2026-02-14 01:10:42,969:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,970:      pdf_renderer.py:  470: printSegment: KPIs:
+   DEBUG: 2026-02-14 01:10:42,970:      pdf_renderer.py:  470: printSegment: l
+   DEBUG: 2026-02-14 01:10:42,970:      pdf_renderer.py:  470: printSegment: Recruitment campaign launched by Q2 2025
+   DEBUG: 2026-02-14 01:10:42,971:      pdf_renderer.py:  470: printSegment: l
+   DEBUG: 2026-02-14 01:10:42,971:      pdf_renderer.py:  470: printSegment: Minimum 20 specialist applications received by Q3 2025
+   DEBUG: 2026-02-14 01:10:42,971:      pdf_renderer.py:  470: printSegment: l
+   DEBUG: 2026-02-14 01:10:42,972:      pdf_renderer.py:  470: printSegment: Conditional offers extended to at least 5 specialists by Q4 2025
+   DEBUG: 2026-02-14 01:10:42,973:      pdf_renderer.py:  470: printSegment: Action 17: Nursing Workforce Expansion Planning
+   DEBUG: 2026-02-14 01:10:42,973:      pdf_renderer.py:  470: printSegment: Strategic Objective:
+   DEBUG: 2026-02-14 01:10:42,973:      pdf_renderer.py:  470: printSegment:  D — Workforce Development
+   DEBUG: 2026-02-14 01:10:42,974:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:42,974:      pdf_renderer.py:  470: printSegment: Description:
+   DEBUG: 2026-02-14 01:10:42,993:      pdf_renderer.py:  470: printSegment:  Develop a comprehensive nursing recruitment and
+   DEBUG: 2026-02-14 01:10:43,007:      pdf_renderer.py:  470: printSegment: training plan to support the phased expansion from 75 to 150 beds. Identify staffing requirements by specialty ward
+   DEBUG: 2026-02-14 01:10:43,016:      pdf_renderer.py:  470: printSegment: (cardiac, nephrology, elderly care, maternity, ICU), establish training partnerships with nursing schools, and plan an
+   DEBUG: 2026-02-14 01:10:43,018:      pdf_renderer.py:  470: printSegment: accelerated orientation programme for new recruits. Initiate recruitment for the first cohort of 40 additional nurses
+   DEBUG: 2026-02-14 01:10:43,020:      pdf_renderer.py:  470: printSegment: required for Phase 1 (2026–2027).
+   DEBUG: 2026-02-14 01:10:43,020:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,021:      pdf_renderer.py:  470: printSegment: Action Owner:
+   DEBUG: 2026-02-14 01:10:43,021:      pdf_renderer.py:  470: printSegment:  Director of Nursing (with HR Director)
+   DEBUG: 2026-02-14 01:10:43,022:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,022:      pdf_renderer.py:  470: printSegment: Timeline:
+   DEBUG: 2026-02-14 01:10:43,022:      pdf_renderer.py:  470: printSegment:  Q2–Q4 2025
+   DEBUG: 2026-02-14 01:10:43,023:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,023:      pdf_renderer.py:  470: printSegment: Budget
+   DEBUG: 2026-02-14 01:10:43,023:      pdf_renderer.py:  470: printSegment: Allocation:
+   DEBUG: 2026-02-14 01:10:43,024:      pdf_renderer.py:  470: printSegment:  LKR 15M (recruitment, orientation programme development, training partnerships)
+   DEBUG: 2026-02-14 01:10:43,024:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,025:      pdf_renderer.py:  470: printSegment: Expected
+   DEBUG: 2026-02-14 01:10:43,025:      pdf_renderer.py:  470: printSegment: Outcome:
+   DEBUG: 2026-02-14 01:10:43,026:      pdf_renderer.py:  470: printSegment:  Nursing workforce plan approved and first-cohort recruitment pipeline established, with 15 conditional
+   DEBUG: 2026-02-14 01:10:43,027:      pdf_renderer.py:  470: printSegment: offers extended by Q4 2025.
+   DEBUG: 2026-02-14 01:10:43,027:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,028:      pdf_renderer.py:  470: printSegment: KPIs:
+   DEBUG: 2026-02-14 01:10:43,028:      pdf_renderer.py:  470: printSegment: l
+   DEBUG: 2026-02-14 01:10:43,028:      pdf_renderer.py:  470: printSegment: Nursing workforce plan approved by Q2 2025
+   DEBUG: 2026-02-14 01:10:43,029:      pdf_renderer.py:  470: printSegment: l
+   DEBUG: 2026-02-14 01:10:43,029:      pdf_renderer.py:  470: printSegment: Training partnerships formalised with 2 nursing schools by Q3 2025
+   DEBUG: 2026-02-14 01:10:43,030:      pdf_renderer.py:  470: printSegment: l
+   DEBUG: 2026-02-14 01:10:43,030:      pdf_renderer.py:  470: printSegment: 15 conditional nursing offers extended by Q4 2025
+   DEBUG: 2026-02-14 01:10:43,031:      pdf_renderer.py:  470: printSegment: Action 18: Continuing Professional Development (CPD) Programme Launch
+   DEBUG: 2026-02-14 01:10:43,031:      pdf_renderer.py:  470: printSegment: Strategic Objective:
+   DEBUG: 2026-02-14 01:10:43,032:      pdf_renderer.py:  470: printSegment:  D — Workforce Development
+   DEBUG: 2026-02-14 01:10:43,032:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,032:      pdf_renderer.py:  470: printSegment: Description:
+   DEBUG: 2026-02-14 01:10:43,054:      pdf_renderer.py:  470: printSegment:  Design and launch a structured Continuing
+   DEBUG: 2026-02-14 01:10:43,071:      pdf_renderer.py:  470: printSegment: Professional Development programme for all clinical staff. The programme will include quarterly clinical skills
+   DEBUG: 2026-02-14 01:10:43,081:      pdf_renderer.py:  470: printSegment: workshops, monthly journal clubs, annual simulation-based emergency training, and online learning modules.
+   DEBUG: 2026-02-14 01:10:43,084:      pdf_renderer.py:  470: printSegment: Establish CPD tracking and link completion to annual performance appraisals. Target a minimum of 20 CPD hours
+   DEBUG: 2026-02-14 01:10:43,085:      pdf_renderer.py:  470: printSegment: per clinician in 2025 as a baseline, scaling to 40 hours by 2030.
+   DEBUG: 2026-02-14 01:10:43,085:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,085:      pdf_renderer.py:  470: printSegment: Action Owner:
+   DEBUG: 2026-02-14 01:10:43,086:      pdf_renderer.py:  470: printSegment:  Director of Nursing (with Medical
+   DEBUG: 2026-02-14 01:10:43,086:      pdf_renderer.py:  470: printSegment: Director)
+   DEBUG: 2026-02-14 01:10:43,087:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,087:      pdf_renderer.py:  470: printSegment: Timeline:
+   DEBUG: 2026-02-14 01:10:43,087:      pdf_renderer.py:  470: printSegment:  Q1–Q4 2025
+   DEBUG: 2026-02-14 01:10:43,088:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,088:      pdf_renderer.py:  470: printSegment: Budget Allocation:
+   DEBUG: 2026-02-14 01:10:43,089:      pdf_renderer.py:  470: printSegment:  LKR 10M (programme development, external trainers,
+   DEBUG: 2026-02-14 01:10:43,090:      pdf_renderer.py:  470: printSegment: simulation equipment, e-learning platform)
+   DEBUG: 2026-02-14 01:10:43,090:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,091:      pdf_renderer.py:  470: printSegment: Expected Outcome:
+   DEBUG: 2026-02-14 01:10:43,092:      pdf_renderer.py:  470: printSegment:  CPD programme operational with quarterly
+   DEBUG: 2026-02-14 01:10:43,093:      pdf_renderer.py:  470: printSegment: workshops delivered and 80% clinician participation by Q4 2025.
+   DEBUG: 2026-02-14 01:10:43,093:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,093:      pdf_renderer.py:  470: printSegment: KPIs:
+   DEBUG: 2026-02-14 01:10:43,094:      pdf_renderer.py:  470: printSegment: l
+   DEBUG: 2026-02-14 01:10:43,094:      pdf_renderer.py:  470: printSegment: CPD programme framework approved by Q1 2025
+   DEBUG: 2026-02-14 01:10:43,095:      pdf_renderer.py:  470: printSegment: l
+   DEBUG: 2026-02-14 01:10:43,095:      pdf_renderer.py:  470: printSegment: 4 quarterly workshops delivered in 2025
+   DEBUG: 2026-02-14 01:10:43,096:      pdf_renderer.py:  470: printSegment: l
+   DEBUG: 2026-02-14 01:10:43,096:      pdf_renderer.py:  470: printSegment: 80% of clinical staff achieving ≥20 CPD hours by Q4 2025
+   DEBUG: 2026-02-14 01:10:43,103:      pdf_renderer.py:  470: printSegment: Action 19: Annual Staff Cricket Tournament 
+   DEBUG: 2026-02-14 01:10:43,103:      pdf_renderer.py:  470: printSegment: &
+   DEBUG: 2026-02-14 01:10:43,103:      pdf_renderer.py:  470: printSegment:  Sports Sponsorship
+   DEBUG: 2026-02-14 01:10:43,103:      pdf_renderer.py:  470: printSegment: Strategic Objective:
+   DEBUG: 2026-02-14 01:10:43,104:      pdf_renderer.py:  470: printSegment:  D — Workforce Development
+   DEBUG: 2026-02-14 01:10:43,104:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,104:      pdf_renderer.py:  470: printSegment: Description:
+   DEBUG: 2026-02-14 01:10:43,128:      pdf_renderer.py:  470: printSegment:  Organise and sponsor the Nawaloka Hospital
+   DEBUG: 2026-02-14 01:10:43,146:      pdf_renderer.py:  470: printSegment: Negombo Annual Staff Cricket Tournament, expanded in 2025 to include teams from neighbouring corporate
+   DEBUG: 2026-02-14 01:10:43,158:      pdf_renderer.py:  470: printSegment: organisations in the Negombo–Katunayake industrial zone. The event will feature a two-day tournament at a local
+   DEBUG: 2026-02-14 01:10:43,162:      pdf_renderer.py:  470: printSegment: cricket ground, with branded merchandise, catering, and a closing ceremony with prizes. An additional sponsorship
+   DEBUG: 2026-02-14 01:10:43,162:      pdf_renderer.py:  470: printSegment: allocation supports the Negombo District Inter-School Cricket Championship as part of the hospital
+   DEBUG: 2026-02-14 01:10:43,163:      pdf_renderer.py:  470: printSegment: '
+   DEBUG: 2026-02-14 01:10:43,163:      pdf_renderer.py:  470: printSegment: s community
+   DEBUG: 2026-02-14 01:10:43,163:      pdf_renderer.py:  470: printSegment: engagement profile.
+   DEBUG: 2026-02-14 01:10:43,164:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,164:      pdf_renderer.py:  470: printSegment: Action Owner:
+   DEBUG: 2026-02-14 01:10:43,164:      pdf_renderer.py:  470: printSegment:  HR Director (with Marketing Director)
+   DEBUG: 2026-02-14 01:10:43,165:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,165:      pdf_renderer.py:  470: printSegment: Timeline:
+   DEBUG: 2026-02-14 01:10:43,165:      pdf_renderer.py:  470: printSegment:  Q3 2025
+   DEBUG: 2026-02-14 01:10:43,166:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,166:      pdf_renderer.py:  470: printSegment: Budget
+   DEBUG: 2026-02-14 01:10:43,166:      pdf_renderer.py:  470: printSegment: Allocation:
+   DEBUG: 2026-02-14 01:10:43,167:      pdf_renderer.py:  470: printSegment:  LKR 8M (venue hire, catering, merchandise, inter-school sponsorship, prizes, event management)
+   DEBUG: 2026-02-14 01:10:43,167:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,167:      pdf_renderer.py:  470: printSegment: Expected Outcome:
+   DEBUG: 2026-02-14 01:10:43,169:      pdf_renderer.py:  470: printSegment:  Enhanced staff morale and external brand visibility through sports engagement. Strengthened
+   DEBUG: 2026-02-14 01:10:43,170:      pdf_renderer.py:  470: printSegment: corporate relationships in the Katunayake corridor.
+   DEBUG: 2026-02-14 01:10:43,170:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,170:      pdf_renderer.py:  470: printSegment: KPIs:
+   DEBUG: 2026-02-14 01:10:43,171:      pdf_renderer.py:  470: printSegment: l
+   DEBUG: 2026-02-14 01:10:43,171:      pdf_renderer.py:  470: printSegment: Minimum 8 corporate teams participating in staff tournament
+   DEBUG: 2026-02-14 01:10:43,172:      pdf_renderer.py:  470: printSegment: l
+   DEBUG: 2026-02-14 01:10:43,172:      pdf_renderer.py:  470: printSegment: Event media coverage in at least 3 local outlets
+   DEBUG: 2026-02-14 01:10:43,172:      pdf_renderer.py:  470: printSegment: l
+   DEBUG: 2026-02-14 01:10:43,173:      pdf_renderer.py:  470: printSegment: Staff satisfaction survey improvement in 
+   DEBUG: 2026-02-14 01:10:43,173:      pdf_renderer.py:  470: printSegment: "
+   DEBUG: 2026-02-14 01:10:43,174:      pdf_renderer.py:  470: printSegment: team engagement
+   DEBUG: 2026-02-14 01:10:43,174:      pdf_renderer.py:  470: printSegment: "
+   DEBUG: 2026-02-14 01:10:43,174:      pdf_renderer.py:  470: printSegment:  category
+   DEBUG: 2026-02-14 01:10:43,175:      pdf_renderer.py:  470: printSegment: Strategic Objective E: Community 
+   DEBUG: 2026-02-14 01:10:43,175:      pdf_renderer.py:  470: printSegment: &
+   DEBUG: 2026-02-14 01:10:43,176:      pdf_renderer.py:  470: printSegment:  Regional Health Expansion
+   DEBUG: 2026-02-14 01:10:43,176:      pdf_renderer.py:  470: printSegment: Action 20: Maldives Partnership Scoping 
+   DEBUG: 2026-02-14 01:10:43,177:      pdf_renderer.py:  470: printSegment: &
+   DEBUG: 2026-02-14 01:10:43,177:      pdf_renderer.py:  470: printSegment:  Negotiations
+   DEBUG: 2026-02-14 01:10:43,178:      pdf_renderer.py:  470: printSegment: Strategic Objective:
+   DEBUG: 2026-02-14 01:10:43,179:      pdf_renderer.py:  470: printSegment:  E — Community 
+   DEBUG: 2026-02-14 01:10:43,180:      pdf_renderer.py:  470: printSegment: &
+   DEBUG: 2026-02-14 01:10:43,180:      pdf_renderer.py:  470: printSegment:  Regional Health Expansion
+   DEBUG: 2026-02-14 01:10:43,180:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,181:      pdf_renderer.py:  470: printSegment: Description:
+   DEBUG: 2026-02-14 01:10:43,202:      pdf_renderer.py:  470: printSegment:  Initiate formal engagement with
+   DEBUG: 2026-02-14 01:10:43,218:      pdf_renderer.py:  470: printSegment: healthcare providers in the Maldives to establish the visiting specialist and telemedicine partnership. Identify
+   DEBUG: 2026-02-14 01:10:43,226:      pdf_renderer.py:  470: printSegment: potential partner clinics in Malé and Addu City, conduct scoping visits, assess regulatory requirements for foreign
+   DEBUG: 2026-02-14 01:10:43,229:      pdf_renderer.py:  470: printSegment: medical practitioners, and negotiate preliminary partnership terms. Engage with the Maldivian Ministry of Health
+   DEBUG: 2026-02-14 01:10:43,230:      pdf_renderer.py:  470: printSegment: and Aasandha (National Health Insurance) to understand reimbursement pathways.
+   DEBUG: 2026-02-14 01:10:43,230:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,230:      pdf_renderer.py:  470: printSegment: Action Owner:
+   DEBUG: 2026-02-14 01:10:43,231:      pdf_renderer.py:  470: printSegment:  International
+   DEBUG: 2026-02-14 01:10:43,231:      pdf_renderer.py:  470: printSegment: Unit Director
+   DEBUG: 2026-02-14 01:10:43,231:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,232:      pdf_renderer.py:  470: printSegment: Timeline:
+   DEBUG: 2026-02-14 01:10:43,232:      pdf_renderer.py:  470: printSegment:  Q1–Q4 2025
+   DEBUG: 2026-02-14 01:10:43,232:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,233:      pdf_renderer.py:  470: printSegment: Budget Allocation:
+   DEBUG: 2026-02-14 01:10:43,234:      pdf_renderer.py:  470: printSegment:  LKR 14M (scoping visits, legal counsel in Maldives,
+   DEBUG: 2026-02-14 01:10:43,234:      pdf_renderer.py:  470: printSegment: regulatory engagement, partnership negotiations)
+   DEBUG: 2026-02-14 01:10:43,235:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,235:      pdf_renderer.py:  470: printSegment: Expected Outcome:
+   DEBUG: 2026-02-14 01:10:43,237:      pdf_renderer.py:  470: printSegment:  Signed preliminary partnership agreement
+   DEBUG: 2026-02-14 01:10:43,237:      pdf_renderer.py:  470: printSegment: with at least one Maldivian clinic by Q4 2025, with regulatory pathway documented.
+   DEBUG: 2026-02-14 01:10:43,238:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,238:      pdf_renderer.py:  470: printSegment: KPIs:
+   DEBUG: 2026-02-14 01:10:43,238:      pdf_renderer.py:  470: printSegment: l
+   DEBUG: 2026-02-14 01:10:43,239:      pdf_renderer.py:  470: printSegment: Scoping visit to Malé completed by Q2 2025
+   DEBUG: 2026-02-14 01:10:43,239:      pdf_renderer.py:  470: printSegment: l
+   DEBUG: 2026-02-14 01:10:43,240:      pdf_renderer.py:  470: printSegment: Regulatory requirements documentation completed by Q3 2025
+   DEBUG: 2026-02-14 01:10:43,240:      pdf_renderer.py:  470: printSegment: l
+   DEBUG: 2026-02-14 01:10:43,241:      pdf_renderer.py:  470: printSegment: Partnership MOU signed by Q4 2025
+   DEBUG: 2026-02-14 01:10:43,241:      pdf_renderer.py:  470: printSegment: Action 21: Medical Tourism Concierge Unit Setup
+   DEBUG: 2026-02-14 01:10:43,242:      pdf_renderer.py:  470: printSegment: Strategic Objective:
+   DEBUG: 2026-02-14 01:10:43,242:      pdf_renderer.py:  470: printSegment:  E — Community 
+   DEBUG: 2026-02-14 01:10:43,242:      pdf_renderer.py:  470: printSegment: &
+   DEBUG: 2026-02-14 01:10:43,243:      pdf_renderer.py:  470: printSegment:  Regional Health Expansion
+   DEBUG: 2026-02-14 01:10:43,243:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,244:      pdf_renderer.py:  470: printSegment: Description:
+   DEBUG: 2026-02-14 01:10:43,264:      pdf_renderer.py:  470: printSegment:  Establish the Medical Tourism
+   DEBUG: 2026-02-14 01:10:43,282:      pdf_renderer.py:  470: printSegment: Concierge Unit as a dedicated operational function. Recruit a bilingual (English/Sinhala) medical tourism
+   DEBUG: 2026-02-14 01:10:43,292:      pdf_renderer.py:  470: printSegment: coordinator, develop patient journey workflows covering pre-arrival consultation, airport transfers, hospital
+   DEBUG: 2026-02-14 01:10:43,297:      pdf_renderer.py:  470: printSegment: admission, hotel recovery partnerships, and post-discharge follow-up. Negotiate agreements with 3–5 Negombo hotels
+   DEBUG: 2026-02-14 01:10:43,298:      pdf_renderer.py:  470: printSegment: for recovery stay packages and initiate discussions with SriLankan Airlines for medical travel fare arrangements.
+   DEBUG: 2026-02-14 01:10:43,298:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,299:      pdf_renderer.py:  470: printSegment: Action Owner:
+   DEBUG: 2026-02-14 01:10:43,299:      pdf_renderer.py:  470: printSegment:  International Unit Director (with Marketing Director)
+   DEBUG: 2026-02-14 01:10:43,300:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,300:      pdf_renderer.py:  470: printSegment: Timeline:
+   DEBUG: 2026-02-14 01:10:43,301:      pdf_renderer.py:  470: printSegment:  Q2–Q4 2025
+   DEBUG: 2026-02-14 01:10:43,301:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,301:      pdf_renderer.py:  470: printSegment: Budget Allocation:
+   DEBUG: 2026-02-14 01:10:43,303:      pdf_renderer.py:  470: printSegment: 
+   DEBUG: 2026-02-14 01:10:43,303:      pdf_renderer.py:  470: printSegment: LKR 12M (staff recruitment, CRM software, hotel negotiations, marketing collateral, airline engagement)
+   DEBUG: 2026-02-14 01:10:43,303:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,304:      pdf_renderer.py:  470: printSegment: Expected
+   DEBUG: 2026-02-14 01:10:43,304:      pdf_renderer.py:  470: printSegment: Outcome:
+   DEBUG: 2026-02-14 01:10:43,306:      pdf_renderer.py:  470: printSegment:  Operational Medical Tourism Concierge Unit by Q4 2025, with documented workflows, hotel
+   DEBUG: 2026-02-14 01:10:43,306:      pdf_renderer.py:  470: printSegment: partnerships, and initial marketing materials.
+   DEBUG: 2026-02-14 01:10:43,307:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,307:      pdf_renderer.py:  470: printSegment: KPIs:
+   DEBUG: 2026-02-14 01:10:43,307:      pdf_renderer.py:  470: printSegment: l
+   DEBUG: 2026-02-14 01:10:43,308:      pdf_renderer.py:  470: printSegment: Medical tourism coordinator appointed by Q2 2025
+   DEBUG: 2026-02-14 01:10:43,308:      pdf_renderer.py:  470: printSegment: l
+   DEBUG: 2026-02-14 01:10:43,309:      pdf_renderer.py:  470: printSegment: Hotel partnership agreements signed with 3 properties by Q3 2025
+   DEBUG: 2026-02-14 01:10:43,309:      pdf_renderer.py:  470: printSegment: l
+   DEBUG: 2026-02-14 01:10:43,310:      pdf_renderer.py:  470: printSegment: Patient journey workflow documented and approved by Q4 2025
+   DEBUG: 2026-02-14 01:10:43,311:      pdf_renderer.py:  470: printSegment: Action 22: Community Preventive Health Screening Programme — Negombo Division
+   DEBUG: 2026-02-14 01:10:43,312:      pdf_renderer.py:  470: printSegment: Strategic Objective:
+   DEBUG: 2026-02-14 01:10:43,312:      pdf_renderer.py:  470: printSegment:  E — Community 
+   DEBUG: 2026-02-14 01:10:43,312:      pdf_renderer.py:  470: printSegment: &
+   DEBUG: 2026-02-14 01:10:43,313:      pdf_renderer.py:  470: printSegment:  Regional Health Expansion
+   DEBUG: 2026-02-14 01:10:43,313:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,313:      pdf_renderer.py:  470: printSegment: Description:
+   DEBUG: 2026-02-14 01:10:43,333:      pdf_renderer.py:  470: printSegment:  Design and launch a community
+   DEBUG: 2026-02-14 01:10:43,349:      pdf_renderer.py:  470: printSegment: preventive health screening programme targeting diabetes, hypertension, and cardiovascular risk in the Negombo
+   DEBUG: 2026-02-14 01:10:43,358:      pdf_renderer.py:  470: printSegment: Divisional Secretariat area. Partner with local Grama Niladhari (village officer) networks and community health
+   DEBUG: 2026-02-14 01:10:43,362:      pdf_renderer.py:  470: printSegment: midwives for outreach. Conduct monthly screening camps at community centres, temples, and churches. Provide
+   DEBUG: 2026-02-14 01:10:43,362:      pdf_renderer.py:  470: printSegment: referral pathways to Nawaloka Hospital for identified cases requiring further investigation or treatment.
+   DEBUG: 2026-02-14 01:10:43,363:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,363:      pdf_renderer.py:  470: printSegment: Action
+   DEBUG: 2026-02-14 01:10:43,363:      pdf_renderer.py:  470: printSegment: Owner:
+   DEBUG: 2026-02-14 01:10:43,363:      pdf_renderer.py:  470: printSegment:  Marketing Director (with Medical Director)
+   DEBUG: 2026-02-14 01:10:43,364:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,364:      pdf_renderer.py:  470: printSegment: Timeline:
+   DEBUG: 2026-02-14 01:10:43,364:      pdf_renderer.py:  470: printSegment:  Q2–Q4 2025
+   DEBUG: 2026-02-14 01:10:43,365:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,365:      pdf_renderer.py:  470: printSegment: Budget Allocation:
+   DEBUG: 2026-02-14 01:10:43,366:      pdf_renderer.py:  470: printSegment:  LKR 9M (screening
+   DEBUG: 2026-02-14 01:10:43,366:      pdf_renderer.py:  470: printSegment: equipment, consumables, logistics, community mobilisation, staff overtime)
+   DEBUG: 2026-02-14 01:10:43,366:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,367:      pdf_renderer.py:  470: printSegment: Expected Outcome:
+   DEBUG: 2026-02-14 01:10:43,370:      pdf_renderer.py:  470: printSegment:  Minimum 3,000
+   DEBUG: 2026-02-14 01:10:43,371:      pdf_renderer.py:  470: printSegment: individuals screened in 2025 with established referral pathways, building towards the strategic target of 25,000
+   DEBUG: 2026-02-14 01:10:43,371:      pdf_renderer.py:  470: printSegment: beneficiaries annually by 2029.
+   DEBUG: 2026-02-14 01:10:43,371:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,372:      pdf_renderer.py:  470: printSegment: KPIs:
+   DEBUG: 2026-02-14 01:10:43,372:      pdf_renderer.py:  470: printSegment: l
+   DEBUG: 2026-02-14 01:10:43,372:      pdf_renderer.py:  470: printSegment: Screening programme launched by Q2 2025
+   DEBUG: 2026-02-14 01:10:43,373:      pdf_renderer.py:  470: printSegment: l
+   DEBUG: 2026-02-14 01:10:43,373:      pdf_renderer.py:  470: printSegment: At least 8 screening camps conducted in 2025
+   DEBUG: 2026-02-14 01:10:43,373:      pdf_renderer.py:  470: printSegment: l
+   DEBUG: 2026-02-14 01:10:43,374:      pdf_renderer.py:  470: printSegment: 3,000 individuals screened by Q4 2025
+   DEBUG: 2026-02-14 01:10:43,374:      pdf_renderer.py:  470: printSegment: Action 23: Corporate Wellness Partnership Expansion
+   DEBUG: 2026-02-14 01:10:43,375:      pdf_renderer.py:  470: printSegment: Strategic Objective:
+   DEBUG: 2026-02-14 01:10:43,375:      pdf_renderer.py:  470: printSegment:  E — Community 
+   DEBUG: 2026-02-14 01:10:43,375:      pdf_renderer.py:  470: printSegment: &
+   DEBUG: 2026-02-14 01:10:43,376:      pdf_renderer.py:  470: printSegment:  Regional Health Expansion
+   DEBUG: 2026-02-14 01:10:43,376:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,376:      pdf_renderer.py:  470: printSegment: Description:
+   DEBUG: 2026-02-14 01:10:43,377:      pdf_renderer.py:  470: printSegment:  Expand the hospital
+   DEBUG: 2026-02-14 01:10:43,377:      pdf_renderer.py:  470: printSegment: '
+   DEBUG: 2026-02-14 01:10:43,390:      pdf_renderer.py:  470: printSegment: s corporate
+   DEBUG: 2026-02-14 01:10:43,402:      pdf_renderer.py:  470: printSegment: wellness client base from 12 to 20 employers, targeting the Negombo–Katunayake Free Trade Zone and hotel/tourism
+   DEBUG: 2026-02-14 01:10:43,407:      pdf_renderer.py:  470: printSegment: sector. Develop tiered wellness packages (basic health screening, executive health checks, on-site health education,
+   DEBUG: 2026-02-14 01:10:43,407:      pdf_renderer.py:  470: printSegment: mental health awareness workshops). Assign a dedicated corporate sales executive to manage relationships and drive
+   DEBUG: 2026-02-14 01:10:43,408:      pdf_renderer.py:  470: printSegment: uptake.
+   DEBUG: 2026-02-14 01:10:43,408:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,408:      pdf_renderer.py:  470: printSegment: Action Owner:
+   DEBUG: 2026-02-14 01:10:43,409:      pdf_renderer.py:  470: printSegment:  Marketing Director
+   DEBUG: 2026-02-14 01:10:43,409:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,409:      pdf_renderer.py:  470: printSegment: Timeline:
+   DEBUG: 2026-02-14 01:10:43,410:      pdf_renderer.py:  470: printSegment:  Q1–Q4 2025
+   DEBUG: 2026-02-14 01:10:43,410:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,410:      pdf_renderer.py:  470: printSegment: Budget Allocation:
+   DEBUG: 2026-02-14 01:10:43,411:      pdf_renderer.py:  470: printSegment:  LKR 7M (sales executive
+   DEBUG: 2026-02-14 01:10:43,412:      pdf_renderer.py:  470: printSegment: recruitment, marketing collateral, package development, client entertainment)
+   DEBUG: 2026-02-14 01:10:43,412:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,413:      pdf_renderer.py:  470: printSegment: Expected Outcome:
+   DEBUG: 2026-02-14 01:10:43,414:      pdf_renderer.py:  470: printSegment:  Increase
+   DEBUG: 2026-02-14 01:10:43,415:      pdf_renderer.py:  470: printSegment: corporate wellness partner base from 12 to 20, generating incremental screening and outpatient revenue.
+   DEBUG: 2026-02-14 01:10:43,415:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,416:      pdf_renderer.py:  470: printSegment: KPIs:
+   DEBUG: 2026-02-14 01:10:43,416:      pdf_renderer.py:  470: printSegment: l
+   DEBUG: 2026-02-14 01:10:43,417:      pdf_renderer.py:  470: printSegment: 8 new corporate partners signed by Q4 2025
+   DEBUG: 2026-02-14 01:10:43,417:      pdf_renderer.py:  470: printSegment: l
+   DEBUG: 2026-02-14 01:10:43,417:      pdf_renderer.py:  470: printSegment: Corporate wellness revenue increase of 30% year-on-year
+   DEBUG: 2026-02-14 01:10:43,418:      pdf_renderer.py:  470: printSegment: l
+   DEBUG: 2026-02-14 01:10:43,418:      pdf_renderer.py:  470: printSegment: At least 1,500 corporate employees screened in 2025
+   DEBUG: 2026-02-14 01:10:43,419:      pdf_renderer.py:  470: printSegment: Action 24: Executive Lounge Furniture 
+   DEBUG: 2026-02-14 01:10:43,419:      pdf_renderer.py:  470: printSegment: &
+   DEBUG: 2026-02-14 01:10:43,420:      pdf_renderer.py:  470: printSegment:  Premium Décor Upgrade
+   DEBUG: 2026-02-14 01:10:43,420:      pdf_renderer.py:  470: printSegment: Strategic Objective:
+   DEBUG: 2026-02-14 01:10:43,421:      pdf_renderer.py:  470: printSegment:  E — Community 
+   DEBUG: 2026-02-14 01:10:43,421:      pdf_renderer.py:  470: printSegment: &
+   DEBUG: 2026-02-14 01:10:43,422:      pdf_renderer.py:  470: printSegment:  Regional Health Expansion
+   DEBUG: 2026-02-14 01:10:43,422:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,423:      pdf_renderer.py:  470: printSegment: Description:
+   DEBUG: 2026-02-14 01:10:43,424:      pdf_renderer.py:  470: printSegment:  Procure and install premium-grade
+   DEBUG: 2026-02-14 01:10:43,424:      pdf_renderer.py:  470: printSegment: furniture and interior décor for the hospital
+   DEBUG: 2026-02-14 01:10:43,425:      pdf_renderer.py:  470: printSegment: '
+   DEBUG: 2026-02-14 01:10:43,437:      pdf_renderer.py:  470: printSegment: s executive patient lounge and VIP waiting area. The upgrade includes
+   DEBUG: 2026-02-14 01:10:43,444:      pdf_renderer.py:  470: printSegment: Italian designer seating, ambient lighting, a dedicated refreshment station with imported coffee machine, premium
+   DEBUG: 2026-02-14 01:10:43,446:      pdf_renderer.py:  470: printSegment: wall finishes, and curated artwork. The initiative aims to elevate the first impression for high-value patients,
+   DEBUG: 2026-02-14 01:10:43,446:      pdf_renderer.py:  470: printSegment: particularly international visitors and medical tourism clients.
+   DEBUG: 2026-02-14 01:10:43,447:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,447:      pdf_renderer.py:  470: printSegment: Action Owner:
+   DEBUG: 2026-02-14 01:10:43,448:      pdf_renderer.py:  470: printSegment:  Facilities 
+   DEBUG: 2026-02-14 01:10:43,448:      pdf_renderer.py:  470: printSegment: &
+   DEBUG: 2026-02-14 01:10:43,448:      pdf_renderer.py:  470: printSegment:  Projects Director
+   DEBUG: 2026-02-14 01:10:43,449:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,449:      pdf_renderer.py:  470: printSegment: Timeline:
+   DEBUG: 2026-02-14 01:10:43,450:      pdf_renderer.py:  470: printSegment:  Q2–Q3 2025
+   DEBUG: 2026-02-14 01:10:43,450:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,450:      pdf_renderer.py:  470: printSegment: Budget Allocation:
+   DEBUG: 2026-02-14 01:10:43,451:      pdf_renderer.py:  470: printSegment:  LKR 18M (furniture procurement, interior design consultancy, installation,
+   DEBUG: 2026-02-14 01:10:43,451:      pdf_renderer.py:  470: printSegment: artwork)
+   DEBUG: 2026-02-14 01:10:43,452:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,452:      pdf_renderer.py:  470: printSegment: Expected Outcome:
+   DEBUG: 2026-02-14 01:10:43,453:      pdf_renderer.py:  470: printSegment:  Fully upgraded executive lounge and VIP area projecting a premium, internationally
+   DEBUG: 2026-02-14 01:10:43,454:      pdf_renderer.py:  470: printSegment: competitive patient environment.
+   DEBUG: 2026-02-14 01:10:43,454:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,454:      pdf_renderer.py:  470: printSegment: KPIs:
+   DEBUG: 2026-02-14 01:10:43,455:      pdf_renderer.py:  470: printSegment: l
+   DEBUG: 2026-02-14 01:10:43,455:      pdf_renderer.py:  470: printSegment: Interior design concept approved by Q2 2025
+   DEBUG: 2026-02-14 01:10:43,456:      pdf_renderer.py:  470: printSegment: l
+   DEBUG: 2026-02-14 01:10:43,456:      pdf_renderer.py:  470: printSegment: Installation completed by end of Q3 2025
+   DEBUG: 2026-02-14 01:10:43,457:      pdf_renderer.py:  470: printSegment: l
+   DEBUG: 2026-02-14 01:10:43,457:      pdf_renderer.py:  470: printSegment: VIP patient satisfaction score improvement of 15%
+   DEBUG: 2026-02-14 01:10:43,458:      pdf_renderer.py:  470: printSegment: Action 25: Retail Pharmacy Outlet Expansion — Negombo Town Centre
+   DEBUG: 2026-02-14 01:10:43,458:      pdf_renderer.py:  470: printSegment: Strategic Objective:
+   DEBUG: 2026-02-14 01:10:43,459:      pdf_renderer.py:  470: printSegment:  E — Community 
+   DEBUG: 2026-02-14 01:10:43,459:      pdf_renderer.py:  470: printSegment: &
+   DEBUG: 2026-02-14 01:10:43,460:      pdf_renderer.py:  470: printSegment:  Regional Health Expansion
+   DEBUG: 2026-02-14 01:10:43,460:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,461:      pdf_renderer.py:  470: printSegment: Description:
+   DEBUG: 2026-02-14 01:10:43,478:      pdf_renderer.py:  470: printSegment:  Establish a standalone retail
+   DEBUG: 2026-02-14 01:10:43,492:      pdf_renderer.py:  470: printSegment: pharmacy outlet in Negombo town centre, separate from the hospital campus. The outlet will offer over-the-counter
+   DEBUG: 2026-02-14 01:10:43,499:      pdf_renderer.py:  470: printSegment: medications, prescription dispensing, basic medical supplies, and health and wellness retail products. The initiative
+   DEBUG: 2026-02-14 01:10:43,500:      pdf_renderer.py:  470: printSegment: leverages the Nawaloka brand for retail pharmaceutical sales and aims to increase community touchpoints and brand
+   DEBUG: 2026-02-14 01:10:43,501:      pdf_renderer.py:  470: printSegment: presence in the Negombo commercial district.
+   DEBUG: 2026-02-14 01:10:43,501:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,502:      pdf_renderer.py:  470: printSegment: Action Owner:
+   DEBUG: 2026-02-14 01:10:43,502:      pdf_renderer.py:  470: printSegment:  Finance Director (with Marketing Director)
+   DEBUG: 2026-02-14 01:10:43,503:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,503:      pdf_renderer.py:  470: printSegment: Timeline:
+   DEBUG: 2026-02-14 01:10:43,504:      pdf_renderer.py:  470: printSegment:  Q1–Q3 2025
+   DEBUG: 2026-02-14 01:10:43,504:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,505:      pdf_renderer.py:  470: printSegment: Budget Allocation:
+   DEBUG: 2026-02-14 01:10:43,505:      pdf_renderer.py:  470: printSegment:  LKR 25M (lease, fit-out, inventory, staffing, licensing, POS systems)
+   DEBUG: 2026-02-14 01:10:43,506:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,506:      pdf_renderer.py:  470: printSegment: Expected Outcome:
+   DEBUG: 2026-02-14 01:10:43,507:      pdf_renderer.py:  470: printSegment:  Operational retail pharmacy in Negombo town centre by Q3 2025, generating standalone retail
+   DEBUG: 2026-02-14 01:10:43,507:      pdf_renderer.py:  470: printSegment: revenue.
+   DEBUG: 2026-02-14 01:10:43,508:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,508:      pdf_renderer.py:  470: printSegment: KPIs:
+   DEBUG: 2026-02-14 01:10:43,508:      pdf_renderer.py:  470: printSegment: l
+   DEBUG: 2026-02-14 01:10:43,509:      pdf_renderer.py:  470: printSegment: Premises lease signed by Q1 2025
+   DEBUG: 2026-02-14 01:10:43,509:      pdf_renderer.py:  470: printSegment: l
+   DEBUG: 2026-02-14 01:10:43,509:      pdf_renderer.py:  470: printSegment: Pharmacy fit-out completed by Q2 2025
+   DEBUG: 2026-02-14 01:10:43,510:      pdf_renderer.py:  470: printSegment: l
+   DEBUG: 2026-02-14 01:10:43,510:      pdf_renderer.py:  470: printSegment: Monthly retail revenue target of LKR 3M achieved by Q4 2025
+   DEBUG: 2026-02-14 01:10:43,510:      pdf_renderer.py:  470: printSegment: 3. Summary Budget Table — 2025 Action Plan
+   DEBUG: 2026-02-14 01:10:43,511:      pdf_renderer.py:  470: printSegment: | # | Action | Strategic Obj. | Budget (LKR M) |
+   DEBUG: 2026-02-14 01:10:43,511:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,511:      pdf_renderer.py:  470: printSegment: |---|---|---|---|
+   DEBUG: 2026-02-14 01:10:43,512:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,512:      pdf_renderer.py:  470: printSegment: | 1 | Adjacent Land Acquisition Due Diligence | A | 35 |
+   DEBUG: 2026-02-14 01:10:43,512:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,513:      pdf_renderer.py:  470: printSegment: |
+   DEBUG: 2026-02-14 01:10:43,514:      pdf_renderer.py:  470: printSegment: 2 | Architectural Master Plan (150-Bed Expansion) | A | 28 |
+   DEBUG: 2026-02-14 01:10:43,514:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,514:      pdf_renderer.py:  470: printSegment: | 3 | Cardiac Cath Lab Feasibility 
+   DEBUG: 2026-02-14 01:10:43,515:      pdf_renderer.py:  470: printSegment: &
+   DEBUG: 2026-02-14 01:10:43,515:      pdf_renderer.py:  470: printSegment:  Equipment Spec | A
+   DEBUG: 2026-02-14 01:10:43,515:      pdf_renderer.py:  470: printSegment: | 12 |
+   DEBUG: 2026-02-14 01:10:43,515:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,516:      pdf_renderer.py:  470: printSegment: | 4 | Elderly Care Unit Pilot Programme Design | A | 8 |
+   DEBUG: 2026-02-14 01:10:43,516:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,517:      pdf_renderer.py:  470: printSegment: | 5 | Aesthetic Medicine Feasibility Study | A | 6 |
+   DEBUG: 2026-02-14 01:10:43,517:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,518:      pdf_renderer.py:  470: printSegment: | 6 |
+   DEBUG: 2026-02-14 01:10:43,518:      pdf_renderer.py:  470: printSegment: Fertility Centre Lab Upgrade Planning | A | 10 |
+   DEBUG: 2026-02-14 01:10:43,518:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,519:      pdf_renderer.py:  470: printSegment: | 7 | Nephrology Service Development Roadmap | A | 5 |
+   DEBUG: 2026-02-14 01:10:43,519:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,520:      pdf_renderer.py:  470: printSegment: | 8 |
+   DEBUG: 2026-02-14 01:10:43,520:      pdf_renderer.py:  470: printSegment: Administrative Office Refurbishment | A | 22 |
+   DEBUG: 2026-02-14 01:10:43,520:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,521:      pdf_renderer.py:  470: printSegment: | 9 | EHR Vendor Selection 
+   DEBUG: 2026-02-14 01:10:43,521:      pdf_renderer.py:  470: printSegment: &
+   DEBUG: 2026-02-14 01:10:43,521:      pdf_renderer.py:  470: printSegment:  Contract | B | 15 |
+   DEBUG: 2026-02-14 01:10:43,522:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,522:      pdf_renderer.py:  470: printSegment: | 10 | IT
+   DEBUG: 2026-02-14 01:10:43,522:      pdf_renderer.py:  470: printSegment: Infrastructure 
+   DEBUG: 2026-02-14 01:10:43,523:      pdf_renderer.py:  470: printSegment: &
+   DEBUG: 2026-02-14 01:10:43,523:      pdf_renderer.py:  470: printSegment:  Network Upgrade | B | 45 |
+   DEBUG: 2026-02-14 01:10:43,523:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,524:      pdf_renderer.py:  470: printSegment: | 11 | Telemedicine Platform Requirements | B | 8 |
+   DEBUG: 2026-02-14 01:10:43,524:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,524:      pdf_renderer.py:  470: printSegment: | 12 | Cybersecurity
+   DEBUG: 2026-02-14 01:10:43,525:      pdf_renderer.py:  470: printSegment: Assessment 
+   DEBUG: 2026-02-14 01:10:43,525:      pdf_renderer.py:  470: printSegment: &
+   DEBUG: 2026-02-14 01:10:43,525:      pdf_renderer.py:  470: printSegment:  Policy | B | 12 |
+   DEBUG: 2026-02-14 01:10:43,526:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,526:      pdf_renderer.py:  470: printSegment: | 13 | Ethics Review Committee Establishment | C | 3 |
+   DEBUG: 2026-02-14 01:10:43,526:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,527:      pdf_renderer.py:  470: printSegment: | 14 | University Research
+   DEBUG: 2026-02-14 01:10:43,528:      pdf_renderer.py:  470: printSegment: Partnership MOU | C | 4 |
+   DEBUG: 2026-02-14 01:10:43,528:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,528:      pdf_renderer.py:  470: printSegment: | 15 | Research Coordinator Appointment | C | 4 |
+   DEBUG: 2026-02-14 01:10:43,529:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,529:      pdf_renderer.py:  470: printSegment: | 16 | Specialist Clinician Recruitment
+   DEBUG: 2026-02-14 01:10:43,530:      pdf_renderer.py:  470: printSegment: Drive | D | 18 |
+   DEBUG: 2026-02-14 01:10:43,530:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,531:      pdf_renderer.py:  470: printSegment: | 17 | Nursing Workforce Expansion Planning | D | 15 |
+   DEBUG: 2026-02-14 01:10:43,531:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,531:      pdf_renderer.py:  470: printSegment: | 18 | CPD Programme Launch | D | 10 |
+   DEBUG: 2026-02-14 01:10:43,532:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,532:      pdf_renderer.py:  470: printSegment: | 19 |
+   DEBUG: 2026-02-14 01:10:43,533:      pdf_renderer.py:  470: printSegment: Staff Cricket Tournament 
+   DEBUG: 2026-02-14 01:10:43,533:      pdf_renderer.py:  470: printSegment: &
+   DEBUG: 2026-02-14 01:10:43,533:      pdf_renderer.py:  470: printSegment:  Sports Sponsorship | D | 8 |
+   DEBUG: 2026-02-14 01:10:43,534:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,534:      pdf_renderer.py:  470: printSegment: | 20 | Maldives Partnership Scoping | E | 14 |
+   DEBUG: 2026-02-14 01:10:43,534:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,535:      pdf_renderer.py:  470: printSegment: | 21 | Medical
+   DEBUG: 2026-02-14 01:10:43,536:      pdf_renderer.py:  470: printSegment: Tourism Concierge Unit Setup | E | 12 |
+   DEBUG: 2026-02-14 01:10:43,536:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,537:      pdf_renderer.py:  470: printSegment: | 22 | Community Health Screening Programme | E | 9 |
+   DEBUG: 2026-02-14 01:10:43,537:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,538:      pdf_renderer.py:  470: printSegment: | 23 | Corporate
+   DEBUG: 2026-02-14 01:10:43,538:      pdf_renderer.py:  470: printSegment: Wellness Partnership Expansion | E | 7 |
+   DEBUG: 2026-02-14 01:10:43,539:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,539:      pdf_renderer.py:  470: printSegment: | 24 | Executive Lounge Premium Furniture Upgrade | E | 18 |
+   DEBUG: 2026-02-14 01:10:43,539:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,540:      pdf_renderer.py:  470: printSegment: | 25 | Retail
+   DEBUG: 2026-02-14 01:10:43,541:      pdf_renderer.py:  470: printSegment: Pharmacy Outlet — Negombo Town | E | 25 |
+   DEBUG: 2026-02-14 01:10:43,541:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,542:      pdf_renderer.py:  470: printSegment: | | | | |
+   DEBUG: 2026-02-14 01:10:43,542:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,542:      pdf_renderer.py:  470: printSegment: | | 
+   DEBUG: 2026-02-14 01:10:43,543:      pdf_renderer.py:  470: printSegment: Total 2025 Action Plan Budget
+   DEBUG: 2026-02-14 01:10:43,543:      pdf_renderer.py:  470: printSegment:  | | 
+   DEBUG: 2026-02-14 01:10:43,543:      pdf_renderer.py:  470: printSegment: LKR 397M
+   DEBUG: 2026-02-14 01:10:43,544:      pdf_renderer.py:  470: printSegment:  |
+   DEBUG: 2026-02-14 01:10:43,561:      pdf_renderer.py:  470: printSegment: Note: The above budget represents action-specific allocations. The total operational budget for 2025 including BAU
+   DEBUG: 2026-02-14 01:10:43,570:      pdf_renderer.py:  470: printSegment: (business-as-usual) hospital operations, existing staff salaries, consumables, utilities, maintenance, and routine
+   DEBUG: 2026-02-14 01:10:43,574:      pdf_renderer.py:  470: printSegment: capital expenditure is estimated at LKR 985M. BAU operational expenditure of approximately LKR 588M is
+   DEBUG: 2026-02-14 01:10:43,575:      pdf_renderer.py:  470: printSegment: managed separately through departmental budgets and is not itemised in this Action Plan.
+   DEBUG: 2026-02-14 01:10:43,576:      pdf_renderer.py:  470: printSegment: 4. Budget Distribution by Strategic Objective
+   DEBUG: 2026-02-14 01:10:43,576:      pdf_renderer.py:  470: printSegment: | Strategic Objective | Number of Actions | Budget (LKR M) | % of Action Budget |
+   DEBUG: 2026-02-14 01:10:43,577:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,577:      pdf_renderer.py:  470: printSegment: |---|---|---|---|
+   DEBUG: 2026-02-14 01:10:43,577:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,578:      pdf_renderer.py:  470: printSegment: | A — Patient Care
+   DEBUG: 2026-02-14 01:10:43,579:      pdf_renderer.py:  470: printSegment: Excellence | 8 | 126 | 31.7% |
+   DEBUG: 2026-02-14 01:10:43,579:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,580:      pdf_renderer.py:  470: printSegment: | B — Digital Health Transformation | 4 | 80 | 20.2% |
+   DEBUG: 2026-02-14 01:10:43,580:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,580:      pdf_renderer.py:  470: printSegment: | C — Research 
+   DEBUG: 2026-02-14 01:10:43,581:      pdf_renderer.py:  470: printSegment: &
+   DEBUG: 2026-02-14 01:10:43,581:      pdf_renderer.py:  470: printSegment:  Innovation | 3 | 11 |
+   DEBUG: 2026-02-14 01:10:43,582:      pdf_renderer.py:  470: printSegment: 2.8% |
+   DEBUG: 2026-02-14 01:10:43,582:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,583:      pdf_renderer.py:  470: printSegment: | D — Workforce Development | 4 | 51 | 12.8% |
+   DEBUG: 2026-02-14 01:10:43,583:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,583:      pdf_renderer.py:  470: printSegment: | E — Community 
+   DEBUG: 2026-02-14 01:10:43,584:      pdf_renderer.py:  470: printSegment: &
+   DEBUG: 2026-02-14 01:10:43,584:      pdf_renderer.py:  470: printSegment:  Regional Health Expansion | 6 | 85 | 21.4% |
+   DEBUG: 2026-02-14 01:10:43,585:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,585:      pdf_renderer.py:  470: printSegment: | | | |
+   DEBUG: 2026-02-14 01:10:43,586:      pdf_renderer.py:  470: printSegment: |
+   DEBUG: 2026-02-14 01:10:43,586:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,586:      pdf_renderer.py:  470: printSegment: | 
+   DEBUG: 2026-02-14 01:10:43,587:      pdf_renderer.py:  470: printSegment: Total
+   DEBUG: 2026-02-14 01:10:43,587:      pdf_renderer.py:  470: printSegment:  | 
+   DEBUG: 2026-02-14 01:10:43,588:      pdf_renderer.py:  470: printSegment: 25
+   DEBUG: 2026-02-14 01:10:43,588:      pdf_renderer.py:  470: printSegment:  | 
+   DEBUG: 2026-02-14 01:10:43,588:      pdf_renderer.py:  470: printSegment: 397
+   DEBUG: 2026-02-14 01:10:43,589:      pdf_renderer.py:  470: printSegment:  | 
+   DEBUG: 2026-02-14 01:10:43,589:      pdf_renderer.py:  470: printSegment: 100%
+   DEBUG: 2026-02-14 01:10:43,590:      pdf_renderer.py:  470: printSegment:  |
+   DEBUG: 2026-02-14 01:10:43,591:      pdf_renderer.py:  470: printSegment: 5. Quarterly Milestone Summary
+   DEBUG: 2026-02-14 01:10:43,591:      pdf_renderer.py:  470: printSegment: | Quarter | Key Milestones |
+   DEBUG: 2026-02-14 01:10:43,591:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,592:      pdf_renderer.py:  470: printSegment: |---|---|
+   DEBUG: 2026-02-14 01:10:43,592:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,593:      pdf_renderer.py:  470: printSegment: | 
+   DEBUG: 2026-02-14 01:10:43,593:      pdf_renderer.py:  470: printSegment: Q1 2025
+   DEBUG: 2026-02-14 01:10:43,598:      pdf_renderer.py:  470: printSegment:  | Land due diligence commenced. Architect engaged. EHR RFP
+   DEBUG: 2026-02-14 01:10:43,600:      pdf_renderer.py:  470: printSegment: issued. ERC membership finalised. CPD framework approved. Cybersecurity audit initiated. Pharmacy lease signed.
+   DEBUG: 2026-02-14 01:10:43,601:      pdf_renderer.py:  470: printSegment: Research Coordinator advertised. Maldives scoping initiated. |
+   DEBUG: 2026-02-14 01:10:43,601:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,602:      pdf_renderer.py:  470: printSegment: | 
+   DEBUG: 2026-02-14 01:10:43,602:      pdf_renderer.py:  470: printSegment: Q2 2025
+   DEBUG: 2026-02-14 01:10:43,613:      pdf_renderer.py:  470: printSegment:  | Land valuation completed. Preliminary
+   DEBUG: 2026-02-14 01:10:43,621:      pdf_renderer.py:  470: printSegment: expansion design submitted. EHR vendor shortlist finalised. Telemedicine requirements defined. Aesthetic medicine
+   DEBUG: 2026-02-14 01:10:43,624:      pdf_renderer.py:  470: printSegment: market study completed. Community screening programme launched. Medical tourism coordinator appointed. Hotel
+   DEBUG: 2026-02-14 01:10:43,625:      pdf_renderer.py:  470: printSegment: partnerships negotiated. Cricket tournament planning commenced. Retail pharmacy fit-out underway. |
+   DEBUG: 2026-02-14 01:10:43,626:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,626:      pdf_renderer.py:  470: printSegment: | 
+   DEBUG: 2026-02-14 01:10:43,626:      pdf_renderer.py:  470: printSegment: Q3 2025
+   DEBUG: 2026-02-14 01:10:43,636:      pdf_renderer.py:  470: printSegment:  |
+   DEBUG: 2026-02-14 01:10:43,645:      pdf_renderer.py:  470: printSegment: Environmental clearance obtained. Master plan finalised. Cardiac lab feasibility submitted. ERC operational.
+   DEBUG: 2026-02-14 01:10:43,648:      pdf_renderer.py:  470: printSegment: University MOU signed. Cybersecurity policy approved. Corporate wellness partners at 18. Administrative
+   DEBUG: 2026-02-14 01:10:43,649:      pdf_renderer.py:  470: printSegment: refurbishment completed. Executive lounge upgrade completed. Pharmacy operational. Screening camps in
+   DEBUG: 2026-02-14 01:10:43,650:      pdf_renderer.py:  470: printSegment: progress. |
+   DEBUG: 2026-02-14 01:10:43,650:      pdf_renderer.py:  470: printSegment:  
+   DEBUG: 2026-02-14 01:10:43,651:      pdf_renderer.py:  470: printSegment: | 
+   DEBUG: 2026-02-14 01:10:43,651:      pdf_renderer.py:  470: printSegment: Q4 2025
+   DEBUG: 2026-02-14 01:10:43,662:      pdf_renderer.py:  470: printSegment:  | Board approval for land acquisition. EHR contract signed. 5 specialist offers extended. 15
+   DEBUG: 2026-02-14 01:10:43,667:      pdf_renderer.py:  470: printSegment: nursing offers extended. Maldives partnership MOU signed. Elderly care model documented. Nephrology roadmap
+   DEBUG: 2026-02-14 01:10:43,669:      pdf_renderer.py:  470: printSegment: approved. Fertility upgrade plan completed. Medical tourism unit operational. Telemedicine vendor shortlisted.
+   DEBUG: 2026-02-14 01:10:43,670:      pdf_renderer.py:  470: printSegment: 3,000 community members screened. |
+   DEBUG: 2026-02-14 01:10:43,671:      pdf_renderer.py:  470: printSegment: 6. Governance 
+   DEBUG: 2026-02-14 01:10:43,671:      pdf_renderer.py:  470: printSegment: &
+   DEBUG: 2026-02-14 01:10:43,671:      pdf_renderer.py:  470: printSegment:  Monitoring
+   DEBUG: 2026-02-14 01:10:43,672:      pdf_renderer.py:  470: printSegment: l
+   DEBUG: 2026-02-14 01:10:43,672:      pdf_renderer.py:  470: printSegment: Monthly Review:
+   DEBUG: 2026-02-14 01:10:43,673:      pdf_renderer.py:  470: printSegment:  Senior Leadership Team reviews action progress against milestones and budget
+   DEBUG: 2026-02-14 01:10:43,673:      pdf_renderer.py:  470: printSegment: utilisation.
+   DEBUG: 2026-02-14 01:10:43,673:      pdf_renderer.py:  470: printSegment: l
+   DEBUG: 2026-02-14 01:10:43,674:      pdf_renderer.py:  470: printSegment: Quarterly Board Report:
+   DEBUG: 2026-02-14 01:10:43,676:      pdf_renderer.py:  470: printSegment:  Consolidated progress report presented to the Board of Directors,
+   DEBUG: 2026-02-14 01:10:43,676:      pdf_renderer.py:  470: printSegment: including KPI dashboards, risk register updates, and budget variance analysis.
+   DEBUG: 2026-02-14 01:10:43,676:      pdf_renderer.py:  470: printSegment: l
+   DEBUG: 2026-02-14 01:10:43,677:      pdf_renderer.py:  470: printSegment: Mid-Year Review (Q2):
+   DEBUG: 2026-02-14 01:10:43,678:      pdf_renderer.py:  470: printSegment:  Formal mid-year evaluation with authority to reallocate budgets between
+   DEBUG: 2026-02-14 01:10:43,679:      pdf_renderer.py:  470: printSegment: actions based on progress and emerging priorities.
+   DEBUG: 2026-02-14 01:10:43,679:      pdf_renderer.py:  470: printSegment: l
+   DEBUG: 2026-02-14 01:10:43,679:      pdf_renderer.py:  470: printSegment: Year-End Assessment (Q4):
+   DEBUG: 2026-02-14 01:10:43,680:      pdf_renderer.py:  470: printSegment:  Comprehensive annual review to evaluate 2025 outcomes and confirm
+   DEBUG: 2026-02-14 01:10:43,681:      pdf_renderer.py:  470: printSegment: readiness for 2026 Strategic Plan execution.
+   DEBUG: 2026-02-14 01:10:43,681:      pdf_renderer.py:  470: printSegment: — End of Action Plan —
+   DEBUG: 2026-02-14 01:10:43,690:      pdf_renderer.py:  470: printSegment: This document is the property of Nawaloka Hospital Negombo and the Nawaloka Medicare Group. Distribution is
+   DEBUG: 2026-02-14 01:10:43,691:      pdf_renderer.py:  470: printSegment: restricted to authorised personnel. For queries, contact the Office of the Chief Executive Officer.
+   DEBUG: 2026-02-14 01:10:43,691:      pdf_renderer.py:   53: 0, [1, 'Nawaloka Hospital Negombo — Annual Action Plan 2025', 1, 68.0]
+   DEBUG: 2026-02-14 01:10:43,691:      pdf_renderer.py:   53: 1, [2, '1. Introduction ', 1, 178.0]
+   DEBUG: 2026-02-14 01:10:43,691:      pdf_renderer.py:   53: 2, [2, '2. Action Plan by Strategic Objective', 1, 427.6]
+   DEBUG: 2026-02-14 01:10:43,691:      pdf_renderer.py:   53: 3, [3, 'Strategic Objective A: Patient Care Excellence', 1, 472.8]
+   DEBUG: 2026-02-14 01:10:43,691:      pdf_renderer.py:   53: 4, [4, 'Action 1: Adjacent Land Acquisition Due Diligence ', 1, 513.2]
+   DEBUG: 2026-02-14 01:10:43,691:      pdf_renderer.py:   53: 5, [4, 'Action 2: Architectural Master Plan for 150-Bed Expansion', 1, 699.2]
+   DEBUG: 2026-02-14 01:10:43,691:      pdf_renderer.py:   53: 6, [4, 'Action 3: Cardiac Catheterisation Laboratory Feasibility ', 2, 248.0]
+   DEBUG: 2026-02-14 01:10:43,691:      pdf_renderer.py:   53: 7, [4, 'Action 4: Elderly Care Unit Pilot Programme Design', 2, 434.0]
+   DEBUG: 2026-02-14 01:10:43,691:      pdf_renderer.py:   53: 8, [4, 'Action 5: Aesthetic ', 2, 608.0]
+   DEBUG: 2026-02-14 01:10:43,691:      pdf_renderer.py:   53: 9, [4, 'Action 6: Fertility Centre Laboratory Upgrade Planning', 3, 146.0]
+   DEBUG: 2026-02-14 01:10:43,691:      pdf_renderer.py:   53: 10, [4, 'Action 7: Nephrology Service Development Roadmap', 3, 332.0]
+   DEBUG: 2026-02-14 01:10:43,691:      pdf_renderer.py:   53: 11, [4, 'Action 8: Administrative Office Refurbishment Programme', 3, 506.0]
+   DEBUG: 2026-02-14 01:10:43,691:      pdf_renderer.py:   53: 12, [3, 'Strategic Objective B: Digital Health Transformation', 3, 692.4]
+   DEBUG: 2026-02-14 01:10:43,691:      pdf_renderer.py:   53: 13, [4, 'Action 9: EHR Vendor Selection ', 4, 74.0]
+   DEBUG: 2026-02-14 01:10:43,691:      pdf_renderer.py:   53: 14, [4, 'Action 10: IT Infrastructure Assessment ', 4, 260.0]
+   DEBUG: 2026-02-14 01:10:43,691:      pdf_renderer.py:   53: 15, [4, 'Action 11: Telemedicine Platform Requirements ', 4, 446.0]
+   DEBUG: 2026-02-14 01:10:43,691:      pdf_renderer.py:   53: 16, [4, 'Action 12: Cybersecurity Baseline Assessment ', 4, 632.0]
+   DEBUG: 2026-02-14 01:10:43,691:      pdf_renderer.py:   53: 17, [3, 'Strategic Objective C: Research ', 5, 182.4]
+   DEBUG: 2026-02-14 01:10:43,692:      pdf_renderer.py:   53: 18, [4, 'Action 13: Establishment of Ethics Review Committee', 5, 222.8]
+   DEBUG: 2026-02-14 01:10:43,692:      pdf_renderer.py:   53: 19, [4, 'Action 14: University Research Partnership MOU', 5, 396.8]
+   DEBUG: 2026-02-14 01:10:43,692:      pdf_renderer.py:   53: 20, [4, 'Action 15: Appointment of Research Coordinator', 5, 582.8]
+   DEBUG: 2026-02-14 01:10:43,692:      pdf_renderer.py:   53: 21, [3, 'Strategic Objective D: Workforce Development', 6, 128.4]
+   DEBUG: 2026-02-14 01:10:43,692:      pdf_renderer.py:   53: 22, [4, 'Action 16: Specialist Clinician Recruitment Drive', 6, 168.8]
+   DEBUG: 2026-02-14 01:10:43,692:      pdf_renderer.py:   53: 23, [4, 'Action 17: Nursing Workforce Expansion Planning', 6, 354.8]
+   DEBUG: 2026-02-14 01:10:43,692:      pdf_renderer.py:   53: 24, [4, 'Action 18: Continuing Professional Development (CPD) Programme Launch', 6, 540.8]
+   DEBUG: 2026-02-14 01:10:43,692:      pdf_renderer.py:   53: 25, [4, 'Action 19: Annual Staff Cricket Tournament ', 7, 74.0]
+   DEBUG: 2026-02-14 01:10:43,692:      pdf_renderer.py:   53: 26, [3, 'Strategic Objective E: Community ', 7, 284.4]
+   DEBUG: 2026-02-14 01:10:43,692:      pdf_renderer.py:   53: 27, [4, 'Action 20: Maldives Partnership Scoping ', 7, 324.79999999999995]
+   DEBUG: 2026-02-14 01:10:43,692:      pdf_renderer.py:   53: 28, [4, 'Action 21: Medical Tourism Concierge Unit Setup', 7, 510.79999999999995]
+   DEBUG: 2026-02-14 01:10:43,692:      pdf_renderer.py:   53: 29, [4, 'Action 22: Community Preventive Health Screening Programme — Negombo Division', 7, 708.8]
+   DEBUG: 2026-02-14 01:10:43,692:      pdf_renderer.py:   53: 30, [4, 'Action 23: Corporate Wellness Partnership Expansion', 8, 260.0]
+   DEBUG: 2026-02-14 01:10:43,692:      pdf_renderer.py:   53: 31, [4, 'Action 24: Executive Lounge Furniture ', 8, 434.0]
+   DEBUG: 2026-02-14 01:10:43,692:      pdf_renderer.py:   53: 32, [4, 'Action 25: Retail Pharmacy Outlet Expansion — Negombo Town Centre', 8, 620.0]
+   DEBUG: 2026-02-14 01:10:43,692:      pdf_renderer.py:   53: 33, [2, '3. Summary Budget Table — 2025 Action Plan', 9, 158.8]
+   DEBUG: 2026-02-14 01:10:43,692:      pdf_renderer.py:   53: 34, [2, '4. Budget Distribution by Strategic Objective', 9, 420.40000000000003]
+   DEBUG: 2026-02-14 01:10:43,692:      pdf_renderer.py:   53: 35, [2, '5. Quarterly Milestone Summary', 9, 520.0]
+   DEBUG: 2026-02-14 01:10:43,692:      pdf_renderer.py:   53: 36, [2, '6. Governance ', 10, 70.0]

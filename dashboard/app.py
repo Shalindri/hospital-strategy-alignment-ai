@@ -16,6 +16,7 @@ Created: 2025-01
 
 from __future__ import annotations
 
+import json
 from pathlib import Path
 from typing import Any
 
@@ -193,7 +194,7 @@ def page_home(data: dict) -> None:
                          color_discrete_map=colours)
             fig.update_layout(showlegend=False, height=300,
                               margin=dict(t=20, b=20))
-            st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig, width='stretch')
 
     with col2:
         st.subheader("Budget by Objective")
@@ -209,7 +210,7 @@ def page_home(data: dict) -> None:
             fig = px.pie(df_budget, names="Objective", values="Budget (LKR M)",
                          color_discrete_sequence=px.colors.qualitative.Set2)
             fig.update_layout(height=300, margin=dict(t=20, b=20))
-            st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig, width='stretch')
 
     # Project overview
     st.subheader("About This System")
@@ -263,7 +264,7 @@ def page_sync_analysis(data: dict) -> None:
             },
         ))
         fig.update_layout(height=280, margin=dict(t=40, b=20, l=30, r=30))
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width='stretch')
 
     with col2:
         st.subheader("Strategy-wise Alignment")
@@ -282,7 +283,7 @@ def page_sync_analysis(data: dict) -> None:
             fig.update_layout(height=280, margin=dict(t=20, b=20),
                               yaxis_title="Cosine Similarity",
                               legend=dict(orientation="h", y=1.1))
-            st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig, width='stretch')
 
     st.divider()
 
@@ -312,7 +313,7 @@ def page_sync_analysis(data: dict) -> None:
             xaxis_title="Action Items",
             yaxis_title="Strategic Objectives",
         )
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width='stretch')
 
     # Distribution histogram
     col1, col2 = st.columns(2)
@@ -328,7 +329,7 @@ def page_sync_analysis(data: dict) -> None:
             fig.add_vline(x=0.60, line_dash="dash", line_color="green",
                           annotation_text="Good threshold")
             fig.update_layout(height=300, margin=dict(t=20, b=20))
-            st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig, width='stretch')
 
     with col2:
         st.subheader("Action Alignment Details")
@@ -342,7 +343,7 @@ def page_sync_analysis(data: dict) -> None:
                 "Class": a["classification"],
                 "Orphan": "Yes" if a["is_orphan"] else "",
             } for a in action_data])
-            st.dataframe(df_actions, use_container_width=True, height=300,
+            st.dataframe(df_actions, width='stretch', height=300,
                          hide_index=True)
 
 
@@ -443,7 +444,7 @@ def page_recommendations(data: dict) -> None:
                 "Score": w.get("best_score", 0),
                 "Note": w.get("note", "")[:60],
             } for w in weak])
-            st.dataframe(df_weak, use_container_width=True, hide_index=True)
+            st.dataframe(df_weak, width='stretch', hide_index=True)
 
 
 # ═══════════════════════════════════════════════════════════════════════
@@ -596,7 +597,7 @@ def page_knowledge_graph(data: dict) -> None:
         yaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
         margin=dict(t=20, b=40, l=20, r=20),
     )
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, width='stretch')
 
     # Bridge nodes and suggestions
     col1, col2 = st.columns(2)
@@ -719,7 +720,7 @@ def page_ontology(data: dict) -> None:
                 color_continuous_scale=["#FFCDD2", "#C8E6C9", "#1B5E20"],
             )
             fig.update_layout(height=400, margin=dict(t=10, b=10))
-            st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig, width='stretch')
 
 
 # ═══════════════════════════════════════════════════════════════════════
@@ -763,7 +764,7 @@ def page_agent_insights(data: dict) -> None:
             "Objectives": ", ".join(i.get("affected_objectives", [])),
             "Addressed": "Yes" if i.get("addressed") else "",
         } for i in issues])
-        st.dataframe(df_issues, use_container_width=True, hide_index=True)
+        st.dataframe(df_issues, width='stretch', hide_index=True)
 
     st.divider()
 
@@ -919,7 +920,7 @@ def page_evaluation(data: dict) -> None:
             "F1": "{:.2%}",
             "Accuracy": "{:.2%}",
         }),
-        use_container_width=True,
+        width='stretch',
         hide_index=True,
     )
 
@@ -940,7 +941,7 @@ def page_evaluation(data: dict) -> None:
             xaxis_tickangle=-30,
             yaxis_title="Score",
         )
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width='stretch')
 
     with col2:
         # Confusion matrix for best method
@@ -960,7 +961,7 @@ def page_evaluation(data: dict) -> None:
             showscale=False,
         ))
         fig.update_layout(height=300, margin=dict(t=20, b=20))
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width='stretch')
 
     # Detection details
     st.divider()
@@ -979,7 +980,7 @@ def page_evaluation(data: dict) -> None:
             "Best Match": m["best_objective"],
             "Best Score": f"{m['best_score']:.3f}",
         } for m in misaligned_details])
-        st.dataframe(df_mis, use_container_width=True, hide_index=True)
+        st.dataframe(df_mis, width='stretch', hide_index=True)
 
 
 # ═══════════════════════════════════════════════════════════════════════
@@ -1066,6 +1067,7 @@ def main() -> None:
                 "Ontology Browser",
                 "Agent Insights",
                 "Evaluation Metrics",
+                "Upload & Analyze",
             ],
             label_visibility="collapsed",
         )
@@ -1129,6 +1131,262 @@ def main() -> None:
         page_agent_insights(data)
     elif page == "Evaluation Metrics":
         page_evaluation(data)
+    elif page == "Upload & Analyze":
+        page_upload_analyze()
+
+
+# ═══════════════════════════════════════════════════════════════════════
+# Page: Upload & Analyze
+# ═══════════════════════════════════════════════════════════════════════
+
+def page_upload_analyze() -> None:
+    """Upload PDF documents and run dynamic alignment analysis."""
+    st.title("Upload & Analyze")
+    st.markdown(
+        "Upload your own **Strategic Plan** and **Action Plan** as PDF files "
+        "to get alignment scores and insights. The system uses AI to extract "
+        "objectives and actions, then computes semantic alignment."
+    )
+
+    # Check Ollama availability
+    from src.pdf_processor import check_ollama_available
+    ollama_ok = check_ollama_available()
+
+    if not ollama_ok:
+        st.error(
+            "Ollama is not running or `llama3.1:8b` model is not available. "
+            "Start Ollama with `ollama serve` and pull the model with "
+            "`ollama pull llama3.1:8b` before uploading files."
+        )
+        return
+
+    st.success("Ollama is running and ready.")
+
+    # File uploaders
+    col1, col2 = st.columns(2)
+    with col1:
+        st.subheader("Strategic Plan")
+        strategic_file = st.file_uploader(
+            "Upload Strategic Plan (PDF)",
+            type=["pdf"],
+            key="strategic_pdf",
+            help="The multi-year strategic plan with objectives, goals, and KPIs.",
+        )
+        if strategic_file:
+            st.caption(f"Uploaded: {strategic_file.name} ({strategic_file.size / 1024:.0f} KB)")
+
+    with col2:
+        st.subheader("Action Plan")
+        action_file = st.file_uploader(
+            "Upload Action Plan (PDF)",
+            type=["pdf"],
+            key="action_pdf",
+            help="The annual action plan with specific actions mapped to objectives.",
+        )
+        if action_file:
+            st.caption(f"Uploaded: {action_file.name} ({action_file.size / 1024:.0f} KB)")
+
+    # Analyze button
+    if strategic_file and action_file:
+        if st.button("Run Alignment Analysis", type="primary", width='stretch'):
+            _run_upload_analysis(strategic_file, action_file)
+
+    # Display results if available in session state
+    if "upload_report" in st.session_state:
+        _display_upload_results(st.session_state["upload_report"])
+
+
+def _run_upload_analysis(strategic_file, action_file) -> None:
+    """Process uploaded PDFs and run alignment analysis."""
+    from src.pdf_processor import (
+        extract_strategic_plan_from_pdf,
+        extract_action_plan_from_pdf,
+    )
+    from src.dynamic_analyzer import run_dynamic_analysis
+
+    progress = st.progress(0, text="Reading PDFs...")
+
+    try:
+        # Step 1: Extract text and parse strategic plan
+        progress.progress(10, text="Extracting strategic plan with AI...")
+        strategic_bytes = strategic_file.read()
+        strategic_data = extract_strategic_plan_from_pdf(strategic_bytes)
+        n_obj = len(strategic_data.get("objectives", []))
+        progress.progress(35, text=f"Found {n_obj} strategic objectives.")
+
+        # Step 2: Extract text and parse action plan
+        progress.progress(40, text="Extracting action plan with AI...")
+        action_bytes = action_file.read()
+        action_data = extract_action_plan_from_pdf(action_bytes)
+        n_act = len(action_data.get("actions", []))
+        progress.progress(65, text=f"Found {n_act} action items.")
+
+        # Step 3: Run alignment analysis
+        progress.progress(70, text="Computing semantic embeddings...")
+        report = run_dynamic_analysis(strategic_data, action_data)
+        progress.progress(100, text="Analysis complete!")
+
+        # Store in session state
+        st.session_state["upload_report"] = report
+        st.rerun()
+
+    except ValueError as e:
+        st.error(f"Parsing error: {e}")
+    except ConnectionError:
+        st.error("Cannot connect to Ollama. Make sure it is running.")
+    except Exception as e:
+        st.error(f"Analysis failed: {e}")
+
+
+def _display_upload_results(report: dict) -> None:
+    """Render the alignment analysis results from uploaded documents."""
+    st.divider()
+    st.header("Analysis Results")
+
+    # Summary metrics
+    cols = st.columns(4)
+    with cols[0]:
+        st.metric("Overall Score", f"{report['overall_score']:.3f}")
+    with cols[1]:
+        st.metric("Classification", report["overall_classification"])
+    with cols[2]:
+        st.metric("Objectives", len(report["objective_alignments"]))
+    with cols[3]:
+        st.metric("Actions", len(report["action_alignments"]))
+
+    # Distribution
+    dist = report["distribution"]
+    dist_cols = st.columns(4)
+    colours = {"Excellent": "#2ecc71", "Good": "#27ae60", "Fair": "#f39c12", "Poor": "#e74c3c"}
+    for i, (cls, count) in enumerate(dist.items()):
+        with dist_cols[i]:
+            st.markdown(
+                f"<div style='text-align:center; padding:8px; "
+                f"background:{colours[cls]}22; border-radius:8px;'>"
+                f"<b>{cls}</b><br><span style='font-size:24px;'>{count}</span></div>",
+                unsafe_allow_html=True,
+            )
+
+    # Alignment heatmap
+    st.subheader("Alignment Heatmap")
+    matrix = report["alignment_matrix"]
+    row_labels = [
+        f"{code}: {oa['name']}"
+        for code, oa in zip(report["matrix_row_labels"], report["objective_alignments"])
+    ]
+    col_labels = [f"Action {n}" for n in report["matrix_col_labels"]]
+
+    fig = go.Figure(data=go.Heatmap(
+        z=matrix,
+        x=col_labels,
+        y=row_labels,
+        colorscale="RdYlGn",
+        zmin=0, zmax=1,
+        text=[[f"{v:.2f}" for v in row] for row in matrix],
+        texttemplate="%{text}",
+        textfont={"size": 9},
+        hovertemplate="Objective: %{y}<br>Action: %{x}<br>Similarity: %{z:.3f}<extra></extra>",
+    ))
+    fig.update_layout(
+        height=max(300, len(row_labels) * 60),
+        margin=dict(l=10, r=10, t=30, b=10),
+        xaxis_title="Actions",
+        yaxis_title="Strategic Objectives",
+    )
+    st.plotly_chart(fig, width='stretch')
+
+    # Per-objective breakdown
+    st.subheader("Per-Objective Alignment")
+    for oa in report["objective_alignments"]:
+        with st.expander(
+            f"[{oa['code']}] {oa['name']} — "
+            f"Mean: {oa['mean_similarity']:.3f} | "
+            f"Max: {oa['max_similarity']:.3f} | "
+            f"Coverage: {oa['coverage_score']:.0%}",
+            expanded=False,
+        ):
+            c1, c2, c3 = st.columns(3)
+            with c1:
+                st.metric("Aligned Actions", oa["aligned_action_count"])
+            with c2:
+                st.metric("Declared Actions", oa["declared_action_count"])
+            with c3:
+                st.metric("Gap Actions", len(oa["gap_actions"]))
+
+            if oa["top_actions"]:
+                st.markdown("**Top-5 Actions:**")
+                for act_num, sim in oa["top_actions"]:
+                    act_info = next(
+                        (a for a in report["action_alignments"]
+                         if a["action_number"] == act_num), {}
+                    )
+                    title = act_info.get("title", f"Action {act_num}")
+                    st.markdown(f"- Action {act_num}: {title} (sim={sim:.3f})")
+
+    # Per-action table
+    st.subheader("Per-Action Alignment")
+    action_rows = []
+    for a in report["action_alignments"]:
+        action_rows.append({
+            "#": a["action_number"],
+            "Title": a["title"][:50],
+            "Declared": a["declared_objective"],
+            "Best Fit": a["best_objective"],
+            "Score": a["best_score"],
+            "Class": a["classification"],
+            "Match": "Yes" if a["declared_match"] else "No",
+            "Orphan": "Yes" if a["is_orphan"] else "",
+        })
+
+    df = pd.DataFrame(action_rows)
+    st.dataframe(
+        df.style.apply(
+            lambda row: [
+                "background-color: #ffcccc" if row["Class"] == "Poor"
+                else "background-color: #ccffcc" if row["Class"] in ("Good", "Excellent")
+                else ""
+            ] * len(row),
+            axis=1,
+        ),
+        width='stretch',
+        hide_index=True,
+    )
+
+    # Orphan and mismatch warnings
+    if report["orphan_actions"]:
+        st.warning(
+            f"**Orphan Actions** (no strategic alignment): "
+            f"{report['orphan_actions']}"
+        )
+
+    if report["mismatched_actions"]:
+        st.info(
+            f"**Declaration Mismatches** ({len(report['mismatched_actions'])} actions): "
+            "These actions are semantically better aligned to a different objective "
+            "than their declared one."
+        )
+        for m in report["mismatched_actions"]:
+            st.markdown(
+                f"- **Action {m['action_number']}** ({m['title'][:40]}): "
+                f"Declared={m['declared_objective']}, "
+                f"Best fit={m['best_objective']} (score={m['best_score']:.3f})"
+            )
+
+    # Download results
+    st.divider()
+    results_json = {k: v for k, v in report.items()
+                    if k not in ("strategic_data", "action_data")}
+    st.download_button(
+        label="Download Results (JSON)",
+        data=json.dumps(results_json, indent=2),
+        file_name="upload_alignment_report.json",
+        mime="application/json",
+    )
+
+    # Clear button
+    if st.button("Clear Results"):
+        del st.session_state["upload_report"]
+        st.rerun()
 
 
 if __name__ == "__main__":

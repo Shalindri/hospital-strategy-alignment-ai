@@ -25,42 +25,45 @@ import streamlit as st
 from dashboard.utils import format_llm_response, generate_pdf_report
 
 # ---------------------------------------------------------------------------
-# Custom CSS — hide sidebar completely
+# Custom CSS
 # ---------------------------------------------------------------------------
 CUSTOM_CSS = """
 <style>
-    /* Hide sidebar entirely */
+    /* Hide sidebar */
     [data-testid="stSidebar"] { display: none !important; }
     [data-testid="stSidebarNav"] { display: none !important; }
     [data-testid="collapsedControl"] { display: none !important; }
 
-    /* Healthcare blue/green theme */
+    /* Theme */
     :root {
         --primary: #1565C0;
         --primary-light: #42A5F5;
         --secondary: #2E7D32;
-        --secondary-light: #66BB6A;
         --accent: #FF8F00;
         --bg-card: #F8FAFB;
         --text-dark: #1A237E;
     }
-    .main .block-container { max-width: 1200px; padding-top: 1.5rem; }
-    h1 { color: var(--primary) !important; }
+    .main .block-container { max-width: 1500px; padding-top: 0rem; }
+    h1 { color: var(--primary) !important; font-size: 1.6rem !important; }
     h2, h3 { color: var(--text-dark) !important; }
+
+    /* Compact upload column */
+    [data-testid="stFileUploader"] label p { font-size: 0.78rem !important; }
+    [data-testid="stFileUploader"] section { padding: 0.3rem !important; }
 
     /* Metric cards */
     .metric-card {
         background: linear-gradient(135deg, #E3F2FD 0%, #F1F8E9 100%);
         border-left: 4px solid var(--primary);
         border-radius: 8px;
-        padding: 1rem 1.2rem;
-        margin-bottom: 0.5rem;
+        padding: 0.5rem 0.8rem;
+        margin-bottom: 0.4rem;
     }
-    .metric-card h4 { margin: 0 0 0.3rem 0; color: var(--primary); font-size: 0.85rem; }
-    .metric-card .value { font-size: 1.8rem; font-weight: 700; color: var(--text-dark); }
-    .metric-card .sub { font-size: 0.75rem; color: #666; }
+    .metric-card h4 { margin: 0 0 0.1rem 0; color: var(--primary); font-size: 0.72rem; }
+    .metric-card .value { font-size: 1.3rem; font-weight: 700; color: var(--text-dark); }
+    .metric-card .sub { font-size: 0.68rem; color: #666; }
 
-    /* Issue badges */
+    /* Badges */
     .badge-orphan  { background: #FFCDD2; color: #B71C1C; padding: 2px 8px; border-radius: 12px; font-size: 0.75rem; }
     .badge-weak    { background: #FFE0B2; color: #E65100; padding: 2px 8px; border-radius: 12px; font-size: 0.75rem; }
     .badge-gap     { background: #E1BEE7; color: #6A1B9A; padding: 2px 8px; border-radius: 12px; font-size: 0.75rem; }
@@ -78,10 +81,86 @@ CUSTOM_CSS = """
         border-radius: 0 8px 8px 0;
     }
 
-    /* Loading indicator */
-    .stSpinner > div { border-color: var(--primary) !important; }
+    /* ── Stepper progress bar ── */
+    .stepper { display: flex; align-items: flex-start; justify-content: space-between; padding: 0.8rem 0; }
+    .stepper .step { flex: 1; text-align: center; position: relative; }
+    .stepper .step .circle {
+        width: 30px; height: 30px; border-radius: 50%;
+        background: #E0E0E0; color: #999;
+        display: inline-flex; align-items: center; justify-content: center;
+        font-size: 0.75rem; font-weight: 700;
+        border: 2px solid #BDBDBD;
+        transition: all 0.3s;
+        position: relative; z-index: 2;
+    }
+    .stepper .step .label { font-size: 0.65rem; color: #888; margin-top: 4px; line-height: 1.1; }
+    /* Connector line between circles */
+    .stepper .step:not(:last-child)::after {
+        content: ''; position: absolute; top: 15px;
+        left: calc(50% + 18px); right: calc(-50% + 18px);
+        height: 3px; background: #E0E0E0; z-index: 1;
+    }
+    /* Active step */
+    .stepper .step.active .circle {
+        background: #FFF9C4; color: #F57F17;
+        border-color: #F57F17;
+        box-shadow: 0 0 0 3px rgba(245,127,23,0.2);
+        animation: pulse 1.5s infinite;
+    }
+    .stepper .step.active .label { color: #F57F17; font-weight: 600; }
+    @keyframes pulse { 0%,100% { box-shadow: 0 0 0 3px rgba(245,127,23,0.2); } 50% { box-shadow: 0 0 0 6px rgba(245,127,23,0.1); } }
+    /* Completed step */
+    .stepper .step.done .circle {
+        background: #4CAF50; color: white;
+        border-color: #388E3C;
+    }
+    .stepper .step.done .label { color: #2E7D32; font-weight: 600; }
+    .stepper .step.done:not(:last-child)::after { background: #4CAF50; }
 </style>
 """
+
+
+# ---------------------------------------------------------------------------
+# Stepper HTML builder
+# ---------------------------------------------------------------------------
+
+PIPELINE_STEPS = [
+    ("1", "PDF Extract"),
+    ("2", "Alignment"),
+    ("3", "Ontology"),
+    ("4", "KG Build"),
+    ("5", "RAG"),
+    ("6", "Agent"),
+]
+
+
+def _build_stepper_html(current_step: int = 0) -> str:
+    """Build HTML for the milestone stepper.
+
+    Args:
+        current_step: 0 = not started, 1-6 = that step is active,
+                      7 = all done.
+    """
+    parts = ['<div class="stepper">']
+    for idx, (num, label) in enumerate(PIPELINE_STEPS):
+        step_num = idx + 1
+        if step_num < current_step:
+            cls = "step done"
+            icon = "&#10003;"  # checkmark
+        elif step_num == current_step:
+            cls = "step active"
+            icon = num
+        else:
+            cls = "step"
+            icon = num
+        parts.append(
+            f'<div class="{cls}">'
+            f'<div class="circle">{icon}</div>'
+            f'<div class="label">{label}</div>'
+            f'</div>'
+        )
+    parts.append('</div>')
+    return "".join(parts)
 
 
 # ---------------------------------------------------------------------------
@@ -89,20 +168,18 @@ CUSTOM_CSS = """
 # ---------------------------------------------------------------------------
 
 def confidence_badge(conf: str) -> str:
-    """Return an HTML badge for a confidence level."""
     cls = conf.lower() if conf.lower() in ("high", "medium", "low") else "medium"
     return f'<span class="badge-{cls}">{conf}</span>'
 
 
 def make_metric_card(title: str, value: str, subtitle: str = "") -> str:
-    """Generate HTML for a metric card."""
     sub_html = f'<div class="sub">{subtitle}</div>' if subtitle else ""
-    return f"""
-    <div class="metric-card">
-        <h4>{title}</h4>
-        <div class="value">{value}</div>
-        {sub_html}
-    </div>"""
+    return (
+        f'<div class="metric-card">'
+        f'<h4>{title}</h4>'
+        f'<div class="value">{value}</div>'
+        f'{sub_html}</div>'
+    )
 
 
 # ═══════════════════════════════════════════════════════════════════════
@@ -110,10 +187,8 @@ def make_metric_card(title: str, value: str, subtitle: str = "") -> str:
 # ═══════════════════════════════════════════════════════════════════════
 
 def _render_sync_analysis(data: dict) -> None:
-    """Render synchronization analysis content."""
     alignment = data["alignment"]
 
-    # Overall gauge
     col1, col2 = st.columns([1, 2])
     with col1:
         score = alignment.get("overall_score", 0)
@@ -133,8 +208,7 @@ def _render_sync_analysis(data: dict) -> None:
                 ],
                 "threshold": {
                     "line": {"color": "#B71C1C", "width": 3},
-                    "thickness": 0.8,
-                    "value": 45,
+                    "thickness": 0.8, "value": 45,
                 },
             },
         ))
@@ -162,7 +236,7 @@ def _render_sync_analysis(data: dict) -> None:
 
     st.divider()
 
-    # Alignment matrix heatmap
+    # Heatmap
     st.subheader("Alignment Matrix Heatmap")
     matrix = alignment.get("alignment_matrix", [])
     row_labels = alignment.get("matrix_row_labels", [])
@@ -179,21 +253,17 @@ def _render_sync_analysis(data: dict) -> None:
             ],
             zmin=0, zmax=1,
             text=[[f"{v:.2f}" for v in row] for row in matrix],
-            texttemplate="%{text}",
-            textfont={"size": 9},
+            texttemplate="%{text}", textfont={"size": 9},
             hovertemplate="Objective %{y}<br>Action %{x}<br>Score: %{z:.3f}<extra></extra>",
         ))
-        fig.update_layout(
-            height=300, margin=dict(t=20, b=20),
-            xaxis_title="Action Items",
-            yaxis_title="Strategic Objectives",
-        )
+        fig.update_layout(height=300, margin=dict(t=20, b=20),
+                          xaxis_title="Action Items", yaxis_title="Strategic Objectives")
         st.plotly_chart(fig, use_container_width=True)
 
-    # Distribution histogram + action table
+    # Histogram + action table
     col1, col2 = st.columns(2)
     with col1:
-        st.subheader("Similarity Score Distribution")
+        st.subheader("Score Distribution")
         if matrix:
             all_scores = [s for row in matrix for s in row]
             fig = px.histogram(x=all_scores, nbins=25,
@@ -227,7 +297,6 @@ def _render_sync_analysis(data: dict) -> None:
 # ═══════════════════════════════════════════════════════════════════════
 
 def _render_recommendations(data: dict) -> None:
-    """Render improvement recommendations content."""
     rag = data["rag"]
     gaps_data = data["gaps"]
 
@@ -235,11 +304,7 @@ def _render_recommendations(data: dict) -> None:
         st.info("RAG recommendations were not generated. Run the full pipeline to see results here.")
         return
 
-    tab1, tab2, tab3 = st.tabs([
-        "Poorly Aligned Actions",
-        "Missing Actions",
-        "Strategic Gaps",
-    ])
+    tab1, tab2, tab3 = st.tabs(["Poorly Aligned Actions", "Missing Actions", "Strategic Gaps"])
 
     with tab1:
         improvements = rag.get("improvements", [])
@@ -250,8 +315,7 @@ def _render_recommendations(data: dict) -> None:
             for imp in improvements:
                 with st.expander(
                     f"Action {imp['action_number']}: {imp['action_title'][:55]} "
-                    f"— Score: {imp['alignment_score']:.3f}",
-                    expanded=False,
+                    f"— Score: {imp['alignment_score']:.3f}", expanded=False,
                 ):
                     cols = st.columns([1, 1, 1])
                     with cols[0]:
@@ -261,12 +325,10 @@ def _render_recommendations(data: dict) -> None:
                     with cols[2]:
                         st.markdown(f"Confidence: {confidence_badge(imp.get('confidence', 'MEDIUM'))}",
                                     unsafe_allow_html=True)
-
                     if imp.get("modified_description"):
                         st.markdown("**Suggested Description:**")
                         desc = format_llm_response(imp["modified_description"], max_length=500)
                         st.markdown(f"> {desc}")
-
                     if imp.get("strategic_linkage"):
                         linkage = format_llm_response(imp["strategic_linkage"], max_length=300)
                         st.markdown(f"**Strategic Linkage:** {linkage}")
@@ -299,7 +361,6 @@ def _render_recommendations(data: dict) -> None:
     with tab3:
         uncovered = gaps_data.get("uncovered_strategy_concepts", [])
         weak = gaps_data.get("weak_actions", [])
-
         if uncovered:
             st.subheader(f"Uncovered Strategy Concepts ({len(uncovered)})")
             for gap in uncovered:
@@ -309,7 +370,6 @@ def _render_recommendations(data: dict) -> None:
                     unsafe_allow_html=True,
                 )
                 st.caption(gap.get("note", ""))
-
         if weak:
             st.subheader(f"Weakly Aligned Actions ({len(weak)})")
             df_weak = pd.DataFrame([{
@@ -319,7 +379,6 @@ def _render_recommendations(data: dict) -> None:
                 "Note": w.get("note", "")[:60],
             } for w in weak])
             st.dataframe(df_weak, use_container_width=True, hide_index=True)
-
         if not uncovered and not weak:
             st.info("No strategic gaps detected.")
 
@@ -329,7 +388,6 @@ def _render_recommendations(data: dict) -> None:
 # ═══════════════════════════════════════════════════════════════════════
 
 def _render_knowledge_graph(data: dict) -> None:
-    """Render knowledge graph visualization."""
     kg = data["kg"]
     if not kg:
         st.info("Knowledge graph was not built. Run the full pipeline to see results here.")
@@ -337,7 +395,6 @@ def _render_knowledge_graph(data: dict) -> None:
 
     insights = kg.get("insights", {})
 
-    # Stats row
     cols = st.columns(4)
     with cols[0]:
         st.metric("Nodes", insights.get("node_count", len(kg.get("nodes", []))))
@@ -350,11 +407,9 @@ def _render_knowledge_graph(data: dict) -> None:
 
     st.divider()
 
-    # Threshold filter
     threshold = st.slider("Minimum edge weight to display", 0.0, 1.0, 0.45, 0.05,
                            key="kg_threshold")
 
-    # Build interactive Plotly network
     nodes = kg.get("nodes", [])
     links = kg.get("edges", kg.get("links", []))
 
@@ -362,16 +417,9 @@ def _render_knowledge_graph(data: dict) -> None:
         st.info("No graph nodes found.")
         return
 
-    # Filter edges by weight
-    filtered_links = [
-        l for l in links
-        if l.get("weight", 1.0) >= threshold
-    ]
-
-    # Build node index
+    filtered_links = [l for l in links if l.get("weight", 1.0) >= threshold]
     node_map = {n["id"]: i for i, n in enumerate(nodes)}
 
-    # Spring layout simulation (simple force-directed)
     np.random.seed(42)
     n = len(nodes)
     pos = np.random.randn(n, 2) * 2
@@ -387,20 +435,14 @@ def _render_knowledge_graph(data: dict) -> None:
                 pos[src_idx] += force
                 pos[tgt_idx] -= force
 
-    # Color mapping
     color_map = {
-        "StrategyObjective": "#4285F4",
-        "StrategyGoal": "#81D4FA",
-        "OntologyConcept": "#9C27B0",
-        "Action": "#4CAF50",
-        "KPI": "#FFEB3B",
-        "Stakeholder": "#FF9800",
-        "TimelineQuarter": "#9E9E9E",
+        "StrategyObjective": "#4285F4", "StrategyGoal": "#81D4FA",
+        "OntologyConcept": "#9C27B0", "Action": "#4CAF50",
+        "KPI": "#FFEB3B", "Stakeholder": "#FF9800", "TimelineQuarter": "#9E9E9E",
     }
 
     show_types = st.multiselect(
-        "Node types to display",
-        list(color_map.keys()),
+        "Node types to display", list(color_map.keys()),
         default=["StrategyObjective", "Action", "OntologyConcept"],
         key="kg_node_types",
     )
@@ -409,7 +451,6 @@ def _render_knowledge_graph(data: dict) -> None:
     for i, node in enumerate(nodes):
         if node.get("node_type") in show_types:
             visible.add(i)
-
     for link in filtered_links:
         src = node_map.get(link.get("source"))
         tgt = node_map.get(link.get("target"))
@@ -419,7 +460,6 @@ def _render_knowledge_graph(data: dict) -> None:
             if tgt is not None:
                 visible.add(tgt)
 
-    # Edge traces
     edge_x, edge_y = [], []
     for link in filtered_links:
         src = node_map.get(link.get("source"))
@@ -431,8 +471,7 @@ def _render_knowledge_graph(data: dict) -> None:
     fig = go.Figure()
     fig.add_trace(go.Scatter(
         x=edge_x, y=edge_y, mode="lines",
-        line=dict(width=0.5, color="#CCCCCC"),
-        hoverinfo="none",
+        line=dict(width=0.5, color="#CCCCCC"), hoverinfo="none",
     ))
 
     for ntype in show_types:
@@ -450,12 +489,10 @@ def _render_knowledge_graph(data: dict) -> None:
                 line=dict(width=1, color="white"),
             ),
             text=[nodes[i].get("label", "")[:20] for i in idx_list],
-            textposition="top center",
-            textfont=dict(size=7),
+            textposition="top center", textfont=dict(size=7),
             name=ntype,
             hovertext=[
-                f"{nodes[i].get('label', '')}<br>"
-                f"Type: {ntype}<br>"
+                f"{nodes[i].get('label', '')}<br>Type: {ntype}<br>"
                 f"Score: {nodes[i].get('alignment_score', 'N/A')}"
                 for i in idx_list
             ],
@@ -463,8 +500,7 @@ def _render_knowledge_graph(data: dict) -> None:
         ))
 
     fig.update_layout(
-        height=600,
-        showlegend=True,
+        height=600, showlegend=True,
         legend=dict(orientation="h", y=-0.05),
         xaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
         yaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
@@ -472,7 +508,6 @@ def _render_knowledge_graph(data: dict) -> None:
     )
     st.plotly_chart(fig, use_container_width=True)
 
-    # Bridge nodes and suggestions
     col1, col2 = st.columns(2)
     with col1:
         st.subheader("Bridge Nodes")
@@ -480,13 +515,11 @@ def _render_knowledge_graph(data: dict) -> None:
         if bridge:
             for bn in bridge[:5]:
                 st.markdown(
-                    f"**{bn.get('label', '')[:40]}** "
-                    f"({bn.get('node_type', '')}) — "
+                    f"**{bn.get('label', '')[:40]}** ({bn.get('node_type', '')}) — "
                     f"betweenness: {bn.get('betweenness', 0):.4f}"
                 )
         else:
             st.caption("No significant bridge nodes detected.")
-
     with col2:
         st.subheader("Suggested New Connections")
         suggestions = insights.get("new_connections", [])
@@ -506,7 +539,6 @@ def _render_knowledge_graph(data: dict) -> None:
 # ═══════════════════════════════════════════════════════════════════════
 
 def _render_ontology(data: dict) -> None:
-    """Render ontology browser content."""
     mappings = data["mappings"]
     gaps_data = data["gaps"]
 
@@ -521,7 +553,6 @@ def _render_ontology(data: dict) -> None:
         f"**Threshold:** {meta.get('mapping_threshold', 0)}"
     )
 
-    # Build concept tree from mappings
     concept_tree: dict[str, list[str]] = {}
     concept_labels: dict[str, str] = {}
     concept_action_count: dict[str, int] = {}
@@ -539,12 +570,10 @@ def _render_ontology(data: dict) -> None:
                 if section == "action_mappings":
                     concept_action_count[cid] = concept_action_count.get(cid, 0) + 1
 
-    # Coverage statistics
     col1, col2 = st.columns([2, 1])
     with col1:
         st.subheader("Concept Hierarchy")
         uncovered_ids = {g["concept_id"] for g in gaps_data.get("uncovered_strategy_concepts", [])}
-
         for parent in sorted(concept_tree.keys()):
             count = concept_action_count.get(parent, 0)
             st.markdown(f"### {concept_labels.get(parent, parent)} ({count} action links)")
@@ -572,7 +601,6 @@ def _render_ontology(data: dict) -> None:
         st.metric("Coverage Rate", f"{coverage_pct:.0%}")
         st.metric("Uncovered (Strategy)", len(uncovered_ids))
 
-        # Sunburst of concept coverage
         sunburst_data = []
         for parent in concept_tree:
             for child in concept_tree[parent]:
@@ -583,11 +611,9 @@ def _render_ontology(data: dict) -> None:
                 })
         if sunburst_data:
             df_sun = pd.DataFrame(sunburst_data)
-            fig = px.sunburst(
-                df_sun, path=["parent", "child"], values="count",
-                color="count",
-                color_continuous_scale=["#FFCDD2", "#C8E6C9", "#1B5E20"],
-            )
+            fig = px.sunburst(df_sun, path=["parent", "child"], values="count",
+                              color="count",
+                              color_continuous_scale=["#FFCDD2", "#C8E6C9", "#1B5E20"])
             fig.update_layout(height=400, margin=dict(t=10, b=10))
             st.plotly_chart(fig, use_container_width=True)
 
@@ -597,7 +623,6 @@ def _render_ontology(data: dict) -> None:
 # ═══════════════════════════════════════════════════════════════════════
 
 def _render_agent_insights(data: dict) -> None:
-    """Render agent insights content."""
     agent_recs = data["agent_recs"]
     agent_trace = data["agent_trace"]
 
@@ -607,7 +632,6 @@ def _render_agent_insights(data: dict) -> None:
 
     meta = agent_recs.get("metadata", {})
 
-    # Stats
     cols = st.columns(4)
     with cols[0]:
         st.metric("Issues Diagnosed", meta.get("total_issues_diagnosed", 0))
@@ -620,7 +644,6 @@ def _render_agent_insights(data: dict) -> None:
 
     st.divider()
 
-    # Critical issues ranked
     st.subheader("Diagnosed Issues (by priority)")
     issues = agent_recs.get("diagnosed_issues_summary", [])
     if issues:
@@ -635,26 +658,21 @@ def _render_agent_insights(data: dict) -> None:
 
     st.divider()
 
-    # Recommendations
     st.subheader("Agent Recommendations")
     for rec in agent_recs.get("recommendations", []):
         with st.expander(
             f"{rec['rec_id']} — {rec['issue_type']} | "
             f"Impact: {rec['impact_score']:.3f} | "
-            f"{rec.get('confidence', 'MEDIUM')}",
-            expanded=False,
+            f"{rec.get('confidence', 'MEDIUM')}", expanded=False,
         ):
             st.markdown(f"**Root Cause:** {format_llm_response(rec.get('what_to_change', ''), max_length=300)}")
             st.markdown(f"**Expected Outcome:** {format_llm_response(rec.get('why', ''), max_length=300)}")
-
             st.markdown("**Recommended Actions:**")
             for a in rec.get("actions", []):
                 st.markdown(f"- {format_llm_response(a, max_length=200)}")
-
             st.markdown("**Proposed KPIs:**")
             for k in rec.get("kpis", []):
                 st.markdown(f"- {format_llm_response(k, max_length=150)}")
-
             cols = st.columns(3)
             with cols[0]:
                 st.markdown(f"**Budget:** LKR {rec.get('estimated_budget', 0):.0f}M")
@@ -663,35 +681,28 @@ def _render_agent_insights(data: dict) -> None:
             with cols[2]:
                 st.markdown(f"**Evidence:** {', '.join(rec.get('evidence_ids', [])[:5])}")
 
-    # Reasoning trace
     st.divider()
     st.subheader("Reasoning Trace")
-    traces = agent_trace.get("traces", [])
+    traces = agent_trace.get("traces", []) if agent_trace else []
     for trace in traces:
         issue_id = trace.get("issue_detected", {}).get("issue_id", "?")
         trace_status = trace.get("final_decision", {}).get("status", "?")
-
         st.markdown(
             f'<div class="trace-step">'
             f'<strong>Iteration {trace["iteration"]}</strong> — '
-            f'{issue_id} -> <strong>{trace_status}</strong>'
-            f'</div>',
+            f'{issue_id} -> <strong>{trace_status}</strong></div>',
             unsafe_allow_html=True,
         )
-
         with st.expander(f"Details: Iteration {trace['iteration']}", expanded=False):
             st.markdown("**Investigation Plan:**")
             for step in trace.get("investigation_plan", []):
                 st.markdown(f"- {step}")
-
             st.markdown("**Reasoning Summary:**")
             for bullet in trace.get("reasoning_summary", []):
                 st.markdown(f"- {bullet}")
-
             st.markdown("**Tool Calls:**")
             for tc in trace.get("tool_calls", []):
                 st.markdown(f"- `{tc.get('tool', '?')}` — {tc.get('purpose', tc.get('query', '')[:50])}")
-
             critique = trace.get("critique_summary", {})
             if critique:
                 st.markdown("**Critique:**")
@@ -706,7 +717,6 @@ def _render_agent_insights(data: dict) -> None:
 # ═══════════════════════════════════════════════════════════════════════
 
 def _render_evaluation(data: dict) -> None:
-    """Render evaluation metrics content."""
     alignment = data["alignment"]
 
     orphan_detected = set(alignment.get("orphan_actions", []))
@@ -714,13 +724,11 @@ def _render_evaluation(data: dict) -> None:
 
     st.subheader("Alignment Detection Summary")
 
-    # Compute metrics for different methods
     methods = {
         "Embedding Similarity (Orphan Detection)": orphan_detected,
         "Embedding Similarity (Poor Alignment)": poorly_aligned,
     }
 
-    # Add ontology-based detection (if available)
     gaps_data = data["gaps"]
     weak_actions = set()
     for w in gaps_data.get("weak_actions", []):
@@ -731,7 +739,6 @@ def _render_evaluation(data: dict) -> None:
     if weak_actions:
         methods["Ontology Mapping (Weak Actions)"] = weak_actions
 
-    # Agent-based detection (if available)
     agent_recs = data["agent_recs"]
     agent_detected = set()
     for issue in agent_recs.get("diagnosed_issues_summary", []):
@@ -746,7 +753,6 @@ def _render_evaluation(data: dict) -> None:
         combined = orphan_detected | weak_actions
         methods["Combined (Embedding + Ontology)"] = combined
 
-    # Detection counts
     det_rows = []
     for method_name, detected in methods.items():
         det_rows.append({
@@ -757,7 +763,6 @@ def _render_evaluation(data: dict) -> None:
     df_det = pd.DataFrame(det_rows)
     st.dataframe(df_det, use_container_width=True, hide_index=True)
 
-    # Cross-method agreement
     st.subheader("Cross-Method Agreement")
     all_flagged = set()
     for detected in methods.values():
@@ -776,7 +781,6 @@ def _render_evaluation(data: dict) -> None:
     else:
         st.success("No misalignment detected by any method.")
 
-    # Mismatch details
     misaligned_details = alignment.get("mismatched_actions", [])
     if misaligned_details:
         st.divider()
@@ -795,74 +799,61 @@ def _render_evaluation(data: dict) -> None:
 # Pipeline runner
 # ═══════════════════════════════════════════════════════════════════════
 
-def _run_full_pipeline_with_progress(report: dict, progress, start_pct: int = 0) -> None:
-    """Run the 4-step pipeline with a shared progress bar."""
-    from dashboard.pipeline_runner import (
-        run_dynamic_ontology, run_dynamic_kg,
-        run_dynamic_rag, run_dynamic_agent,
-    )
+def _run_upload_analysis(strategic_file, action_file, stepper_placeholder) -> None:
+    """Process uploaded PDFs and run the full 6-step pipeline.
 
-    remaining = 100 - start_pct
-    step_size = remaining // 4
-
-    # Step 1/4
-    progress.progress(start_pct + 5, text="Step 1/4: Ontology mapping...")
-    mappings, gaps = run_dynamic_ontology(report)
-    st.session_state["dynamic_mappings"] = mappings
-    st.session_state["dynamic_gaps"] = gaps
-    progress.progress(start_pct + step_size, text="Step 1/4: Ontology mapping... done")
-
-    # Step 2/4
-    progress.progress(start_pct + step_size + 5, text="Step 2/4: Knowledge graph...")
-    kg = run_dynamic_kg(report, mappings)
-    st.session_state["dynamic_kg"] = kg
-    progress.progress(start_pct + step_size * 2, text="Step 2/4: Knowledge graph... done")
-
-    # Step 3/4
-    progress.progress(start_pct + step_size * 2 + 5, text="Step 3/4: RAG recommendations (LLM)...")
-    rag = run_dynamic_rag(report)
-    st.session_state["dynamic_rag"] = rag
-    progress.progress(start_pct + step_size * 3, text="Step 3/4: RAG recommendations... done")
-
-    # Step 4/4
-    progress.progress(start_pct + step_size * 3 + 5, text="Step 4/4: Agent reasoning (LLM)...")
-    agent_recs, agent_trace = run_dynamic_agent(report, mappings, kg)
-    st.session_state["dynamic_agent_recs"] = agent_recs
-    st.session_state["dynamic_agent_trace"] = agent_trace
-    progress.progress(100, text="Pipeline complete!")
-
-
-def _run_upload_analysis(strategic_file, action_file) -> None:
-    """Process uploaded PDFs and run alignment + full pipeline."""
+    Updates the stepper_placeholder (an st.empty()) at each milestone.
+    """
     from src.pdf_processor import (
         extract_strategic_plan_from_pdf,
         extract_action_plan_from_pdf,
     )
     from src.dynamic_analyzer import run_dynamic_analysis
+    from dashboard.pipeline_runner import (
+        run_dynamic_ontology, run_dynamic_kg,
+        run_dynamic_rag, run_dynamic_agent,
+    )
 
-    progress = st.progress(0, text="Starting analysis...")
+    def _update(step: int) -> None:
+        stepper_placeholder.markdown(_build_stepper_html(step), unsafe_allow_html=True)
 
     try:
-        # PDF extraction
-        progress.progress(5, text="Extracting strategic plan with AI...")
+        # Step 1: PDF extraction
+        _update(1)
         strategic_bytes = strategic_file.read()
         strategic_data = extract_strategic_plan_from_pdf(strategic_bytes)
-        n_obj = len(strategic_data.get("objectives", []))
-        progress.progress(15, text=f"Found {n_obj} strategic objectives. Extracting action plan...")
-
         action_bytes = action_file.read()
         action_data = extract_action_plan_from_pdf(action_bytes)
-        n_act = len(action_data.get("actions", []))
-        progress.progress(30, text=f"Found {n_act} actions. Computing alignment...")
 
-        # Alignment analysis
+        # Step 2: Alignment
+        _update(2)
         report = run_dynamic_analysis(strategic_data, action_data)
         st.session_state["upload_report"] = report
-        progress.progress(40, text="Alignment complete. Running full pipeline...")
 
-        # Full pipeline (ontology, KG, RAG, agent)
-        _run_full_pipeline_with_progress(report, progress, start_pct=40)
+        # Step 3: Ontology
+        _update(3)
+        mappings, gaps = run_dynamic_ontology(report)
+        st.session_state["dynamic_mappings"] = mappings
+        st.session_state["dynamic_gaps"] = gaps
 
+        # Step 4: Knowledge Graph
+        _update(4)
+        kg = run_dynamic_kg(report, mappings)
+        st.session_state["dynamic_kg"] = kg
+
+        # Step 5: RAG
+        _update(5)
+        rag = run_dynamic_rag(report)
+        st.session_state["dynamic_rag"] = rag
+
+        # Step 6: Agent
+        _update(6)
+        agent_recs, agent_trace = run_dynamic_agent(report, mappings, kg)
+        st.session_state["dynamic_agent_recs"] = agent_recs
+        st.session_state["dynamic_agent_trace"] = agent_trace
+
+        # All done
+        _update(7)
         st.session_state["pipeline_done"] = True
         st.session_state.pop("pipeline_running", None)
         st.rerun()
@@ -879,11 +870,10 @@ def _run_upload_analysis(strategic_file, action_file) -> None:
 
 
 # ═══════════════════════════════════════════════════════════════════════
-# Main app — single page
+# Main app
 # ═══════════════════════════════════════════════════════════════════════
 
 def main() -> None:
-    """Single-page Streamlit application entry point."""
     st.set_page_config(
         page_title="Healthcare Strategy Aligner",
         page_icon="🏥",
@@ -892,169 +882,143 @@ def main() -> None:
     )
 
     st.markdown(CUSTOM_CSS, unsafe_allow_html=True)
-
-    # ── Header ────────────────────────────────────────────────────
     st.title("Healthcare Strategy Aligner")
 
     pipeline_done = st.session_state.get("pipeline_done", False)
-    has_report = "upload_report" in st.session_state
 
-    # ── Upload section ────────────────────────────────────────────
-    if not pipeline_done:
-        _show_upload_form()
-    else:
-        # Show summary bar + export + clear
-        _show_summary_bar()
+    # ── Top panel: compact upload (20%) | stepper + controls (80%) ─
+    left_col, right_col = st.columns([1, 4], gap="medium")
 
-    # ── Results (only after pipeline completes) ───────────────────
+    # Collect file references and button state before triggering analysis
+    strategic_file = None
+    action_file = None
+    run_clicked = False
+
+    with left_col:
+        if not pipeline_done:
+            @st.cache_data(ttl=60, show_spinner=False)
+            def _check_ollama():
+                from src.pdf_processor import check_ollama_available
+                return check_ollama_available()
+
+            ollama_ok = _check_ollama()
+            if not ollama_ok:
+                st.error("Ollama not running.")
+            else:
+                strategic_file = st.file_uploader(
+                    "Strategic Plan", type=["pdf"], key="strategic_pdf",
+                )
+                action_file = st.file_uploader(
+                    "Action Plan", type=["pdf"], key="action_pdf",
+                )
+                if strategic_file and action_file:
+                    if st.session_state.get("pipeline_running"):
+                        st.caption("Running...")
+                    else:
+                        run_clicked = st.button(
+                            "Run Analysis", type="primary",
+                            use_container_width=True,
+                        )
+                else:
+                    st.caption("Upload both PDFs.")
+        else:
+            # After pipeline: compact summary
+            report = st.session_state["upload_report"]
+            st.markdown(make_metric_card(
+                "Score",
+                f"{report['overall_score']:.0%}",
+                report["overall_classification"],
+            ), unsafe_allow_html=True)
+            st.markdown(make_metric_card(
+                "Actions",
+                str(len(report["action_alignments"])),
+            ), unsafe_allow_html=True)
+            st.markdown(make_metric_card(
+                "Objectives",
+                str(len(report["objective_alignments"])),
+            ), unsafe_allow_html=True)
+            if st.button("New Analysis", use_container_width=True):
+                for key in list(st.session_state.keys()):
+                    if key in ("upload_report", "pipeline_done", "pipeline_running") \
+                            or key.startswith("dynamic_"):
+                        del st.session_state[key]
+                st.rerun()
+
+    with right_col:
+        # Create a placeholder for the stepper — always in the right column
+        stepper_area = st.empty()
+
+        if pipeline_done:
+            # Show completed stepper + metrics + download
+            stepper_area.markdown(_build_stepper_html(7), unsafe_allow_html=True)
+
+            from dashboard.data_adapter import build_data_dict
+            report = st.session_state["upload_report"]
+            data = build_data_dict(report, dict(st.session_state))
+
+            m1, m2, m3, m4, m5 = st.columns(5)
+            with m1:
+                st.metric("Orphans", len(report.get("orphan_actions", [])))
+            with m2:
+                st.metric("Poor", len(report.get("poorly_aligned_actions", [])))
+            with m3:
+                st.metric("Well Aligned", len(report.get("well_aligned_actions", [])))
+            with m4:
+                pdf_bytes = generate_pdf_report(data)
+                if pdf_bytes:
+                    st.download_button(
+                        "Download PDF", data=pdf_bytes,
+                        file_name="isps_alignment_report.pdf",
+                        mime="application/pdf", use_container_width=True,
+                    )
+            with m5:
+                results_json = {k: v for k, v in report.items()
+                                if k not in ("strategic_data", "action_data")}
+                st.download_button(
+                    "Download JSON",
+                    data=json.dumps(results_json, indent=2),
+                    file_name="alignment_report.json",
+                    mime="application/json", use_container_width=True,
+                )
+        else:
+            # Show idle stepper (no step active)
+            stepper_area.markdown(_build_stepper_html(0), unsafe_allow_html=True)
+
+    # ── Trigger analysis OUTSIDE columns so stepper updates in right col ─
+    if run_clicked and strategic_file and action_file:
+        st.session_state["pipeline_running"] = True
+        _run_upload_analysis(strategic_file, action_file, stepper_area)
+
+    # ── Tabs + Output ─────────────────────────────────────────────
     if pipeline_done:
-        st.divider()
-        _show_results()
+        from dashboard.data_adapter import build_data_dict
+        report = st.session_state["upload_report"]
+        data = build_data_dict(report, dict(st.session_state))
 
-
-def _show_upload_form() -> None:
-    """Render the upload form and trigger analysis."""
-    st.markdown(
-        "Upload your **Strategic Plan** and **Action Plan** PDFs. "
-        "The system will extract content with AI, compute alignment, "
-        "and run the full analysis pipeline automatically."
-    )
-
-    # Check Ollama availability
-    @st.cache_data(ttl=60, show_spinner=False)
-    def _check_ollama():
-        from src.pdf_processor import check_ollama_available
-        return check_ollama_available()
-
-    ollama_ok = _check_ollama()
-
-    if not ollama_ok:
-        st.error(
-            "Ollama not running. Start with `ollama serve` and "
-            "`ollama pull llama3.1:8b`."
-        )
-        return
-
-    col1, col2 = st.columns(2)
-    with col1:
-        strategic_file = st.file_uploader(
-            "Strategic Plan (PDF)",
-            type=["pdf"],
-            key="strategic_pdf",
-        )
-    with col2:
-        action_file = st.file_uploader(
-            "Action Plan (PDF)",
-            type=["pdf"],
-            key="action_pdf",
-        )
-
-    if strategic_file and action_file:
-        if st.session_state.get("pipeline_running"):
-            st.info("Analysis running... please wait.")
-        elif st.button("Run Analysis", type="primary", use_container_width=True):
-            st.session_state["pipeline_running"] = True
-            _run_upload_analysis(strategic_file, action_file)
+        tabs = st.tabs([
+            "Sync Analysis", "Recommendations", "Knowledge Graph",
+            "Ontology", "Agent Insights", "Evaluation",
+        ])
+        with tabs[0]:
+            _render_sync_analysis(data)
+        with tabs[1]:
+            _render_recommendations(data)
+        with tabs[2]:
+            _render_knowledge_graph(data)
+        with tabs[3]:
+            _render_ontology(data)
+        with tabs[4]:
+            _render_agent_insights(data)
+        with tabs[5]:
+            _render_evaluation(data)
     else:
-        st.caption("Upload both PDFs to begin.")
-
-
-def _show_summary_bar() -> None:
-    """Show summary metrics, export buttons, and clear button."""
-    from dashboard.data_adapter import build_data_dict
-
-    report = st.session_state["upload_report"]
-    data = build_data_dict(report, dict(st.session_state))
-
-    # Summary metrics
-    m1, m2, m3, m4 = st.columns(4)
-    with m1:
-        st.markdown(make_metric_card(
-            "Overall Score",
-            f"{report['overall_score']:.1%}",
-            report["overall_classification"],
-        ), unsafe_allow_html=True)
-    with m2:
-        st.markdown(make_metric_card(
-            "Strategic Objectives",
-            str(len(report["objective_alignments"])),
-        ), unsafe_allow_html=True)
-    with m3:
-        st.markdown(make_metric_card(
-            "Action Items",
-            str(len(report["action_alignments"])),
-        ), unsafe_allow_html=True)
-    with m4:
-        st.markdown(make_metric_card(
-            "Orphan Actions",
-            str(len(report.get("orphan_actions", []))),
-            "Below alignment threshold",
-        ), unsafe_allow_html=True)
-
-    # Export + clear buttons
-    b1, b2, b3 = st.columns(3)
-    with b1:
-        pdf_bytes = generate_pdf_report(data)
-        if pdf_bytes:
-            st.download_button(
-                label="Download Report (PDF)",
-                data=pdf_bytes,
-                file_name="isps_alignment_report.pdf",
-                mime="application/pdf",
-                use_container_width=True,
-            )
-    with b2:
-        results_json = {k: v for k, v in report.items()
-                        if k not in ("strategic_data", "action_data")}
-        st.download_button(
-            label="Download Results (JSON)",
-            data=json.dumps(results_json, indent=2),
-            file_name="alignment_report.json",
-            mime="application/json",
-            use_container_width=True,
-        )
-    with b3:
-        if st.button("Clear / Upload New", use_container_width=True):
-            for key in list(st.session_state.keys()):
-                if key in ("upload_report", "pipeline_done", "pipeline_running") \
-                        or key.startswith("dynamic_"):
-                    del st.session_state[key]
-            st.rerun()
-
-
-def _show_results() -> None:
-    """Show all analysis results in tabs."""
-    from dashboard.data_adapter import build_data_dict
-
-    report = st.session_state["upload_report"]
-    data = build_data_dict(report, dict(st.session_state))
-
-    tabs = st.tabs([
-        "Synchronization Analysis",
-        "Improvement Recommendations",
-        "Knowledge Graph",
-        "Ontology Browser",
-        "Agent Insights",
-        "Evaluation Metrics",
-    ])
-
-    with tabs[0]:
-        _render_sync_analysis(data)
-
-    with tabs[1]:
-        _render_recommendations(data)
-
-    with tabs[2]:
-        _render_knowledge_graph(data)
-
-    with tabs[3]:
-        _render_ontology(data)
-
-    with tabs[4]:
-        _render_agent_insights(data)
-
-    with tabs[5]:
-        _render_evaluation(data)
+        tabs = st.tabs([
+            "Sync Analysis", "Recommendations", "Knowledge Graph",
+            "Ontology", "Agent Insights", "Evaluation",
+        ])
+        for tab in tabs:
+            with tab:
+                st.info("Upload PDFs and run analysis to see results here.")
 
 
 if __name__ == "__main__":

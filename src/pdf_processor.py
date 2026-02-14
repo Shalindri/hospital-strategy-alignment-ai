@@ -72,7 +72,7 @@ def _query_ollama(prompt: str, model: str = "llama3.1:8b") -> str:
         "model": model,
         "prompt": prompt,
         "stream": False,
-        "options": {"temperature": 0.1, "num_predict": 4096},
+        "options": {"temperature": 0.1, "num_predict": 8192},
     }).encode()
 
     req = urllib.request.Request(
@@ -85,12 +85,24 @@ def _query_ollama(prompt: str, model: str = "llama3.1:8b") -> str:
     return data.get("response", "")
 
 
+def _clean_json_string(raw: str) -> str:
+    """Fix common LLM JSON mistakes: trailing commas, unescaped chars."""
+    # Remove trailing commas before } or ]
+    raw = re.sub(r",\s*([}\]])", r"\1", raw)
+    return raw
+
+
 def _extract_json_from_response(text: str) -> dict | list:
     """Find and parse the first JSON object or array in LLM output."""
+    logger.debug("LLM response length: %d chars", len(text))
+
     # Try to find JSON block in markdown code fences
     match = re.search(r"```(?:json)?\s*\n([\s\S]*?)\n```", text)
     if match:
-        return json.loads(match.group(1))
+        try:
+            return json.loads(_clean_json_string(match.group(1)))
+        except json.JSONDecodeError:
+            pass
 
     # Try to find raw JSON object or array
     for start_char, end_char in [("{", "}"), ("[", "]")]:
@@ -99,16 +111,43 @@ def _extract_json_from_response(text: str) -> dict | list:
             continue
         # Find matching closing brace/bracket
         depth = 0
+        last_valid = -1
         for i in range(start, len(text)):
             if text[i] == start_char:
                 depth += 1
             elif text[i] == end_char:
                 depth -= 1
             if depth == 0:
-                try:
-                    return json.loads(text[start:i + 1])
-                except json.JSONDecodeError:
-                    break
+                last_valid = i
+                break
+
+        if last_valid > start:
+            candidate = text[start:last_valid + 1]
+            try:
+                return json.loads(_clean_json_string(candidate))
+            except json.JSONDecodeError:
+                pass
+
+    # Last resort: try to repair truncated JSON by closing open brackets
+    for start_char, end_char in [("{", "}"), ("[", "]")]:
+        start = text.find(start_char)
+        if start == -1:
+            continue
+        candidate = text[start:]
+        open_braces = candidate.count("{") - candidate.count("}")
+        open_brackets = candidate.count("[") - candidate.count("]")
+        if open_braces > 0 or open_brackets > 0:
+            # Remove any trailing partial entry (incomplete key-value)
+            candidate = re.sub(r',\s*"[^"]*"?\s*:?\s*[^}\]]*$', "", candidate)
+            candidate += "]" * open_brackets + "}" * open_braces
+            candidate = _clean_json_string(candidate)
+            try:
+                result = json.loads(candidate)
+                logger.warning("Repaired truncated JSON from LLM output.")
+                return result
+            except json.JSONDecodeError:
+                pass
+
     raise ValueError("No valid JSON found in LLM response")
 
 
@@ -229,22 +268,39 @@ def extract_strategic_plan_from_pdf(
     logger.info("Sending strategic plan to LLM for parsing (%d chars)...",
                 len(truncated))
     response = _query_ollama(prompt, model)
+    logger.info("LLM strategic plan response length: %d chars", len(response))
     result = _extract_json_from_response(response)
 
-    # Validate minimum structure
-    if isinstance(result, dict) and "objectives" in result:
-        n_obj = len(result["objectives"])
+    # Flexible key detection — LLM may use different key names
+    objectives_list = None
+    if isinstance(result, dict):
+        for key in ("objectives", "strategic_objectives"):
+            if key in result and isinstance(result[key], list):
+                objectives_list = result[key]
+                break
+        if objectives_list is None:
+            for key, val in result.items():
+                if isinstance(val, list) and len(val) > 0 and isinstance(val[0], dict):
+                    logger.warning("Using unexpected key '%s' as objectives list.", key)
+                    objectives_list = val
+                    break
+
+    if objectives_list is not None:
+        result["objectives"] = objectives_list
+        n_obj = len(objectives_list)
         logger.info("LLM extracted %d strategic objectives.", n_obj)
-        # Ensure all objectives have required fields
-        for obj in result["objectives"]:
+        for obj in objectives_list:
             obj.setdefault("strategic_goals", [])
             obj.setdefault("kpis", [])
             obj.setdefault("keywords", [])
             obj.setdefault("goal_statement", obj.get("name", ""))
         return result
 
+    logger.error("LLM response keys: %s",
+                 list(result.keys()) if isinstance(result, dict) else type(result).__name__)
     raise ValueError(
-        "LLM response does not contain expected 'objectives' key."
+        "LLM response does not contain expected 'objectives' key. "
+        f"Got keys: {list(result.keys()) if isinstance(result, dict) else type(result).__name__}"
     )
 
 
@@ -277,14 +333,32 @@ def extract_action_plan_from_pdf(
     logger.info("Sending action plan to LLM for parsing (%d chars)...",
                 len(truncated))
     response = _query_ollama(prompt, model)
+    logger.info("LLM action plan response length: %d chars", len(response))
     result = _extract_json_from_response(response)
 
-    # Validate minimum structure
-    if isinstance(result, dict) and "actions" in result:
-        n_act = len(result["actions"])
+    # Flexible key detection — LLM may use different key names
+    actions_list = None
+    if isinstance(result, dict):
+        for key in ("actions", "action_items", "action_plan", "items"):
+            if key in result and isinstance(result[key], list):
+                actions_list = result[key]
+                break
+        if actions_list is None:
+            for key, val in result.items():
+                if isinstance(val, list) and len(val) > 0 and isinstance(val[0], dict):
+                    logger.warning("Using unexpected key '%s' as actions list.", key)
+                    actions_list = val
+                    break
+    elif isinstance(result, list) and len(result) > 0:
+        actions_list = result
+        result = {"actions": actions_list}
+
+    if actions_list is not None:
+        result["actions"] = actions_list
+        n_act = len(actions_list)
         logger.info("LLM extracted %d action items.", n_act)
-        # Ensure all actions have required fields
-        for act in result["actions"]:
+        for idx, act in enumerate(actions_list):
+            act.setdefault("action_number", idx + 1)
             act.setdefault("description", act.get("title", ""))
             act.setdefault("expected_outcome", "")
             act.setdefault("kpis", [])
@@ -296,8 +370,11 @@ def extract_action_plan_from_pdf(
             act.setdefault("budget_raw", "")
         return result
 
+    logger.error("LLM response keys: %s",
+                 list(result.keys()) if isinstance(result, dict) else type(result).__name__)
     raise ValueError(
-        "LLM response does not contain expected 'actions' key."
+        "LLM response does not contain expected 'actions' key. "
+        f"Got keys: {list(result.keys()) if isinstance(result, dict) else type(result).__name__}"
     )
 
 

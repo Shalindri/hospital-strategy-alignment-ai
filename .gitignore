@@ -32,3 +32,10 @@ Thumbs.db
 
 # Jupyter
 .ipynb_checkpoints/
+
+# Logs
+logs/
+*.log
+
+# ChromaDB
+chroma_db/

@@ -12,7 +12,7 @@ Typical usage (from the Streamlit dashboard)::
     report = run_dynamic_analysis(strategic_data, action_data)
     # report is a dict with overall_score, alignment_matrix, etc.
 
-Author : ISPS Team
+Author : shalindri20@gmail.com
 Created: 2025-01
 """
 

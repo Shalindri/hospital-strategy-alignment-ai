@@ -16,7 +16,7 @@ Typical usage (from the Streamlit dashboard)::
     strategic_data = extract_strategic_plan_from_pdf(uploaded_bytes)
     action_data    = extract_action_plan_from_pdf(uploaded_bytes)
 
-Author : ISPS Team
+Author : shalindri20@gmail.com
 Created: 2025-01
 """
 

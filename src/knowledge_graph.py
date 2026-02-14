@@ -42,7 +42,7 @@ Typical usage::
     kg.build()
     kg.export_all()
 
-Author : ISPS Team
+Author : shalindri20@gmail.com
 Created: 2025-01
 """
 

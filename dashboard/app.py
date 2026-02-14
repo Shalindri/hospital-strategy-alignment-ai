@@ -1,24 +1,20 @@
 """
-Streamlit Dashboard for Hospital Strategy--Action Plan Alignment System (ISPS).
+Healthcare Strategy Aligner — Single-Page Streamlit App.
 
-A multi-page interactive dashboard that visualises synchronization analysis,
-improvement recommendations, knowledge graph structure, ontology mappings,
-agentic AI reasoning traces, and evaluation metrics for Nawaloka Hospital
-Negombo's strategy--action alignment.
+Upload Strategic Plan and Action Plan PDFs, run the full analysis pipeline,
+and view all results on one page — no sidebar navigation needed.
 
 Launch::
 
     streamlit run dashboard/app.py
 
-Author : ISPS Team
+Author : shalindri20@gmail.com
 Created: 2025-01
 """
 
 from __future__ import annotations
 
 import json
-from pathlib import Path
-from typing import Any
 
 import numpy as np
 import pandas as pd
@@ -26,25 +22,18 @@ import plotly.express as px
 import plotly.graph_objects as go
 import streamlit as st
 
-from dashboard.utils import (
-    export_data,
-    format_llm_response,
-    generate_pdf_report,
-    load_analysis_results,
-)
+from dashboard.utils import format_llm_response, generate_pdf_report
 
 # ---------------------------------------------------------------------------
-# Paths
-# ---------------------------------------------------------------------------
-PROJECT_ROOT = Path(__file__).resolve().parent.parent
-DATA_DIR = PROJECT_ROOT / "data"
-OUTPUT_DIR = PROJECT_ROOT / "outputs"
-
-# ---------------------------------------------------------------------------
-# Custom CSS
+# Custom CSS — hide sidebar completely
 # ---------------------------------------------------------------------------
 CUSTOM_CSS = """
 <style>
+    /* Hide sidebar entirely */
+    [data-testid="stSidebar"] { display: none !important; }
+    [data-testid="stSidebarNav"] { display: none !important; }
+    [data-testid="collapsedControl"] { display: none !important; }
+
     /* Healthcare blue/green theme */
     :root {
         --primary: #1565C0;
@@ -89,41 +78,20 @@ CUSTOM_CSS = """
         border-radius: 0 8px 8px 0;
     }
 
-    /* Sidebar */
-    [data-testid="stSidebar"] { background: linear-gradient(180deg, #0D47A1 0%, #1565C0 100%); }
-    [data-testid="stSidebar"] .css-1d391kg { color: white; }
-    [data-testid="stSidebar"] p, [data-testid="stSidebar"] label { color: #E3F2FD !important; }
-
     /* Loading indicator */
     .stSpinner > div { border-color: var(--primary) !important; }
 </style>
 """
 
-# ---------------------------------------------------------------------------
-# Data loading (cached)
-# ---------------------------------------------------------------------------
-
-@st.cache_data
-def load_all_data() -> dict[str, Any]:
-    """Load all upstream pipeline data via utils (cached by Streamlit)."""
-    return load_analysis_results()
-
 
 # ---------------------------------------------------------------------------
-# Helper functions
+# Helpers
 # ---------------------------------------------------------------------------
 
 def confidence_badge(conf: str) -> str:
     """Return an HTML badge for a confidence level."""
     cls = conf.lower() if conf.lower() in ("high", "medium", "low") else "medium"
     return f'<span class="badge-{cls}">{conf}</span>'
-
-
-def classification_badge(cls: str) -> str:
-    """Return an HTML badge for alignment classification."""
-    mapping = {"Excellent": "good", "Good": "good", "Fair": "weak", "Poor": "orphan"}
-    badge_cls = mapping.get(cls, "weak")
-    return f'<span class="badge-{badge_cls}">{cls}</span>'
 
 
 def make_metric_card(title: str, value: str, subtitle: str = "") -> str:
@@ -138,104 +106,11 @@ def make_metric_card(title: str, value: str, subtitle: str = "") -> str:
 
 
 # ═══════════════════════════════════════════════════════════════════════
-# Page: Home
+# Render: Sync Analysis
 # ═══════════════════════════════════════════════════════════════════════
 
-def page_home(data: dict) -> None:
-    """Render the Home page."""
-    st.title("Hospital Strategy-Action Plan Alignment System")
-    st.markdown("**Nawaloka Hospital Negombo** | Strategic Plan 2026-2030 | Action Plan 2025")
-
-    alignment = data["alignment"]
-    actions = data["actions"].get("actions", [])
-    objectives = data["strategic"].get("objectives", [])
-
-    # Quick stats
-    cols = st.columns(4)
-    with cols[0]:
-        score = alignment.get("overall_score", 0)
-        st.markdown(make_metric_card(
-            "Overall Sync Score",
-            f"{score:.1%}",
-            alignment.get("overall_classification", ""),
-        ), unsafe_allow_html=True)
-    with cols[1]:
-        st.markdown(make_metric_card(
-            "Strategic Objectives", str(len(objectives)),
-            "A through E",
-        ), unsafe_allow_html=True)
-    with cols[2]:
-        st.markdown(make_metric_card(
-            "Action Items", str(len(actions)),
-            f"Budget: LKR {sum(a.get('budget_lkr_millions', 0) for a in actions):.0f}M",
-        ), unsafe_allow_html=True)
-    with cols[3]:
-        orphans = len(alignment.get("orphan_actions", []))
-        st.markdown(make_metric_card(
-            "Orphan Actions", str(orphans),
-            "Below alignment threshold",
-        ), unsafe_allow_html=True)
-
-    st.divider()
-
-    # Distribution overview
-    col1, col2 = st.columns(2)
-    with col1:
-        st.subheader("Alignment Distribution")
-        dist = alignment.get("distribution", {})
-        if dist:
-            df_dist = pd.DataFrame([
-                {"Classification": k, "Count": v} for k, v in dist.items()
-            ])
-            colours = {"Excellent": "#1B5E20", "Good": "#66BB6A",
-                       "Fair": "#FFB300", "Poor": "#E53935"}
-            fig = px.bar(df_dist, x="Classification", y="Count",
-                         color="Classification",
-                         color_discrete_map=colours)
-            fig.update_layout(showlegend=False, height=300,
-                              margin=dict(t=20, b=20))
-            st.plotly_chart(fig, width='stretch')
-
-    with col2:
-        st.subheader("Budget by Objective")
-        obj_budget: dict[str, float] = {}
-        for a in actions:
-            code = a.get("strategic_objective_code", "?")
-            obj_budget[code] = obj_budget.get(code, 0) + a.get("budget_lkr_millions", 0)
-        if obj_budget:
-            df_budget = pd.DataFrame([
-                {"Objective": k, "Budget (LKR M)": v}
-                for k, v in sorted(obj_budget.items())
-            ])
-            fig = px.pie(df_budget, names="Objective", values="Budget (LKR M)",
-                         color_discrete_sequence=px.colors.qualitative.Set2)
-            fig.update_layout(height=300, margin=dict(t=20, b=20))
-            st.plotly_chart(fig, width='stretch')
-
-    # Project overview
-    st.subheader("About This System")
-    st.markdown("""
-    The **ISPS** (Intelligent Strategic Plan Synchronization) system uses AI to evaluate
-    how well a hospital's operational action plan aligns with its strategic plan. The pipeline includes:
-
-    1. **Document Processing** — NLP extraction from markdown plans
-    2. **Vector Embeddings** — Semantic similarity via sentence-transformers
-    3. **Synchronization Analysis** — Alignment scoring matrix
-    4. **Ontology Mapping** — Healthcare concept taxonomy alignment
-    5. **Knowledge Graph** — Structural analysis of relationships
-    6. **RAG Engine** — LLM-powered improvement recommendations
-    7. **Agent Reasoner** — Agentic diagnosis with self-critique
-    """)
-
-
-# ═══════════════════════════════════════════════════════════════════════
-# Page: Synchronization Analysis
-# ═══════════════════════════════════════════════════════════════════════
-
-def page_sync_analysis(data: dict) -> None:
-    """Render the Synchronization Analysis page."""
-    st.title("Synchronization Analysis")
-
+def _render_sync_analysis(data: dict) -> None:
+    """Render synchronization analysis content."""
     alignment = data["alignment"]
 
     # Overall gauge
@@ -264,7 +139,7 @@ def page_sync_analysis(data: dict) -> None:
             },
         ))
         fig.update_layout(height=280, margin=dict(t=40, b=20, l=30, r=30))
-        st.plotly_chart(fig, width='stretch')
+        st.plotly_chart(fig, use_container_width=True)
 
     with col2:
         st.subheader("Strategy-wise Alignment")
@@ -283,7 +158,7 @@ def page_sync_analysis(data: dict) -> None:
             fig.update_layout(height=280, margin=dict(t=20, b=20),
                               yaxis_title="Cosine Similarity",
                               legend=dict(orientation="h", y=1.1))
-            st.plotly_chart(fig, width='stretch')
+            st.plotly_chart(fig, use_container_width=True)
 
     st.divider()
 
@@ -313,9 +188,9 @@ def page_sync_analysis(data: dict) -> None:
             xaxis_title="Action Items",
             yaxis_title="Strategic Objectives",
         )
-        st.plotly_chart(fig, width='stretch')
+        st.plotly_chart(fig, use_container_width=True)
 
-    # Distribution histogram
+    # Distribution histogram + action table
     col1, col2 = st.columns(2)
     with col1:
         st.subheader("Similarity Score Distribution")
@@ -329,7 +204,7 @@ def page_sync_analysis(data: dict) -> None:
             fig.add_vline(x=0.60, line_dash="dash", line_color="green",
                           annotation_text="Good threshold")
             fig.update_layout(height=300, margin=dict(t=20, b=20))
-            st.plotly_chart(fig, width='stretch')
+            st.plotly_chart(fig, use_container_width=True)
 
     with col2:
         st.subheader("Action Alignment Details")
@@ -343,20 +218,22 @@ def page_sync_analysis(data: dict) -> None:
                 "Class": a["classification"],
                 "Orphan": "Yes" if a["is_orphan"] else "",
             } for a in action_data])
-            st.dataframe(df_actions, width='stretch', height=300,
+            st.dataframe(df_actions, use_container_width=True, height=300,
                          hide_index=True)
 
 
 # ═══════════════════════════════════════════════════════════════════════
-# Page: Improvement Recommendations
+# Render: Recommendations
 # ═══════════════════════════════════════════════════════════════════════
 
-def page_recommendations(data: dict) -> None:
-    """Render the Improvement Recommendations page."""
-    st.title("Improvement Recommendations")
-
+def _render_recommendations(data: dict) -> None:
+    """Render improvement recommendations content."""
     rag = data["rag"]
     gaps_data = data["gaps"]
+
+    if not rag:
+        st.info("RAG recommendations were not generated. Run the full pipeline to see results here.")
+        return
 
     tab1, tab2, tab3 = st.tabs([
         "Poorly Aligned Actions",
@@ -364,7 +241,6 @@ def page_recommendations(data: dict) -> None:
         "Strategic Gaps",
     ])
 
-    # ── Tab 1: Poorly aligned ──────────────────────────────────────
     with tab1:
         improvements = rag.get("improvements", [])
         if not improvements:
@@ -395,7 +271,6 @@ def page_recommendations(data: dict) -> None:
                         linkage = format_llm_response(imp["strategic_linkage"], max_length=300)
                         st.markdown(f"**Strategic Linkage:** {linkage}")
 
-    # ── Tab 2: Missing actions ─────────────────────────────────────
     with tab2:
         suggestions = rag.get("new_action_suggestions", [])
         if not suggestions:
@@ -421,7 +296,6 @@ def page_recommendations(data: dict) -> None:
                         for kpi in sug["kpis"][:4]:
                             st.markdown(f"- {kpi}")
 
-    # ── Tab 3: Strategic gaps ──────────────────────────────────────
     with tab3:
         uncovered = gaps_data.get("uncovered_strategy_concepts", [])
         weak = gaps_data.get("weak_actions", [])
@@ -444,20 +318,21 @@ def page_recommendations(data: dict) -> None:
                 "Score": w.get("best_score", 0),
                 "Note": w.get("note", "")[:60],
             } for w in weak])
-            st.dataframe(df_weak, width='stretch', hide_index=True)
+            st.dataframe(df_weak, use_container_width=True, hide_index=True)
+
+        if not uncovered and not weak:
+            st.info("No strategic gaps detected.")
 
 
 # ═══════════════════════════════════════════════════════════════════════
-# Page: Knowledge Graph
+# Render: Knowledge Graph
 # ═══════════════════════════════════════════════════════════════════════
 
-def page_knowledge_graph(data: dict) -> None:
-    """Render the Knowledge Graph visualization page."""
-    st.title("Knowledge Graph Explorer")
-
+def _render_knowledge_graph(data: dict) -> None:
+    """Render knowledge graph visualization."""
     kg = data["kg"]
     if not kg:
-        st.warning("Knowledge graph data not available. Run `python -m src.knowledge_graph` first.")
+        st.info("Knowledge graph was not built. Run the full pipeline to see results here.")
         return
 
     insights = kg.get("insights", {})
@@ -476,7 +351,8 @@ def page_knowledge_graph(data: dict) -> None:
     st.divider()
 
     # Threshold filter
-    threshold = st.slider("Minimum edge weight to display", 0.0, 1.0, 0.45, 0.05)
+    threshold = st.slider("Minimum edge weight to display", 0.0, 1.0, 0.45, 0.05,
+                           key="kg_threshold")
 
     # Build interactive Plotly network
     nodes = kg.get("nodes", [])
@@ -500,7 +376,6 @@ def page_knowledge_graph(data: dict) -> None:
     n = len(nodes)
     pos = np.random.randn(n, 2) * 2
 
-    # Simple iterative layout
     for _ in range(50):
         for link in filtered_links:
             src_idx = node_map.get(link.get("source"))
@@ -523,11 +398,11 @@ def page_knowledge_graph(data: dict) -> None:
         "TimelineQuarter": "#9E9E9E",
     }
 
-    # Only show key node types
     show_types = st.multiselect(
         "Node types to display",
         list(color_map.keys()),
         default=["StrategyObjective", "Action", "OntologyConcept"],
+        key="kg_node_types",
     )
 
     visible = set()
@@ -535,7 +410,6 @@ def page_knowledge_graph(data: dict) -> None:
         if node.get("node_type") in show_types:
             visible.add(i)
 
-    # Also include linked nodes
     for link in filtered_links:
         src = node_map.get(link.get("source"))
         tgt = node_map.get(link.get("target"))
@@ -561,7 +435,6 @@ def page_knowledge_graph(data: dict) -> None:
         hoverinfo="none",
     ))
 
-    # Node traces by type
     for ntype in show_types:
         idx_list = [i for i, nd in enumerate(nodes)
                     if nd.get("node_type") == ntype and i in visible]
@@ -597,7 +470,7 @@ def page_knowledge_graph(data: dict) -> None:
         yaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
         margin=dict(t=20, b=40, l=20, r=20),
     )
-    st.plotly_chart(fig, width='stretch')
+    st.plotly_chart(fig, use_container_width=True)
 
     # Bridge nodes and suggestions
     col1, col2 = st.columns(2)
@@ -620,7 +493,7 @@ def page_knowledge_graph(data: dict) -> None:
         if suggestions:
             for sug in suggestions[:5]:
                 st.markdown(
-                    f"**{sug.get('concept', '')}** ← "
+                    f"**{sug.get('concept', '')}** <- "
                     f"{sug.get('suggested_action', '')} "
                     f"(conf: {sug.get('confidence', 0):.3f})"
                 )
@@ -629,18 +502,16 @@ def page_knowledge_graph(data: dict) -> None:
 
 
 # ═══════════════════════════════════════════════════════════════════════
-# Page: Ontology Browser
+# Render: Ontology Browser
 # ═══════════════════════════════════════════════════════════════════════
 
-def page_ontology(data: dict) -> None:
-    """Render the Ontology Browser page."""
-    st.title("Healthcare Strategy Ontology")
-
+def _render_ontology(data: dict) -> None:
+    """Render ontology browser content."""
     mappings = data["mappings"]
     gaps_data = data["gaps"]
 
     if not mappings:
-        st.warning("Ontology mappings not available. Run `python -m src.ontology_mapper` first.")
+        st.info("Ontology mappings were not computed. Run the full pipeline to see results here.")
         return
 
     meta = mappings.get("metadata", {})
@@ -672,12 +543,10 @@ def page_ontology(data: dict) -> None:
     col1, col2 = st.columns([2, 1])
     with col1:
         st.subheader("Concept Hierarchy")
-        # Uncovered concepts
         uncovered_ids = {g["concept_id"] for g in gaps_data.get("uncovered_strategy_concepts", [])}
 
         for parent in sorted(concept_tree.keys()):
             count = concept_action_count.get(parent, 0)
-            icon = "+" if count > 0 else "-"
             st.markdown(f"### {concept_labels.get(parent, parent)} ({count} action links)")
             for child in sorted(concept_tree[parent]):
                 child_count = concept_action_count.get(child, 0)
@@ -720,22 +589,20 @@ def page_ontology(data: dict) -> None:
                 color_continuous_scale=["#FFCDD2", "#C8E6C9", "#1B5E20"],
             )
             fig.update_layout(height=400, margin=dict(t=10, b=10))
-            st.plotly_chart(fig, width='stretch')
+            st.plotly_chart(fig, use_container_width=True)
 
 
 # ═══════════════════════════════════════════════════════════════════════
-# Page: Agent Insights
+# Render: Agent Insights
 # ═══════════════════════════════════════════════════════════════════════
 
-def page_agent_insights(data: dict) -> None:
-    """Render the Agent Insights page."""
-    st.title("Agentic AI Reasoning Insights")
-
+def _render_agent_insights(data: dict) -> None:
+    """Render agent insights content."""
     agent_recs = data["agent_recs"]
     agent_trace = data["agent_trace"]
 
     if not agent_recs:
-        st.warning("Agent recommendations not available. Run `python -m src.agent_reasoner` first.")
+        st.info("Agent reasoning was not run. Run the full pipeline to see results here.")
         return
 
     meta = agent_recs.get("metadata", {})
@@ -764,7 +631,7 @@ def page_agent_insights(data: dict) -> None:
             "Objectives": ", ".join(i.get("affected_objectives", [])),
             "Addressed": "Yes" if i.get("addressed") else "",
         } for i in issues])
-        st.dataframe(df_issues, width='stretch', hide_index=True)
+        st.dataframe(df_issues, use_container_width=True, hide_index=True)
 
     st.divider()
 
@@ -802,13 +669,12 @@ def page_agent_insights(data: dict) -> None:
     traces = agent_trace.get("traces", [])
     for trace in traces:
         issue_id = trace.get("issue_detected", {}).get("issue_id", "?")
-        status = trace.get("final_decision", {}).get("status", "?")
-        status_icon = "+" if status == "ACCEPTED" else "-"
+        trace_status = trace.get("final_decision", {}).get("status", "?")
 
         st.markdown(
             f'<div class="trace-step">'
             f'<strong>Iteration {trace["iteration"]}</strong> — '
-            f'{issue_id} → <strong>{status}</strong>'
+            f'{issue_id} -> <strong>{trace_status}</strong>'
             f'</div>',
             unsafe_allow_html=True,
         )
@@ -836,28 +702,17 @@ def page_agent_insights(data: dict) -> None:
 
 
 # ═══════════════════════════════════════════════════════════════════════
-# Page: Evaluation Metrics
+# Render: Evaluation Metrics
 # ═══════════════════════════════════════════════════════════════════════
 
-def page_evaluation(data: dict) -> None:
-    """Render the Evaluation Metrics page."""
-    st.title("Evaluation Metrics")
-
+def _render_evaluation(data: dict) -> None:
+    """Render evaluation metrics content."""
     alignment = data["alignment"]
-
-    # Ground truth: intentionally misaligned actions
-    MISALIGNED_GROUND_TRUTH = {8, 19, 24, 25}
-    ALL_ACTIONS = set(range(1, 26))
 
     orphan_detected = set(alignment.get("orphan_actions", []))
     poorly_aligned = set(alignment.get("poorly_aligned_actions", []))
 
-    st.subheader("Misalignment Detection Performance")
-    st.markdown(
-        "The action plan contains **4 intentionally misaligned actions** "
-        "(8, 19, 24, 25) embedded for evaluation. Below shows how well "
-        "each detection method identifies them."
-    )
+    st.subheader("Alignment Detection Summary")
 
     # Compute metrics for different methods
     methods = {
@@ -865,7 +720,7 @@ def page_evaluation(data: dict) -> None:
         "Embedding Similarity (Poor Alignment)": poorly_aligned,
     }
 
-    # Add ontology-based detection
+    # Add ontology-based detection (if available)
     gaps_data = data["gaps"]
     weak_actions = set()
     for w in gaps_data.get("weak_actions", []):
@@ -873,9 +728,10 @@ def page_evaluation(data: dict) -> None:
         num_str = act_id.replace("action_", "")
         if num_str.isdigit():
             weak_actions.add(int(num_str))
-    methods["Ontology Mapping (Weak Actions)"] = weak_actions
+    if weak_actions:
+        methods["Ontology Mapping (Weak Actions)"] = weak_actions
 
-    # Agent-based detection
+    # Agent-based detection (if available)
     agent_recs = data["agent_recs"]
     agent_detected = set()
     for issue in agent_recs.get("diagnosed_issues_summary", []):
@@ -883,95 +739,47 @@ def page_evaluation(data: dict) -> None:
             num_str = issue["issue_id"].replace("orphan_action_", "")
             if num_str.isdigit():
                 agent_detected.add(int(num_str))
-    methods["Agent Reasoner (Orphan Detection)"] = agent_detected
+    if agent_detected:
+        methods["Agent Reasoner (Orphan Detection)"] = agent_detected
 
-    # Combined
-    combined = orphan_detected | weak_actions
-    methods["Combined (Embedding + Ontology)"] = combined
+    if weak_actions:
+        combined = orphan_detected | weak_actions
+        methods["Combined (Embedding + Ontology)"] = combined
 
-    metrics_rows = []
+    # Detection counts
+    det_rows = []
     for method_name, detected in methods.items():
-        tp = len(detected & MISALIGNED_GROUND_TRUTH)
-        fp = len(detected - MISALIGNED_GROUND_TRUTH)
-        fn = len(MISALIGNED_GROUND_TRUTH - detected)
-        tn = len(ALL_ACTIONS - detected - MISALIGNED_GROUND_TRUTH)
-
-        precision = tp / max(tp + fp, 1)
-        recall = tp / max(tp + fn, 1)
-        f1 = 2 * precision * recall / max(precision + recall, 0.001)
-        accuracy = (tp + tn) / len(ALL_ACTIONS)
-
-        metrics_rows.append({
+        det_rows.append({
             "Method": method_name,
-            "TP": tp, "FP": fp, "FN": fn, "TN": tn,
-            "Precision": precision,
-            "Recall": recall,
-            "F1": f1,
-            "Accuracy": accuracy,
+            "Flagged Actions": len(detected),
+            "Actions": ", ".join(str(a) for a in sorted(detected)) if detected else "None",
         })
+    df_det = pd.DataFrame(det_rows)
+    st.dataframe(df_det, use_container_width=True, hide_index=True)
 
-    df_metrics = pd.DataFrame(metrics_rows)
+    # Cross-method agreement
+    st.subheader("Cross-Method Agreement")
+    all_flagged = set()
+    for detected in methods.values():
+        all_flagged |= detected
+    if all_flagged:
+        agreement_rows = []
+        for act_num in sorted(all_flagged):
+            flagged_by = [name for name, det in methods.items() if act_num in det]
+            agreement_rows.append({
+                "Action": act_num,
+                "Flagged By": len(flagged_by),
+                "Methods": ", ".join(m.split("(")[0].strip() for m in flagged_by),
+            })
+        df_agree = pd.DataFrame(agreement_rows)
+        st.dataframe(df_agree, use_container_width=True, hide_index=True)
+    else:
+        st.success("No misalignment detected by any method.")
 
-    # Display metrics table
-    st.dataframe(
-        df_metrics.style.format({
-            "Precision": "{:.2%}",
-            "Recall": "{:.2%}",
-            "F1": "{:.2%}",
-            "Accuracy": "{:.2%}",
-        }),
-        width='stretch',
-        hide_index=True,
-    )
-
-    # Bar chart comparison
-    col1, col2 = st.columns(2)
-    with col1:
-        df_plot = df_metrics.melt(
-            id_vars="Method",
-            value_vars=["Precision", "Recall", "F1"],
-            var_name="Metric",
-            value_name="Score",
-        )
-        fig = px.bar(df_plot, x="Method", y="Score", color="Metric",
-                     barmode="group",
-                     color_discrete_sequence=["#1565C0", "#2E7D32", "#FF8F00"])
-        fig.update_layout(
-            height=350, margin=dict(t=20, b=80),
-            xaxis_tickangle=-30,
-            yaxis_title="Score",
-        )
-        st.plotly_chart(fig, width='stretch')
-
-    with col2:
-        # Confusion matrix for best method
-        best_idx = df_metrics["F1"].idxmax()
-        best = df_metrics.iloc[best_idx]
-        st.subheader(f"Confusion Matrix: {best['Method'][:35]}")
-        cm = [[int(best["TP"]), int(best["FP"])],
-              [int(best["FN"]), int(best["TN"])]]
-        fig = go.Figure(data=go.Heatmap(
-            z=cm,
-            x=["Predicted Misaligned", "Predicted Aligned"],
-            y=["Actually Misaligned", "Actually Aligned"],
-            text=[[str(v) for v in row] for row in cm],
-            texttemplate="%{text}",
-            textfont={"size": 20},
-            colorscale=[[0, "#E3F2FD"], [1, "#1565C0"]],
-            showscale=False,
-        ))
-        fig.update_layout(height=300, margin=dict(t=20, b=20))
-        st.plotly_chart(fig, width='stretch')
-
-    # Detection details
-    st.divider()
-    st.subheader("Detection Details")
-    st.markdown(f"**Ground truth misaligned:** {sorted(MISALIGNED_GROUND_TRUTH)}")
-    st.markdown(f"**Orphan actions detected:** {sorted(orphan_detected)}")
-    st.markdown(f"**Ontology weak actions:** {sorted(weak_actions)}")
-
+    # Mismatch details
     misaligned_details = alignment.get("mismatched_actions", [])
     if misaligned_details:
+        st.divider()
         st.subheader("Declared vs Best Objective Mismatches")
         df_mis = pd.DataFrame([{
             "Action": m["action_number"],
@@ -980,110 +788,212 @@ def page_evaluation(data: dict) -> None:
             "Best Match": m["best_objective"],
             "Best Score": f"{m['best_score']:.3f}",
         } for m in misaligned_details])
-        st.dataframe(df_mis, width='stretch', hide_index=True)
+        st.dataframe(df_mis, use_container_width=True, hide_index=True)
 
 
 # ═══════════════════════════════════════════════════════════════════════
-# Export Report
+# Pipeline runner
 # ═══════════════════════════════════════════════════════════════════════
 
-def generate_report_text(data: dict) -> str:
-    """Generate a text summary report for export."""
-    alignment = data["alignment"]
-    rag = data["rag"]
-    agent = data["agent_recs"]
-    gaps = data["gaps"]
+def _run_full_pipeline_with_progress(report: dict, progress, start_pct: int = 0) -> None:
+    """Run the 4-step pipeline with a shared progress bar."""
+    from dashboard.pipeline_runner import (
+        run_dynamic_ontology, run_dynamic_kg,
+        run_dynamic_rag, run_dynamic_agent,
+    )
 
-    lines = [
-        "=" * 70,
-        "HOSPITAL STRATEGY-ACTION PLAN ALIGNMENT REPORT",
-        "Nawaloka Hospital Negombo",
-        "=" * 70,
-        "",
-        "1. OVERALL SYNCHRONIZATION",
-        f"   Score: {alignment.get('overall_score', 0):.1%} ({alignment.get('overall_classification', '')})",
-        f"   Mean similarity: {alignment.get('mean_similarity', 0):.4f}",
-        f"   Distribution: {alignment.get('distribution', {})}",
-        "",
-        "2. OBJECTIVE ALIGNMENT",
-    ]
-    for oa in alignment.get("objective_alignments", []):
-        lines.append(
-            f"   {oa['code']}: {oa['name']:<40} "
-            f"mean={oa['mean_similarity']:.3f}  "
-            f"coverage={oa['coverage_score']:.0%}"
-        )
+    remaining = 100 - start_pct
+    step_size = remaining // 4
 
-    lines += ["", "3. ORPHAN ACTIONS"]
-    for num in alignment.get("orphan_actions", []):
-        aa = next((a for a in alignment.get("action_alignments", [])
-                    if a["action_number"] == num), {})
-        lines.append(f"   Action {num}: {aa.get('title', '?')[:50]} — score={aa.get('best_score', 0):.3f}")
+    # Step 1/4
+    progress.progress(start_pct + 5, text="Step 1/4: Ontology mapping...")
+    mappings, gaps = run_dynamic_ontology(report)
+    st.session_state["dynamic_mappings"] = mappings
+    st.session_state["dynamic_gaps"] = gaps
+    progress.progress(start_pct + step_size, text="Step 1/4: Ontology mapping... done")
 
-    lines += ["", "4. RAG RECOMMENDATIONS"]
-    lines.append(f"   Improvements: {len(rag.get('improvements', []))}")
-    lines.append(f"   New actions suggested: {len(rag.get('new_action_suggestions', []))}")
+    # Step 2/4
+    progress.progress(start_pct + step_size + 5, text="Step 2/4: Knowledge graph...")
+    kg = run_dynamic_kg(report, mappings)
+    st.session_state["dynamic_kg"] = kg
+    progress.progress(start_pct + step_size * 2, text="Step 2/4: Knowledge graph... done")
 
-    lines += ["", "5. AGENT RECOMMENDATIONS"]
-    for rec in (agent or {}).get("recommendations", []):
-        lines.append(f"   [{rec['rec_id']}] {rec['issue_type']} — impact={rec['impact_score']:.3f}")
+    # Step 3/4
+    progress.progress(start_pct + step_size * 2 + 5, text="Step 3/4: RAG recommendations (LLM)...")
+    rag = run_dynamic_rag(report)
+    st.session_state["dynamic_rag"] = rag
+    progress.progress(start_pct + step_size * 3, text="Step 3/4: RAG recommendations... done")
 
-    lines += ["", "6. STRATEGIC GAPS"]
-    lines.append(f"   Uncovered concepts: {len(gaps.get('uncovered_strategy_concepts', []))}")
-    lines.append(f"   Weak actions: {len(gaps.get('weak_actions', []))}")
+    # Step 4/4
+    progress.progress(start_pct + step_size * 3 + 5, text="Step 4/4: Agent reasoning (LLM)...")
+    agent_recs, agent_trace = run_dynamic_agent(report, mappings, kg)
+    st.session_state["dynamic_agent_recs"] = agent_recs
+    st.session_state["dynamic_agent_trace"] = agent_trace
+    progress.progress(100, text="Pipeline complete!")
 
-    lines += ["", "=" * 70, "Generated by ISPS Dashboard", "=" * 70]
-    return "\n".join(lines)
+
+def _run_upload_analysis(strategic_file, action_file) -> None:
+    """Process uploaded PDFs and run alignment + full pipeline."""
+    from src.pdf_processor import (
+        extract_strategic_plan_from_pdf,
+        extract_action_plan_from_pdf,
+    )
+    from src.dynamic_analyzer import run_dynamic_analysis
+
+    progress = st.progress(0, text="Starting analysis...")
+
+    try:
+        # PDF extraction
+        progress.progress(5, text="Extracting strategic plan with AI...")
+        strategic_bytes = strategic_file.read()
+        strategic_data = extract_strategic_plan_from_pdf(strategic_bytes)
+        n_obj = len(strategic_data.get("objectives", []))
+        progress.progress(15, text=f"Found {n_obj} strategic objectives. Extracting action plan...")
+
+        action_bytes = action_file.read()
+        action_data = extract_action_plan_from_pdf(action_bytes)
+        n_act = len(action_data.get("actions", []))
+        progress.progress(30, text=f"Found {n_act} actions. Computing alignment...")
+
+        # Alignment analysis
+        report = run_dynamic_analysis(strategic_data, action_data)
+        st.session_state["upload_report"] = report
+        progress.progress(40, text="Alignment complete. Running full pipeline...")
+
+        # Full pipeline (ontology, KG, RAG, agent)
+        _run_full_pipeline_with_progress(report, progress, start_pct=40)
+
+        st.session_state["pipeline_done"] = True
+        st.session_state.pop("pipeline_running", None)
+        st.rerun()
+
+    except ValueError as e:
+        st.session_state.pop("pipeline_running", None)
+        st.error(f"Parsing error: {e}")
+    except ConnectionError:
+        st.session_state.pop("pipeline_running", None)
+        st.error("Cannot connect to Ollama. Make sure it is running.")
+    except Exception as e:
+        st.session_state.pop("pipeline_running", None)
+        st.error(f"Analysis failed: {e}")
 
 
 # ═══════════════════════════════════════════════════════════════════════
-# Main app
+# Main app — single page
 # ═══════════════════════════════════════════════════════════════════════
 
 def main() -> None:
-    """Streamlit application entry point."""
+    """Single-page Streamlit application entry point."""
     st.set_page_config(
-        page_title="ISPS Dashboard — Nawaloka Hospital",
+        page_title="Healthcare Strategy Aligner",
         page_icon="🏥",
         layout="wide",
-        initial_sidebar_state="expanded",
+        initial_sidebar_state="collapsed",
     )
 
     st.markdown(CUSTOM_CSS, unsafe_allow_html=True)
 
-    # Sidebar navigation
-    with st.sidebar:
-        st.markdown("## ISPS Dashboard")
-        st.markdown("**Nawaloka Hospital Negombo**")
-        st.divider()
+    # ── Header ────────────────────────────────────────────────────
+    st.title("Healthcare Strategy Aligner")
 
-        page = st.radio(
-            "Navigation",
-            [
-                "Home",
-                "Synchronization Analysis",
-                "Improvement Recommendations",
-                "Knowledge Graph",
-                "Ontology Browser",
-                "Agent Insights",
-                "Evaluation Metrics",
-                "Upload & Analyze",
-            ],
-            label_visibility="collapsed",
+    pipeline_done = st.session_state.get("pipeline_done", False)
+    has_report = "upload_report" in st.session_state
+
+    # ── Upload section ────────────────────────────────────────────
+    if not pipeline_done:
+        _show_upload_form()
+    else:
+        # Show summary bar + export + clear
+        _show_summary_bar()
+
+    # ── Results (only after pipeline completes) ───────────────────
+    if pipeline_done:
+        st.divider()
+        _show_results()
+
+
+def _show_upload_form() -> None:
+    """Render the upload form and trigger analysis."""
+    st.markdown(
+        "Upload your **Strategic Plan** and **Action Plan** PDFs. "
+        "The system will extract content with AI, compute alignment, "
+        "and run the full analysis pipeline automatically."
+    )
+
+    # Check Ollama availability
+    @st.cache_data(ttl=60, show_spinner=False)
+    def _check_ollama():
+        from src.pdf_processor import check_ollama_available
+        return check_ollama_available()
+
+    ollama_ok = _check_ollama()
+
+    if not ollama_ok:
+        st.error(
+            "Ollama not running. Start with `ollama serve` and "
+            "`ollama pull llama3.1:8b`."
+        )
+        return
+
+    col1, col2 = st.columns(2)
+    with col1:
+        strategic_file = st.file_uploader(
+            "Strategic Plan (PDF)",
+            type=["pdf"],
+            key="strategic_pdf",
+        )
+    with col2:
+        action_file = st.file_uploader(
+            "Action Plan (PDF)",
+            type=["pdf"],
+            key="action_pdf",
         )
 
-        st.divider()
+    if strategic_file and action_file:
+        if st.session_state.get("pipeline_running"):
+            st.info("Analysis running... please wait.")
+        elif st.button("Run Analysis", type="primary", use_container_width=True):
+            st.session_state["pipeline_running"] = True
+            _run_upload_analysis(strategic_file, action_file)
+    else:
+        st.caption("Upload both PDFs to begin.")
 
-        # Export button
-        st.markdown("### Export")
 
-    # Load data
-    with st.spinner("Loading pipeline data..."):
-        data = load_all_data()
+def _show_summary_bar() -> None:
+    """Show summary metrics, export buttons, and clear button."""
+    from dashboard.data_adapter import build_data_dict
 
-    # Export in sidebar (after data is loaded)
-    with st.sidebar:
-        # PDF report
+    report = st.session_state["upload_report"]
+    data = build_data_dict(report, dict(st.session_state))
+
+    # Summary metrics
+    m1, m2, m3, m4 = st.columns(4)
+    with m1:
+        st.markdown(make_metric_card(
+            "Overall Score",
+            f"{report['overall_score']:.1%}",
+            report["overall_classification"],
+        ), unsafe_allow_html=True)
+    with m2:
+        st.markdown(make_metric_card(
+            "Strategic Objectives",
+            str(len(report["objective_alignments"])),
+        ), unsafe_allow_html=True)
+    with m3:
+        st.markdown(make_metric_card(
+            "Action Items",
+            str(len(report["action_alignments"])),
+        ), unsafe_allow_html=True)
+    with m4:
+        st.markdown(make_metric_card(
+            "Orphan Actions",
+            str(len(report.get("orphan_actions", []))),
+            "Below alignment threshold",
+        ), unsafe_allow_html=True)
+
+    # Export + clear buttons
+    b1, b2, b3 = st.columns(3)
+    with b1:
         pdf_bytes = generate_pdf_report(data)
         if pdf_bytes:
             st.download_button(
@@ -1091,302 +1001,60 @@ def main() -> None:
                 data=pdf_bytes,
                 file_name="isps_alignment_report.pdf",
                 mime="application/pdf",
+                use_container_width=True,
             )
-
-        # TXT report
-        report_text = generate_report_text(data)
+    with b2:
+        results_json = {k: v for k, v in report.items()
+                        if k not in ("strategic_data", "action_data")}
         st.download_button(
-            label="Download Report (TXT)",
-            data=report_text,
-            file_name="isps_alignment_report.txt",
-            mime="text/plain",
+            label="Download Results (JSON)",
+            data=json.dumps(results_json, indent=2),
+            file_name="alignment_report.json",
+            mime="application/json",
+            use_container_width=True,
         )
-
-        # CSV / JSON / Excel via export_data()
-        export_fmt = st.selectbox(
-            "Data export format",
-            ["csv", "json", "excel"],
-            label_visibility="collapsed",
-        )
-        raw_bytes, filename, mime = export_data(data, export_fmt)
-        st.download_button(
-            label=f"Export Data ({export_fmt.upper()})",
-            data=raw_bytes,
-            file_name=filename,
-            mime=mime,
-        )
-
-    # Route to selected page
-    if page == "Home":
-        page_home(data)
-    elif page == "Synchronization Analysis":
-        page_sync_analysis(data)
-    elif page == "Improvement Recommendations":
-        page_recommendations(data)
-    elif page == "Knowledge Graph":
-        page_knowledge_graph(data)
-    elif page == "Ontology Browser":
-        page_ontology(data)
-    elif page == "Agent Insights":
-        page_agent_insights(data)
-    elif page == "Evaluation Metrics":
-        page_evaluation(data)
-    elif page == "Upload & Analyze":
-        page_upload_analyze()
+    with b3:
+        if st.button("Clear / Upload New", use_container_width=True):
+            for key in list(st.session_state.keys()):
+                if key in ("upload_report", "pipeline_done", "pipeline_running") \
+                        or key.startswith("dynamic_"):
+                    del st.session_state[key]
+            st.rerun()
 
 
-# ═══════════════════════════════════════════════════════════════════════
-# Page: Upload & Analyze
-# ═══════════════════════════════════════════════════════════════════════
+def _show_results() -> None:
+    """Show all analysis results in tabs."""
+    from dashboard.data_adapter import build_data_dict
 
-def page_upload_analyze() -> None:
-    """Upload PDF documents and run dynamic alignment analysis."""
-    st.title("Upload & Analyze")
-    st.markdown(
-        "Upload your own **Strategic Plan** and **Action Plan** as PDF files "
-        "to get alignment scores and insights. The system uses AI to extract "
-        "objectives and actions, then computes semantic alignment."
-    )
+    report = st.session_state["upload_report"]
+    data = build_data_dict(report, dict(st.session_state))
 
-    # Check Ollama availability
-    from src.pdf_processor import check_ollama_available
-    ollama_ok = check_ollama_available()
+    tabs = st.tabs([
+        "Synchronization Analysis",
+        "Improvement Recommendations",
+        "Knowledge Graph",
+        "Ontology Browser",
+        "Agent Insights",
+        "Evaluation Metrics",
+    ])
 
-    if not ollama_ok:
-        st.error(
-            "Ollama is not running or `llama3.1:8b` model is not available. "
-            "Start Ollama with `ollama serve` and pull the model with "
-            "`ollama pull llama3.1:8b` before uploading files."
-        )
-        return
+    with tabs[0]:
+        _render_sync_analysis(data)
 
-    st.success("Ollama is running and ready.")
+    with tabs[1]:
+        _render_recommendations(data)
 
-    # File uploaders
-    col1, col2 = st.columns(2)
-    with col1:
-        st.subheader("Strategic Plan")
-        strategic_file = st.file_uploader(
-            "Upload Strategic Plan (PDF)",
-            type=["pdf"],
-            key="strategic_pdf",
-            help="The multi-year strategic plan with objectives, goals, and KPIs.",
-        )
-        if strategic_file:
-            st.caption(f"Uploaded: {strategic_file.name} ({strategic_file.size / 1024:.0f} KB)")
+    with tabs[2]:
+        _render_knowledge_graph(data)
 
-    with col2:
-        st.subheader("Action Plan")
-        action_file = st.file_uploader(
-            "Upload Action Plan (PDF)",
-            type=["pdf"],
-            key="action_pdf",
-            help="The annual action plan with specific actions mapped to objectives.",
-        )
-        if action_file:
-            st.caption(f"Uploaded: {action_file.name} ({action_file.size / 1024:.0f} KB)")
+    with tabs[3]:
+        _render_ontology(data)
 
-    # Analyze button
-    if strategic_file and action_file:
-        if st.button("Run Alignment Analysis", type="primary", width='stretch'):
-            _run_upload_analysis(strategic_file, action_file)
+    with tabs[4]:
+        _render_agent_insights(data)
 
-    # Display results if available in session state
-    if "upload_report" in st.session_state:
-        _display_upload_results(st.session_state["upload_report"])
-
-
-def _run_upload_analysis(strategic_file, action_file) -> None:
-    """Process uploaded PDFs and run alignment analysis."""
-    from src.pdf_processor import (
-        extract_strategic_plan_from_pdf,
-        extract_action_plan_from_pdf,
-    )
-    from src.dynamic_analyzer import run_dynamic_analysis
-
-    progress = st.progress(0, text="Reading PDFs...")
-
-    try:
-        # Step 1: Extract text and parse strategic plan
-        progress.progress(10, text="Extracting strategic plan with AI...")
-        strategic_bytes = strategic_file.read()
-        strategic_data = extract_strategic_plan_from_pdf(strategic_bytes)
-        n_obj = len(strategic_data.get("objectives", []))
-        progress.progress(35, text=f"Found {n_obj} strategic objectives.")
-
-        # Step 2: Extract text and parse action plan
-        progress.progress(40, text="Extracting action plan with AI...")
-        action_bytes = action_file.read()
-        action_data = extract_action_plan_from_pdf(action_bytes)
-        n_act = len(action_data.get("actions", []))
-        progress.progress(65, text=f"Found {n_act} action items.")
-
-        # Step 3: Run alignment analysis
-        progress.progress(70, text="Computing semantic embeddings...")
-        report = run_dynamic_analysis(strategic_data, action_data)
-        progress.progress(100, text="Analysis complete!")
-
-        # Store in session state
-        st.session_state["upload_report"] = report
-        st.rerun()
-
-    except ValueError as e:
-        st.error(f"Parsing error: {e}")
-    except ConnectionError:
-        st.error("Cannot connect to Ollama. Make sure it is running.")
-    except Exception as e:
-        st.error(f"Analysis failed: {e}")
-
-
-def _display_upload_results(report: dict) -> None:
-    """Render the alignment analysis results from uploaded documents."""
-    st.divider()
-    st.header("Analysis Results")
-
-    # Summary metrics
-    cols = st.columns(4)
-    with cols[0]:
-        st.metric("Overall Score", f"{report['overall_score']:.3f}")
-    with cols[1]:
-        st.metric("Classification", report["overall_classification"])
-    with cols[2]:
-        st.metric("Objectives", len(report["objective_alignments"]))
-    with cols[3]:
-        st.metric("Actions", len(report["action_alignments"]))
-
-    # Distribution
-    dist = report["distribution"]
-    dist_cols = st.columns(4)
-    colours = {"Excellent": "#2ecc71", "Good": "#27ae60", "Fair": "#f39c12", "Poor": "#e74c3c"}
-    for i, (cls, count) in enumerate(dist.items()):
-        with dist_cols[i]:
-            st.markdown(
-                f"<div style='text-align:center; padding:8px; "
-                f"background:{colours[cls]}22; border-radius:8px;'>"
-                f"<b>{cls}</b><br><span style='font-size:24px;'>{count}</span></div>",
-                unsafe_allow_html=True,
-            )
-
-    # Alignment heatmap
-    st.subheader("Alignment Heatmap")
-    matrix = report["alignment_matrix"]
-    row_labels = [
-        f"{code}: {oa['name']}"
-        for code, oa in zip(report["matrix_row_labels"], report["objective_alignments"])
-    ]
-    col_labels = [f"Action {n}" for n in report["matrix_col_labels"]]
-
-    fig = go.Figure(data=go.Heatmap(
-        z=matrix,
-        x=col_labels,
-        y=row_labels,
-        colorscale="RdYlGn",
-        zmin=0, zmax=1,
-        text=[[f"{v:.2f}" for v in row] for row in matrix],
-        texttemplate="%{text}",
-        textfont={"size": 9},
-        hovertemplate="Objective: %{y}<br>Action: %{x}<br>Similarity: %{z:.3f}<extra></extra>",
-    ))
-    fig.update_layout(
-        height=max(300, len(row_labels) * 60),
-        margin=dict(l=10, r=10, t=30, b=10),
-        xaxis_title="Actions",
-        yaxis_title="Strategic Objectives",
-    )
-    st.plotly_chart(fig, width='stretch')
-
-    # Per-objective breakdown
-    st.subheader("Per-Objective Alignment")
-    for oa in report["objective_alignments"]:
-        with st.expander(
-            f"[{oa['code']}] {oa['name']} — "
-            f"Mean: {oa['mean_similarity']:.3f} | "
-            f"Max: {oa['max_similarity']:.3f} | "
-            f"Coverage: {oa['coverage_score']:.0%}",
-            expanded=False,
-        ):
-            c1, c2, c3 = st.columns(3)
-            with c1:
-                st.metric("Aligned Actions", oa["aligned_action_count"])
-            with c2:
-                st.metric("Declared Actions", oa["declared_action_count"])
-            with c3:
-                st.metric("Gap Actions", len(oa["gap_actions"]))
-
-            if oa["top_actions"]:
-                st.markdown("**Top-5 Actions:**")
-                for act_num, sim in oa["top_actions"]:
-                    act_info = next(
-                        (a for a in report["action_alignments"]
-                         if a["action_number"] == act_num), {}
-                    )
-                    title = act_info.get("title", f"Action {act_num}")
-                    st.markdown(f"- Action {act_num}: {title} (sim={sim:.3f})")
-
-    # Per-action table
-    st.subheader("Per-Action Alignment")
-    action_rows = []
-    for a in report["action_alignments"]:
-        action_rows.append({
-            "#": a["action_number"],
-            "Title": a["title"][:50],
-            "Declared": a["declared_objective"],
-            "Best Fit": a["best_objective"],
-            "Score": a["best_score"],
-            "Class": a["classification"],
-            "Match": "Yes" if a["declared_match"] else "No",
-            "Orphan": "Yes" if a["is_orphan"] else "",
-        })
-
-    df = pd.DataFrame(action_rows)
-    st.dataframe(
-        df.style.apply(
-            lambda row: [
-                "background-color: #ffcccc" if row["Class"] == "Poor"
-                else "background-color: #ccffcc" if row["Class"] in ("Good", "Excellent")
-                else ""
-            ] * len(row),
-            axis=1,
-        ),
-        width='stretch',
-        hide_index=True,
-    )
-
-    # Orphan and mismatch warnings
-    if report["orphan_actions"]:
-        st.warning(
-            f"**Orphan Actions** (no strategic alignment): "
-            f"{report['orphan_actions']}"
-        )
-
-    if report["mismatched_actions"]:
-        st.info(
-            f"**Declaration Mismatches** ({len(report['mismatched_actions'])} actions): "
-            "These actions are semantically better aligned to a different objective "
-            "than their declared one."
-        )
-        for m in report["mismatched_actions"]:
-            st.markdown(
-                f"- **Action {m['action_number']}** ({m['title'][:40]}): "
-                f"Declared={m['declared_objective']}, "
-                f"Best fit={m['best_objective']} (score={m['best_score']:.3f})"
-            )
-
-    # Download results
-    st.divider()
-    results_json = {k: v for k, v in report.items()
-                    if k not in ("strategic_data", "action_data")}
-    st.download_button(
-        label="Download Results (JSON)",
-        data=json.dumps(results_json, indent=2),
-        file_name="upload_alignment_report.json",
-        mime="application/json",
-    )
-
-    # Clear button
-    if st.button("Clear Results"):
-        del st.session_state["upload_report"]
-        st.rerun()
+    with tabs[5]:
+        _render_evaluation(data)
 
 
 if __name__ == "__main__":

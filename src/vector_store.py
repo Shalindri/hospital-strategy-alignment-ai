@@ -66,7 +66,7 @@ Typical usage::
         top_k=3,
     )
 
-Author : ISPS Team
+Author : shalindri20@gmail.com
 Created: 2025-01
 """
 

@@ -55,7 +55,7 @@ Typical usage::
     mapper = OntologyMapper()
     mapper.run()
 
-Author : ISPS Team
+Author : shalindri20@gmail.com
 Created: 2025-01
 """
 

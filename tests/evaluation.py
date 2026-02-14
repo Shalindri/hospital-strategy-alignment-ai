@@ -27,7 +27,7 @@ Outputs (written to ``outputs/evaluation/``)::
     score_correlation.png     — predicted vs ground-truth scatter plots
     mae_comparison.png        — MAE bar chart
 
-Author : ISPS Team
+Author : shalindri20@gmail.com
 Created: 2025-01
 """
 

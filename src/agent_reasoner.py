@@ -52,7 +52,7 @@ Typical usage::
     agent = AgentReasoner()
     agent.run()
 
-Author : ISPS Team
+Author : shalindri20@gmail.com
 Created: 2025-01
 """
 

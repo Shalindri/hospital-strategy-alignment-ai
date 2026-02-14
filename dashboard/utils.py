@@ -12,7 +12,7 @@ Provides:
 All functions include error handling and return sensible defaults on failure
 so the dashboard never crashes due to a missing file or malformed data.
 
-Author : ISPS Team
+Author : shalindri20@gmail.com
 Created: 2025-01
 """
 

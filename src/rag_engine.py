@@ -47,7 +47,7 @@ Typical usage::
     results = engine.run()
     engine.save_results()
 
-Author : ISPS Team
+Author : shalindri20@gmail.com
 Created: 2025-01
 """
 

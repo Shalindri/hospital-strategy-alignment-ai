@@ -68,7 +68,7 @@ Apply these guidelines consistently:
     Examples: a sports tournament has nothing to do with Research; a
     pharmacy outlet has nothing to do with Digital Health.
 
-Author : ISPS Team
+Author : shalindri20@gmail.com
 Created: 2025-01
 """
 

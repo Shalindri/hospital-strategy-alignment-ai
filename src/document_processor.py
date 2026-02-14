@@ -14,7 +14,7 @@ Typical usage::
     strategic = processor.process_strategic_plan()
     actions   = processor.process_action_plan()
 
-Author : ISPS Team
+Author : shalindri20@gmail.com
 Created: 2025-01
 """
 

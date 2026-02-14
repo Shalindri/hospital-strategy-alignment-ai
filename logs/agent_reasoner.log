@@ -1,42 +1,38 @@
-2026-02-13 21:36:08 | INFO | Initialising vector store ...
-2026-02-13 21:36:13 | INFO | Initialising LLM (llama3.1:8b) ...
-2026-02-13 21:36:13 | INFO | ============================================================
-2026-02-13 21:36:13 | INFO | AGENT REASONER — Starting pipeline
-2026-02-13 21:36:13 | INFO |   Max iterations:  5
-2026-02-13 21:36:13 | INFO |   Issue threshold:  0.150
-2026-02-13 21:36:13 | INFO | ============================================================
-2026-02-13 21:36:13 | INFO | Diagnosed 24 issues. Top-3 scores: ['orphan_action_1=0.6162', 'orphan_action_25=0.6004', 'under_supported_C=0.5984']
-2026-02-13 21:36:13 | INFO | ─── Iteration 1/5 ───
-2026-02-13 21:36:13 | INFO | Addressing: orphan_action_1 (score=0.6162, type=orphan_action)
-2026-02-13 21:36:13 | INFO | Cache hit for key a4729682fb3db1ee.
-2026-02-13 21:36:13 | INFO | Cache hit for key 9e1f8ac41eaf511d.
-2026-02-13 21:36:13 | INFO | Recommendation ACCEPTED: rec_orphan_action_1 (impact=0.380)
-2026-02-13 21:36:13 | INFO | ─── Iteration 2/5 ───
-2026-02-13 21:36:13 | INFO | Addressing: orphan_action_25 (score=0.6004, type=orphan_action)
-2026-02-13 21:36:13 | INFO | Cache hit for key 1b5c081dc6176756.
-2026-02-13 21:36:13 | INFO | Cache hit for key 9ff833ba829143bd.
-2026-02-13 21:36:13 | INFO | Recommendation ACCEPTED: rec_orphan_action_25 (impact=0.230)
-2026-02-13 21:36:13 | INFO | ─── Iteration 3/5 ───
-2026-02-13 21:36:13 | INFO | Addressing: under_supported_C (score=0.5984, type=under_supported_strategy)
-2026-02-13 21:36:14 | INFO | Cache hit for key 63a6a79da3c12ca3.
-2026-02-13 21:36:14 | INFO | Cache hit for key 16447a01132ca95a.
-2026-02-13 21:36:14 | INFO | Recommendation ACCEPTED: rec_under_supported_C (impact=0.605)
-2026-02-13 21:36:14 | INFO | ─── Iteration 4/5 ───
-2026-02-13 21:36:14 | INFO | Addressing: under_supported_D (score=0.5712, type=under_supported_strategy)
-2026-02-13 21:36:14 | INFO | Cache hit for key 839f35593b625a9c.
-2026-02-13 21:36:14 | INFO | Cache hit for key 131bcac259660c10.
-2026-02-13 21:36:14 | INFO | Recommendation ACCEPTED: rec_under_supported_D (impact=0.680)
-2026-02-13 21:36:14 | INFO | ─── Iteration 5/5 ───
-2026-02-13 21:36:14 | INFO | Addressing: under_supported_B (score=0.5440, type=under_supported_strategy)
-2026-02-13 21:36:14 | INFO | Cache hit for key 7de9732e4e1f1eaf.
-2026-02-13 21:36:14 | INFO | Cache hit for key e2a7ea23536d4ce6.
-2026-02-13 21:36:14 | INFO | Recommendation ACCEPTED: rec_under_supported_B (impact=0.155)
-2026-02-13 21:36:14 | INFO | ============================================================
-2026-02-13 21:36:14 | INFO | AGENT REASONER — Pipeline complete
-2026-02-13 21:36:14 | INFO |   Issues diagnosed:     24
-2026-02-13 21:36:14 | INFO |   Issues addressed:     5
-2026-02-13 21:36:14 | INFO |   Recommendations made: 5
-2026-02-13 21:36:14 | INFO |   Total impact score:   2.050
-2026-02-13 21:36:14 | INFO | ============================================================
-2026-02-13 21:36:14 | INFO | Recommendations saved to /Users/shalindri/Documents/MSc/Information_Retrival/hospital-strategy-alignment-ai/outputs/agent_recommendations.json.
-2026-02-13 21:36:14 | INFO | Reasoning trace saved to /Users/shalindri/Documents/MSc/Information_Retrival/hospital-strategy-alignment-ai/outputs/agent_trace.json.
+2026-02-14 12:31:09 | INFO | ============================================================
+2026-02-14 12:31:09 | INFO | AGENT REASONER — Starting pipeline
+2026-02-14 12:31:09 | INFO |   Max iterations:  5
+2026-02-14 12:31:09 | INFO |   Issue threshold:  0.150
+2026-02-14 12:31:09 | INFO | ============================================================
+2026-02-14 12:31:09 | INFO | Diagnosed 57 issues. Top-3 scores: ['under_supported_A=0.6664', 'orphan_action_1=0.5908', 'orphan_action_2=0.5636']
+2026-02-14 12:31:09 | INFO | ─── Iteration 1/5 ───
+2026-02-14 12:31:09 | INFO | Addressing: under_supported_A (score=0.6664, type=under_supported_strategy)
+2026-02-14 12:31:09 | INFO | LLM call attempt 1/3 (key=4b0e1c77dbff5122) ...
+2026-02-14 12:31:33 | INFO | LLM call attempt 1/3 (key=ed5c988ffaaf03e4) ...
+2026-02-14 12:31:48 | INFO | Recommendation ACCEPTED: rec_under_supported_A (impact=0.680)
+2026-02-14 12:31:48 | INFO | ─── Iteration 2/5 ───
+2026-02-14 12:31:48 | INFO | Addressing: orphan_action_1 (score=0.5908, type=orphan_action)
+2026-02-14 12:31:48 | INFO | LLM call attempt 1/3 (key=58f5f679fe63fab5) ...
+2026-02-14 12:32:07 | INFO | LLM call attempt 1/3 (key=9b531a0d3e903fe7) ...
+2026-02-14 12:32:23 | INFO | Recommendation ACCEPTED: rec_orphan_action_1 (impact=0.410)
+2026-02-14 12:32:23 | INFO | ─── Iteration 3/5 ───
+2026-02-14 12:32:23 | INFO | Addressing: orphan_action_2 (score=0.5636, type=orphan_action)
+2026-02-14 12:32:23 | INFO | LLM call attempt 1/3 (key=4fcf82ff012b3947) ...
+2026-02-14 12:32:42 | INFO | LLM call attempt 1/3 (key=f256bfd730899815) ...
+2026-02-14 12:32:55 | INFO | Recommendation ACCEPTED: rec_orphan_action_2 (impact=0.305)
+2026-02-14 12:32:55 | INFO | ─── Iteration 4/5 ───
+2026-02-14 12:32:55 | INFO | Addressing: under_supported_C (score=0.5304, type=under_supported_strategy)
+2026-02-14 12:32:56 | INFO | LLM call attempt 1/3 (key=5d68910ec0002895) ...
+2026-02-14 12:33:12 | INFO | LLM call attempt 1/3 (key=22417d59e30f693a) ...
+2026-02-14 12:33:28 | INFO | Recommendation ACCEPTED: rec_under_supported_C (impact=0.680)
+2026-02-14 12:33:28 | INFO | ─── Iteration 5/5 ───
+2026-02-14 12:33:28 | INFO | Addressing: under_supported_D (score=0.5304, type=under_supported_strategy)
+2026-02-14 12:33:28 | INFO | LLM call attempt 1/3 (key=b2d728d27c5eaf3f) ...
+2026-02-14 12:33:46 | INFO | LLM call attempt 1/3 (key=ef89b283d4149714) ...
+2026-02-14 12:34:01 | INFO | Recommendation ACCEPTED: rec_under_supported_D (impact=0.380)
+2026-02-14 12:34:01 | INFO | ============================================================
+2026-02-14 12:34:01 | INFO | AGENT REASONER — Pipeline complete
+2026-02-14 12:34:01 | INFO |   Issues diagnosed:     57
+2026-02-14 12:34:01 | INFO |   Issues addressed:     5
+2026-02-14 12:34:01 | INFO |   Recommendations made: 5
+2026-02-14 12:34:01 | INFO |   Total impact score:   2.455
+2026-02-14 12:34:01 | INFO | ============================================================

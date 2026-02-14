@@ -14,8 +14,6 @@ Created: 2025-01
 
 from __future__ import annotations
 
-import json
-
 import numpy as np
 import pandas as pd
 import plotly.express as px
@@ -43,13 +41,48 @@ CUSTOM_CSS = """
         --bg-card: #F8FAFB;
         --text-dark: #1A237E;
     }
-    .main .block-container { max-width: 1500px; padding-top: 0rem; }
-    h1 { color: var(--primary) !important; font-size: 1.6rem !important; }
+    .main .block-container { max-width: 1500px; padding-top: 0.5rem; }
+
+    /* ── Header bar ── */
+    .header-bar {
+        background: linear-gradient(135deg, #1565C0 0%, #1A237E 100%);
+        color: white;
+        padding: 0.8rem 1.5rem;
+        border-radius: 10px;
+        margin-bottom: 0.8rem;
+        text-align: center;
+    }
+    .header-bar h1 {
+        color: white !important;
+        font-size: 1.5rem !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
     h2, h3 { color: var(--text-dark) !important; }
 
-    /* Compact upload column */
-    [data-testid="stFileUploader"] label p { font-size: 0.78rem !important; }
-    [data-testid="stFileUploader"] section { padding: 0.3rem !important; }
+    /* ── Toolbar area ── */
+    .toolbar-container {
+        background: var(--bg-card);
+        border: 1px solid #E0E0E0;
+        border-radius: 10px;
+        padding: 0.8rem 1rem;
+        margin-bottom: 0.8rem;
+    }
+
+    /* Compact upload in toolbar */
+    [data-testid="stFileUploader"] label p { font-size: 0.75rem !important; }
+    [data-testid="stFileUploader"] section { padding: 0.2rem !important; }
+    [data-testid="stFileUploader"] { margin-bottom: 0 !important; }
+
+    /* Processing label */
+    .processing-label {
+        text-align: center;
+        color: #F57F17;
+        font-size: 0.75rem;
+        font-weight: 600;
+        margin-top: 0.3rem;
+    }
 
     /* Metric cards */
     .metric-card {
@@ -82,22 +115,22 @@ CUSTOM_CSS = """
     }
 
     /* ── Stepper progress bar ── */
-    .stepper { display: flex; align-items: flex-start; justify-content: space-between; padding: 0.8rem 0; }
+    .stepper { display: flex; align-items: flex-start; justify-content: space-between; padding: 0.4rem 0; }
     .stepper .step { flex: 1; text-align: center; position: relative; }
     .stepper .step .circle {
-        width: 30px; height: 30px; border-radius: 50%;
+        width: 26px; height: 26px; border-radius: 50%;
         background: #E0E0E0; color: #999;
         display: inline-flex; align-items: center; justify-content: center;
-        font-size: 0.75rem; font-weight: 700;
+        font-size: 0.7rem; font-weight: 700;
         border: 2px solid #BDBDBD;
         transition: all 0.3s;
         position: relative; z-index: 2;
     }
-    .stepper .step .label { font-size: 0.65rem; color: #888; margin-top: 4px; line-height: 1.1; }
+    .stepper .step .label { font-size: 0.6rem; color: #888; margin-top: 3px; line-height: 1.1; }
     /* Connector line between circles */
     .stepper .step:not(:last-child)::after {
-        content: ''; position: absolute; top: 15px;
-        left: calc(50% + 18px); right: calc(-50% + 18px);
+        content: ''; position: absolute; top: 13px;
+        left: calc(50% + 16px); right: calc(-50% + 16px);
         height: 3px; background: #E0E0E0; z-index: 1;
     }
     /* Active step */
@@ -116,6 +149,20 @@ CUSTOM_CSS = """
     }
     .stepper .step.done .label { color: #2E7D32; font-weight: 600; }
     .stepper .step.done:not(:last-child)::after { background: #4CAF50; }
+
+    /* ── Output placeholder ── */
+    .output-placeholder {
+        background: var(--bg-card);
+        border: 1px solid #E0E0E0;
+        border-radius: 10px;
+        padding: 3rem 2rem;
+        min-height: 400px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #999;
+        font-size: 1.1rem;
+    }
 </style>
 """
 
@@ -213,7 +260,7 @@ def _render_sync_analysis(data: dict) -> None:
             },
         ))
         fig.update_layout(height=280, margin=dict(t=40, b=20, l=30, r=30))
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width='stretch')
 
     with col2:
         st.subheader("Strategy-wise Alignment")
@@ -232,7 +279,7 @@ def _render_sync_analysis(data: dict) -> None:
             fig.update_layout(height=280, margin=dict(t=20, b=20),
                               yaxis_title="Cosine Similarity",
                               legend=dict(orientation="h", y=1.1))
-            st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig, width='stretch')
 
     st.divider()
 
@@ -258,7 +305,7 @@ def _render_sync_analysis(data: dict) -> None:
         ))
         fig.update_layout(height=300, margin=dict(t=20, b=20),
                           xaxis_title="Action Items", yaxis_title="Strategic Objectives")
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width='stretch')
 
     # Histogram + action table
     col1, col2 = st.columns(2)
@@ -274,7 +321,7 @@ def _render_sync_analysis(data: dict) -> None:
             fig.add_vline(x=0.60, line_dash="dash", line_color="green",
                           annotation_text="Good threshold")
             fig.update_layout(height=300, margin=dict(t=20, b=20))
-            st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig, width='stretch')
 
     with col2:
         st.subheader("Action Alignment Details")
@@ -288,7 +335,7 @@ def _render_sync_analysis(data: dict) -> None:
                 "Class": a["classification"],
                 "Orphan": "Yes" if a["is_orphan"] else "",
             } for a in action_data])
-            st.dataframe(df_actions, use_container_width=True, height=300,
+            st.dataframe(df_actions, width='stretch', height=300,
                          hide_index=True)
 
 
@@ -378,7 +425,7 @@ def _render_recommendations(data: dict) -> None:
                 "Score": w.get("best_score", 0),
                 "Note": w.get("note", "")[:60],
             } for w in weak])
-            st.dataframe(df_weak, use_container_width=True, hide_index=True)
+            st.dataframe(df_weak, width='stretch', hide_index=True)
         if not uncovered and not weak:
             st.info("No strategic gaps detected.")
 
@@ -506,7 +553,7 @@ def _render_knowledge_graph(data: dict) -> None:
         yaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
         margin=dict(t=20, b=40, l=20, r=20),
     )
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, width='stretch')
 
     col1, col2 = st.columns(2)
     with col1:
@@ -615,7 +662,7 @@ def _render_ontology(data: dict) -> None:
                               color="count",
                               color_continuous_scale=["#FFCDD2", "#C8E6C9", "#1B5E20"])
             fig.update_layout(height=400, margin=dict(t=10, b=10))
-            st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig, width='stretch')
 
 
 # ═══════════════════════════════════════════════════════════════════════
@@ -654,7 +701,7 @@ def _render_agent_insights(data: dict) -> None:
             "Objectives": ", ".join(i.get("affected_objectives", [])),
             "Addressed": "Yes" if i.get("addressed") else "",
         } for i in issues])
-        st.dataframe(df_issues, use_container_width=True, hide_index=True)
+        st.dataframe(df_issues, width='stretch', hide_index=True)
 
     st.divider()
 
@@ -761,7 +808,7 @@ def _render_evaluation(data: dict) -> None:
             "Actions": ", ".join(str(a) for a in sorted(detected)) if detected else "None",
         })
     df_det = pd.DataFrame(det_rows)
-    st.dataframe(df_det, use_container_width=True, hide_index=True)
+    st.dataframe(df_det, width='stretch', hide_index=True)
 
     st.subheader("Cross-Method Agreement")
     all_flagged = set()
@@ -777,7 +824,7 @@ def _render_evaluation(data: dict) -> None:
                 "Methods": ", ".join(m.split("(")[0].strip() for m in flagged_by),
             })
         df_agree = pd.DataFrame(agreement_rows)
-        st.dataframe(df_agree, use_container_width=True, hide_index=True)
+        st.dataframe(df_agree, width='stretch', hide_index=True)
     else:
         st.success("No misalignment detected by any method.")
 
@@ -792,7 +839,7 @@ def _render_evaluation(data: dict) -> None:
             "Best Match": m["best_objective"],
             "Best Score": f"{m['best_score']:.3f}",
         } for m in misaligned_details])
-        st.dataframe(df_mis, use_container_width=True, hide_index=True)
+        st.dataframe(df_mis, width='stretch', hide_index=True)
 
 
 # ═══════════════════════════════════════════════════════════════════════
@@ -882,109 +929,130 @@ def main() -> None:
     )
 
     st.markdown(CUSTOM_CSS, unsafe_allow_html=True)
-    st.title("Healthcare Strategy Aligner")
+
+    # ── Header bar ──
+    st.markdown(
+        '<div class="header-bar"><h1>Healthcare Strategy Aligner</h1></div>',
+        unsafe_allow_html=True,
+    )
 
     pipeline_done = st.session_state.get("pipeline_done", False)
 
-    # ── Top panel: compact upload (20%) | stepper + controls (80%) ─
-    left_col, right_col = st.columns([1, 4], gap="medium")
+    # ── Toolbar: uploaders | button | stepper | download — one row ──
+    st.markdown('<div class="toolbar-container">', unsafe_allow_html=True)
 
-    # Collect file references and button state before triggering analysis
     strategic_file = None
     action_file = None
     run_clicked = False
 
-    with left_col:
-        if not pipeline_done:
-            @st.cache_data(ttl=60, show_spinner=False)
-            def _check_ollama():
-                from src.pdf_processor import check_ollama_available
-                return check_ollama_available()
+    if not pipeline_done:
+        # Layout: [uploader1] [uploader2] [button] [stepper] [empty]
+        c_up1, c_up2, c_btn, c_step, c_dl = st.columns(
+            [1.2, 1.2, 1, 2.5, 1], gap="medium",
+        )
 
-            ollama_ok = _check_ollama()
+        @st.cache_data(ttl=60, show_spinner=False)
+        def _check_ollama():
+            from src.pdf_processor import check_ollama_available
+            return check_ollama_available()
+
+        ollama_ok = _check_ollama()
+
+        with c_up1:
             if not ollama_ok:
                 st.error("Ollama not running.")
             else:
                 strategic_file = st.file_uploader(
-                    "Strategic Plan", type=["pdf"], key="strategic_pdf",
+                    "strategy.pdf", type=["pdf"], key="strategic_pdf",
+                    label_visibility="collapsed",
                 )
+
+        with c_up2:
+            if ollama_ok:
                 action_file = st.file_uploader(
-                    "Action Plan", type=["pdf"], key="action_pdf",
+                    "action.pdf", type=["pdf"], key="action_pdf",
+                    label_visibility="collapsed",
                 )
-                if strategic_file and action_file:
-                    if st.session_state.get("pipeline_running"):
-                        st.caption("Running...")
-                    else:
-                        run_clicked = st.button(
-                            "Run Analysis", type="primary",
-                            use_container_width=True,
-                        )
+
+        with c_btn:
+            if strategic_file and action_file:
+                if st.session_state.get("pipeline_running"):
+                    st.button(
+                        "Start Analysis", type="primary",
+                        width='stretch', disabled=True,
+                    )
                 else:
-                    st.caption("Upload both PDFs.")
+                    run_clicked = st.button(
+                        "Start Analysis", type="primary",
+                        width='stretch',
+                    )
+            else:
+                st.button(
+                    "Start Analysis", type="primary",
+                    width='stretch', disabled=True,
+                )
+
+        stepper_area = c_step.empty()
+        if st.session_state.get("pipeline_running"):
+            stepper_area.markdown(_build_stepper_html(0), unsafe_allow_html=True)
+            c_step.markdown(
+                '<div class="processing-label">PROCESSING...</div>',
+                unsafe_allow_html=True,
+            )
         else:
-            # After pipeline: compact summary
-            report = st.session_state["upload_report"]
-            st.markdown(make_metric_card(
-                "Score",
-                f"{report['overall_score']:.0%}",
-                report["overall_classification"],
-            ), unsafe_allow_html=True)
-            st.markdown(make_metric_card(
-                "Actions",
-                str(len(report["action_alignments"])),
-            ), unsafe_allow_html=True)
-            st.markdown(make_metric_card(
-                "Objectives",
-                str(len(report["objective_alignments"])),
-            ), unsafe_allow_html=True)
-            if st.button("New Analysis", use_container_width=True):
+            stepper_area.markdown(_build_stepper_html(0), unsafe_allow_html=True)
+
+        with c_dl:
+            st.button(
+                "Download Report as PDF",
+                width='stretch', disabled=True,
+            )
+    else:
+        # Pipeline done: [summary] [button] [stepper] [download]
+        c_info, c_btn, c_step, c_dl = st.columns(
+            [2, 1, 2.5, 1.5], gap="medium",
+        )
+
+        report = st.session_state["upload_report"]
+
+        with c_info:
+            i1, i2, i3, i4, i5 = st.columns(5)
+            with i1:
+                st.metric("Score", f"{report['overall_score']:.0%}")
+            with i2:
+                st.metric("Actions", len(report["action_alignments"]))
+            with i3:
+                st.metric("Orphans", len(report.get("orphan_actions", [])))
+            with i4:
+                st.metric("Poor", len(report.get("poorly_aligned_actions", [])))
+            with i5:
+                st.metric("Good", len(report.get("well_aligned_actions", [])))
+
+        with c_btn:
+            if st.button("New Analysis", type="secondary", width='stretch'):
                 for key in list(st.session_state.keys()):
                     if key in ("upload_report", "pipeline_done", "pipeline_running") \
                             or key.startswith("dynamic_"):
                         del st.session_state[key]
                 st.rerun()
 
-    with right_col:
-        # Create a placeholder for the stepper — always in the right column
-        stepper_area = st.empty()
+        stepper_area = c_step.empty()
+        stepper_area.markdown(_build_stepper_html(7), unsafe_allow_html=True)
 
-        if pipeline_done:
-            # Show completed stepper + metrics + download
-            stepper_area.markdown(_build_stepper_html(7), unsafe_allow_html=True)
-
+        with c_dl:
             from dashboard.data_adapter import build_data_dict
-            report = st.session_state["upload_report"]
             data = build_data_dict(report, dict(st.session_state))
-
-            m1, m2, m3, m4, m5 = st.columns(5)
-            with m1:
-                st.metric("Orphans", len(report.get("orphan_actions", [])))
-            with m2:
-                st.metric("Poor", len(report.get("poorly_aligned_actions", [])))
-            with m3:
-                st.metric("Well Aligned", len(report.get("well_aligned_actions", [])))
-            with m4:
-                pdf_bytes = generate_pdf_report(data)
-                if pdf_bytes:
-                    st.download_button(
-                        "Download PDF", data=pdf_bytes,
-                        file_name="isps_alignment_report.pdf",
-                        mime="application/pdf", use_container_width=True,
-                    )
-            with m5:
-                results_json = {k: v for k, v in report.items()
-                                if k not in ("strategic_data", "action_data")}
+            pdf_bytes = generate_pdf_report(data)
+            if pdf_bytes:
                 st.download_button(
-                    "Download JSON",
-                    data=json.dumps(results_json, indent=2),
-                    file_name="alignment_report.json",
-                    mime="application/json", use_container_width=True,
+                    "Download Report as PDF", data=pdf_bytes,
+                    file_name="isps_alignment_report.pdf",
+                    mime="application/pdf", width='stretch',
                 )
-        else:
-            # Show idle stepper (no step active)
-            stepper_area.markdown(_build_stepper_html(0), unsafe_allow_html=True)
 
-    # ── Trigger analysis OUTSIDE columns so stepper updates in right col ─
+    st.markdown('</div>', unsafe_allow_html=True)
+
+    # ── Trigger analysis OUTSIDE columns so stepper updates ──
     if run_clicked and strategic_file and action_file:
         st.session_state["pipeline_running"] = True
         _run_upload_analysis(strategic_file, action_file, stepper_area)
@@ -1018,7 +1086,10 @@ def main() -> None:
         ])
         for tab in tabs:
             with tab:
-                st.info("Upload PDFs and run analysis to see results here.")
+                st.markdown(
+                    '<div class="output-placeholder">Output</div>',
+                    unsafe_allow_html=True,
+                )
 
 
 if __name__ == "__main__":

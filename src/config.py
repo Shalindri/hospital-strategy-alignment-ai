@@ -43,8 +43,8 @@ logger = logging.getLogger("config")
 
 THRESHOLD_EXCELLENT = 0.75   # Near-direct operationalisation of strategy
 THRESHOLD_GOOD = 0.60        # Clear strategic support
-THRESHOLD_FAIR = 0.45        # Partial or indirect alignment
-ORPHAN_THRESHOLD = 0.45      # Below this for ALL objectives → orphan
+THRESHOLD_FAIR = 0.42        # Partial or indirect alignment
+ORPHAN_THRESHOLD = 0.42      # Below this for ALL objectives → orphan
 
 # ---------------------------------------------------------------------------
 # Default hospital name (used when no name is provided in data)

@@ -342,26 +342,18 @@ class SynchronizationAnalyzer:
                 "Run VectorStore.build_from_json() first."
             )
 
-        # ── Convert to numpy arrays ──────────────────────────────────
-        # Embeddings are already L2-normalised (we set
-        # normalize_embeddings=True during encoding), so cosine
-        # similarity = dot product.
+        # Convert to numpy arrays - cosine similarity = dot product.
         obj_emb = np.array(obj_data["embeddings"])  # (5, 384)
         act_emb = np.array(act_data["embeddings"])  # (25, 384)
+
+        matrix = obj_emb @ act_emb.T
+        matrix = np.clip(matrix, -1.0, 1.0)
 
         logger.info(
             "Embedding shapes: objectives %s, actions %s",
             obj_emb.shape,
             act_emb.shape,
         )
-
-        # ── Cosine similarity via matrix multiplication ──────────────
-        # For L2-normalised vectors: cos_sim(u, v) = u · v
-        # Result shape: (n_objectives, n_actions)
-        matrix = obj_emb @ act_emb.T
-
-        # Clip to [-1, 1] to guard against floating-point drift
-        matrix = np.clip(matrix, -1.0, 1.0)
 
         logger.info(
             "Similarity matrix: shape=%s, min=%.4f, max=%.4f, mean=%.4f",

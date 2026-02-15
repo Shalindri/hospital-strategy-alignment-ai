@@ -704,13 +704,17 @@ def parse_strategic_plan(filepath: Path) -> list[dict[str, Any]]:
     text = filepath.read_text(encoding="utf-8")
     objectives: list[dict[str, Any]] = []
 
-    obj_patterns = [
-        ("A", "Patient Care Excellence"),
-        ("B", "Digital Health Transformation"),
-        ("C", "Research & Innovation"),
-        ("D", "Workforce Development"),
-        ("E", "Community & Regional Health Expansion"),
-    ]
+    # Derive objective patterns from the strategic plan JSON if available
+    obj_patterns: list[tuple[str, str]] = []
+    strategic_json = filepath.parent / "strategic_plan.json"
+    if strategic_json.exists():
+        import json as _json
+        with open(strategic_json, encoding="utf-8") as _f:
+            _sp = _json.load(_f)
+        for _obj in _sp.get("objectives", []):
+            obj_patterns.append((_obj["code"], _obj["name"]))
+    if not obj_patterns:
+        logger.warning("No strategic_plan.json found; cannot derive objective patterns.")
 
     stop_headings = [
         r"Strategic Objective [A-E]",

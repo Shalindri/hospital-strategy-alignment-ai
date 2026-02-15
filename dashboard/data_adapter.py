@@ -49,9 +49,13 @@ def build_data_dict(
         "mismatched_actions": upload_report.get("mismatched_actions", []),
     }
 
+    # Extract hospital name from strategic plan metadata if available
+    strategic = upload_report.get("strategic_data", {})
+    hospital_name = strategic.get("metadata", {}).get("title", "")
+
     return {
         "alignment": alignment,
-        "strategic": upload_report.get("strategic_data", {}),
+        "strategic": strategic,
         "actions": upload_report.get("action_data", {}),
         "rag": ss.get("dynamic_rag", {}),
         "mappings": ss.get("dynamic_mappings", {}),
@@ -59,4 +63,6 @@ def build_data_dict(
         "kg": ss.get("dynamic_kg", {}),
         "agent_recs": ss.get("dynamic_agent_recs", {}),
         "agent_trace": ss.get("dynamic_agent_trace", {}),
+        "hospital_name": hospital_name,
+        "ground_truth_orphans": ss.get("ground_truth_orphans", []),
     }

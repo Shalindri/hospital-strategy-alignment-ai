@@ -32,6 +32,8 @@ import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 
+from src.config import THRESHOLD_FAIR, THRESHOLD_GOOD  # noqa: E402
+
 logger = logging.getLogger(__name__)
 
 # ---------------------------------------------------------------------------
@@ -127,6 +129,24 @@ def load_analysis_results() -> dict[str, Any]:
         "Loaded %d/%d pipeline artefacts (%d missing/failed).",
         loaded, loaded + failed, failed,
     )
+
+    # Derive hospital name from strategic plan metadata
+    strategic = data.get("strategic", {})
+    data["hospital_name"] = strategic.get("metadata", {}).get("title", "")
+
+    # Load ground truth orphans if available (for static Nawaloka data)
+    gt_path = PROJECT_ROOT / "tests" / "ground_truth.json"
+    if gt_path.exists():
+        gt = _load_json_safe(gt_path)
+        if gt:
+            orphan_nums = {
+                entry["action_number"]
+                for entry in gt
+                if entry.get("alignment_label", 1.0) == 0.0
+                and entry.get("is_declared_pair", False)
+            }
+            data["ground_truth_orphans"] = sorted(orphan_nums)
+
     return data
 
 
@@ -224,9 +244,10 @@ def generate_pdf_report(data: dict[str, Any]) -> bytes:
     elements.append(Paragraph(
         "Hospital Strategy-Action Plan Alignment Report", title_style,
     ))
-    elements.append(_p("Nawaloka Hospital Negombo"))
+    hospital_name = data.get("hospital_name", "")
+    if hospital_name:
+        elements.append(_p(hospital_name))
     elements.append(_p(
-        f"Strategic Plan 2026-2030 | Action Plan 2025 | "
         f"Generated: {datetime.now():%Y-%m-%d %H:%M}",
         small_style,
     ))
@@ -379,32 +400,46 @@ def generate_pdf_report(data: dict[str, Any]) -> bytes:
 
     # ── Section 7: Evaluation metrics ─────────────────────────────────
     elements.append(Paragraph("7. Evaluation Metrics", heading_style))
-    ground_truth = {8, 19, 24, 25}
-    all_actions = set(range(1, 26))
+    col_labels = alignment.get("matrix_col_labels", [])
+    all_actions = set(col_labels) if col_labels else set()
     orphan_set = set(alignment.get("orphan_actions", []))
+    ground_truth = set(data.get("ground_truth_orphans", []))
 
-    tp = len(orphan_set & ground_truth)
-    fp = len(orphan_set - ground_truth)
-    fn = len(ground_truth - orphan_set)
-    tn = len(all_actions - orphan_set - ground_truth)
-    prec = tp / max(tp + fp, 1)
-    rec_val = tp / max(tp + fn, 1)
-    f1 = 2 * prec * rec_val / max(prec + rec_val, 0.001)
+    if ground_truth and all_actions:
+        tp = len(orphan_set & ground_truth)
+        fp = len(orphan_set - ground_truth)
+        fn = len(ground_truth - orphan_set)
+        tn = len(all_actions - orphan_set - ground_truth)
+        prec = tp / max(tp + fp, 1)
+        rec_val = tp / max(tp + fn, 1)
+        f1 = 2 * prec * rec_val / max(prec + rec_val, 0.001)
 
-    elements.append(_p(
-        f"Ground truth misaligned: {sorted(ground_truth)} | "
-        f"Detected orphans: {sorted(orphan_set)}"
-    ))
-    tbl_data = [
-        ["Metric", "Value"],
-        ["True Positives", str(tp)],
-        ["False Positives", str(fp)],
-        ["False Negatives", str(fn)],
-        ["True Negatives", str(tn)],
-        ["Precision", f"{prec:.2%}"],
-        ["Recall", f"{rec_val:.2%}"],
-        ["F1 Score", f"{f1:.2%}"],
-    ]
+        elements.append(_p(
+            f"Ground truth misaligned: {sorted(ground_truth)} | "
+            f"Detected orphans: {sorted(orphan_set)}"
+        ))
+        tbl_data = [
+            ["Metric", "Value"],
+            ["True Positives", str(tp)],
+            ["False Positives", str(fp)],
+            ["False Negatives", str(fn)],
+            ["True Negatives", str(tn)],
+            ["Precision", f"{prec:.2%}"],
+            ["Recall", f"{rec_val:.2%}"],
+            ["F1 Score", f"{f1:.2%}"],
+        ]
+    else:
+        elements.append(_p(
+            f"Detected orphans: {sorted(orphan_set)} | "
+            f"Total actions: {len(all_actions)}"
+        ))
+        tbl_data = [
+            ["Metric", "Value"],
+            ["Orphan count", str(len(orphan_set))],
+            ["Total actions", str(len(all_actions))],
+            ["Orphan rate", f"{len(orphan_set) / max(len(all_actions), 1):.1%}"],
+        ]
+
     tbl = Table(tbl_data, hAlign="LEFT", colWidths=[120, 80])
     tbl.setStyle(TableStyle([
         ("BACKGROUND", (0, 0), (-1, 0), rl_colors.HexColor("#1565C0")),
@@ -715,8 +750,8 @@ def create_plotly_charts(data: dict[str, Any]) -> dict[str, go.Figure]:
             x=[f"Act {c}" for c in col_labels],
             y=[f"Obj {r}" for r in row_labels],
             colorscale=[
-                [0, "#FFCDD2"], [0.45, "#FFE082"],
-                [0.6, "#A5D6A7"], [1, "#1B5E20"],
+                [0, "#FFCDD2"], [THRESHOLD_FAIR, "#FFE082"],
+                [THRESHOLD_GOOD, "#A5D6A7"], [1, "#1B5E20"],
             ],
             zmin=0, zmax=1,
             text=[[f"{v:.2f}" for v in row] for row in matrix],
@@ -743,11 +778,11 @@ def create_plotly_charts(data: dict[str, Any]) -> dict[str, go.Figure]:
             color_discrete_sequence=[COLOURS["primary_light"]],
         )
         fig.add_vline(
-            x=0.45, line_dash="dash", line_color="red",
+            x=THRESHOLD_FAIR, line_dash="dash", line_color="red",
             annotation_text="Fair threshold",
         )
         fig.add_vline(
-            x=0.60, line_dash="dash", line_color="green",
+            x=THRESHOLD_GOOD, line_dash="dash", line_color="green",
             annotation_text="Good threshold",
         )
         fig.update_layout(height=300, margin=dict(t=20, b=20))
@@ -802,9 +837,13 @@ def create_plotly_charts(data: dict[str, Any]) -> dict[str, go.Figure]:
 
 def _compute_evaluation_metrics(data: dict) -> list[dict]:
     """Compute P/R/F1 for each detection method against ground truth."""
-    ground_truth = {8, 19, 24, 25}
-    all_actions = set(range(1, 26))
+    ground_truth = set(data.get("ground_truth_orphans", []))
     alignment = data.get("alignment", {})
+    col_labels = alignment.get("matrix_col_labels", [])
+    all_actions = set(col_labels) if col_labels else set()
+
+    if not ground_truth or not all_actions:
+        return []
     gaps = data.get("gaps", {})
     agent = data.get("agent_recs", {})
 

@@ -139,22 +139,16 @@ MAX_TOOL_CALLS_PER_ITERATION = 8
 ISSUE_SCORE_THRESHOLD = 0.15
 MARGINAL_IMPROVEMENT_THRESHOLD = 0.05
 
-# Alignment thresholds
-ORPHAN_THRESHOLD = 0.45
+# Alignment thresholds (from shared config)
+from src.config import ORPHAN_THRESHOLD  # noqa: E402
 LOW_COVERAGE_THRESHOLD = 0.25
 WEAK_MAPPING_THRESHOLD = 0.55
 
 RANDOM_SEED = 42
 np.random.seed(RANDOM_SEED)
 
-# Objective metadata
-OBJECTIVE_NAMES: dict[str, str] = {
-    "A": "Patient Care Excellence",
-    "B": "Digital Health Transformation",
-    "C": "Research & Innovation",
-    "D": "Workforce Development",
-    "E": "Community & Regional Health Expansion",
-}
+# Objective metadata (populated dynamically from loaded data)
+from src.synchronization_analyzer import OBJECTIVE_NAMES  # noqa: E402
 
 
 # ---------------------------------------------------------------------------
@@ -871,7 +865,11 @@ class AgentReasoner:
             action = self._action_by_num.get(issue.action_numbers[0], {})
             query = f"{action.get('title', '')} {action.get('description', '')[:150]}"
         else:
-            obj_code = issue.affected_objectives[0] if issue.affected_objectives else "A"
+            obj_code = (
+                issue.affected_objectives[0]
+                if issue.affected_objectives
+                else next(iter(self._objective_by_code), "A")
+            )
             obj = self._objective_by_code.get(obj_code, {})
             query = obj.get("goal_statement", OBJECTIVE_NAMES.get(obj_code, ""))
 

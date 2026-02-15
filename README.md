@@ -1,10 +1,10 @@
 # Hospital Strategy–Action Plan Alignment System (ISPS)
 
-An AI-powered system that evaluates the alignment between a hospital's strategic plan and its annual action plan using RAG (Retrieval-Augmented Generation), semantic embeddings, and knowledge graph techniques.
+An AI-powered system that evaluates the alignment between a hospital's strategic plan and its annual action plan using semantic embeddings, ontology mapping, knowledge graphs, RAG (Retrieval-Augmented Generation), and agentic AI reasoning.
 
 ## Problem Statement
 
-Hospitals produce multi-year strategic plans and annual action plans, but ensuring operational actions genuinely support strategic objectives is a manual, subjective process. This system automates alignment detection, identifies misaligned actions, and provides explainable scoring — enabling hospital leadership to make evidence-based planning decisions.
+Hospitals produce multi-year strategic plans and annual action plans, but ensuring operational actions genuinely support strategic objectives is a manual, subjective process. This system automates alignment detection, identifies misaligned (orphan) actions, and provides explainable scoring — enabling hospital leadership to make evidence-based planning decisions.
 
 ## Case Study
 
@@ -12,54 +12,99 @@ Hospitals produce multi-year strategic plans and annual action plans, but ensuri
 - Strategic Plan: 2026–2030 (5 strategic objectives, capacity expansion from 75 to 150 beds)
 - Action Plan: 2025 (25 operational actions across the five objectives)
 - Includes intentionally misaligned actions for evaluation of detection precision/recall
+- 58-pair human-annotated ground truth dataset for system evaluation
+
+The system is **domain-agnostic** — any hospital or organisation can upload their strategic and action plan PDFs through the dashboard for analysis.
 
 ## Architecture
 
 ```
-┌──────────────┐    ┌──────────────┐    ┌──────────────────┐
-│  Strategic   │    │   Action     │    │   Embedding &    │
-│  Plan (MD)   │───>│  Plan (MD)   │───>│   Vector Store   │
-└──────────────┘    └──────────────┘    │   (ChromaDB)     │
-                                        └────────┬─────────┘
-                                                 │
-                              ┌──────────────────┼──────────────────┐
-                              │                  │                  │
-                      ┌───────▼──────┐  ┌────────▼───────┐ ┌───────▼───────┐
-                      │  Semantic    │  │  Knowledge     │ │  LLM-based    │
-                      │  Similarity  │  │  Graph (RDF)   │ │  Reasoning    │
-                      │  Scoring     │  │  Analysis      │ │  (Ollama)     │
-                      └───────┬──────┘  └────────┬───────┘ └───────┬───────┘
-                              │                  │                  │
-                              └──────────────────┼──────────────────┘
-                                                 │
-                                        ┌────────▼─────────┐
-                                        │   Alignment      │
-                                        │   Dashboard      │
-                                        │   (Streamlit)    │
-                                        └──────────────────┘
+┌──────────────┐    ┌──────────────┐
+│  Strategic   │    │   Action     │
+│  Plan (PDF)  │    │  Plan (PDF)  │
+└──────┬───────┘    └──────┬───────┘
+       │                   │
+       └─────────┬─────────┘
+                 ▼
+       ┌─────────────────┐
+       │  PDF Processor   │  LLM-based extraction (Ollama llama3.1:8b)
+       │  → Structured    │
+       │    JSON           │
+       └────────┬─────────┘
+                │
+    ┌───────────┼───────────────────────────────┐
+    │           │                               │
+    ▼           ▼                               ▼
+┌────────┐ ┌──────────┐                  ┌────────────┐
+│ChromaDB│ │Alignment │                  │  Ontology  │
+│Vector  │ │Scoring   │                  │  Mapper    │
+│Store   │ │(Cosine)  │                  │  (RDF/OWL) │
+└───┬────┘ └────┬─────┘                  └─────┬──────┘
+    │           │                               │
+    │     ┌─────┴──────┐               ┌────────┴────────┐
+    │     │ Knowledge  │               │  Gap Detection  │
+    │     │ Graph      │               │                 │
+    │     │ (NetworkX) │               └─────────────────┘
+    │     └─────┬──────┘
+    │           │
+    ├───────────┤
+    ▼           ▼
+┌────────┐ ┌──────────┐
+│  RAG   │ │  Agent   │
+│Engine  │ │ Reasoner │
+│(LLM)  │ │ (LLM)   │
+└───┬────┘ └────┬─────┘
+    │           │
+    └─────┬─────┘
+          ▼
+  ┌───────────────┐
+  │   Streamlit   │
+  │   Dashboard   │
+  └───────────────┘
 ```
+
+## 6-Stage Pipeline
+
+| Stage | Module | Description | LLM Required |
+|-------|--------|-------------|:------------:|
+| 1. Extraction | `pdf_processor.py` | PDF → structured JSON via Ollama LLM | Yes |
+| 2. Alignment | `synchronization_analyzer.py` | Cosine similarity matrix (5×25) | No |
+| 3. Ontology | `ontology_mapper.py` | RDF/OWL mapping with hybrid scoring | No |
+| 4. Knowledge Graph | `knowledge_graph.py` | NetworkX graph with centrality analysis | No |
+| 5. RAG | `rag_engine.py` | Context-aware improvement suggestions | Yes |
+| 6. Agent | `agent_reasoner.py` | Plan-Act-Reflect diagnostic reasoning | Yes |
 
 ## Project Structure
 
 ```
 hospital-strategy-alignment-ai/
-├── data/                  # Strategic plan & action plan documents
-│   ├── strategic_plan.md
-│   └── action_plan.md
-├── src/                   # Core source code
-│   ├── __init__.py
-│   ├── parser.py          # Document parsing & chunking
-│   ├── embeddings.py      # Embedding generation & vector store
-│   ├── alignment.py       # Alignment scoring engine
-│   ├── knowledge_graph.py # RDF/ontology-based analysis
-│   └── llm_chain.py       # LLM reasoning chains (Ollama)
-├── models/                # Persisted embeddings & vector DB
-├── dashboard/             # Streamlit UI
-│   └── app.py
-├── tests/                 # Evaluation & test scripts
-│   ├── __init__.py
-│   └── evaluate.py        # Precision/recall evaluation
-├── docs/                  # Report materials & documentation
+├── src/                       # Core pipeline modules
+│   ├── config.py              # Shared configuration constants
+│   ├── pdf_processor.py       # PDF extraction with Ollama LLM
+│   ├── vector_store.py        # ChromaDB embeddings (all-MiniLM-L6-v2)
+│   ├── synchronization_analyzer.py  # Alignment scoring engine
+│   ├── dynamic_analyzer.py    # Dynamic analysis for uploaded PDFs
+│   ├── ontology_mapper.py     # RDF/OWL ontology mapping
+│   ├── knowledge_graph.py     # NetworkX knowledge graph
+│   ├── rag_engine.py          # RAG recommendation engine
+│   └── agent_reasoner.py      # Agentic AI reasoning (Plan-Act-Reflect)
+├── dashboard/                 # Streamlit UI
+│   ├── app.py                 # Main dashboard application
+│   ├── pipeline_runner.py     # Dynamic pipeline orchestration
+│   ├── data_adapter.py        # Data format conversion
+│   └── utils.py               # PDF report, charts, exports
+├── data/                      # Processed data (JSON)
+│   ├── strategic_plan.json
+│   ├── action_plan.json
+│   └── alignment_report.json
+├── tests/                     # Evaluation & ground truth
+│   ├── evaluation.py          # P/R/F1/AUC against baselines
+│   ├── evaluate_suggestions.py # Suggestion quality metrics
+│   ├── create_ground_truth.py # Ground truth labelling tool
+│   └── ground_truth.json      # 58-pair human-annotated dataset
+├── experiments/               # Parameter tuning notebooks
+│   └── parameter_tuning.ipynb
+├── outputs/                   # Generated artefacts (ontology, KG, etc.)
 ├── requirements.txt
 └── README.md
 ```
@@ -68,13 +113,14 @@ hospital-strategy-alignment-ai/
 
 | Component | Technology |
 |---|---|
-| LLM Framework | LangChain |
-| Local LLM | Ollama (Llama 3 / Mistral) |
-| Embeddings | Sentence-Transformers |
-| Vector Store | ChromaDB |
-| Knowledge Graph | RDFLib + NetworkX |
-| NLP | spaCy |
+| LLM Framework | LangChain + Ollama |
+| Local LLM | Ollama (llama3.1:8b) |
+| Embeddings | Sentence-Transformers (all-MiniLM-L6-v2, 384-dim) |
+| Vector Store | ChromaDB (cosine similarity, HNSW indexing) |
+| Ontology | RDFLib (Turtle/OWL export) |
+| Knowledge Graph | NetworkX (centrality, community detection) |
 | Dashboard | Streamlit + Plotly |
+| Evaluation | scikit-learn, SciPy |
 | Language | Python 3.10+ |
 
 ## Setup
@@ -98,11 +144,8 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 # Install dependencies
 pip install -r requirements.txt
 
-# Download spaCy model
-python -m spacy download en_core_web_sm
-
 # Pull Ollama model
-ollama pull llama3
+ollama pull llama3.1:8b
 ```
 
 ### Running the Dashboard
@@ -111,28 +154,39 @@ ollama pull llama3
 streamlit run dashboard/app.py
 ```
 
-## Strategic Objectives Evaluated
+### Running Evaluation
 
-| Code | Objective |
-|---|---|
-| A | Patient Care Excellence |
-| B | Digital Health Transformation |
-| C | Research & Innovation |
-| D | Workforce Development |
-| E | Community & Regional Health Expansion |
+```bash
+python -m tests.evaluation
+```
 
-## Evaluation Methodology
+### Parameter Tuning Experiments
 
-The system evaluates alignment using three complementary approaches:
+```bash
+cd experiments
+jupyter notebook parameter_tuning.ipynb
+```
 
-1. **Semantic Similarity** — Embedding-based cosine similarity between action descriptions and strategic objective text
-2. **Knowledge Graph Analysis** — RDF ontology mapping of actions to strategic goals, KPIs, and stakeholders
-3. **LLM Reasoning** — Chain-of-thought evaluation using a local LLM to assess logical alignment and provide explanations
+## Alignment Scoring
 
-Results are aggregated into a composite alignment score (0–1) per action, with classification into:
-- **Strong alignment** (≥0.7)
-- **Moderate alignment** (0.4–0.7)
-- **Weak/misaligned** (<0.4)
+The system uses four classification thresholds (configurable in `src/config.py`):
+
+| Range | Classification | Interpretation |
+|-------|---------------|----------------|
+| >= 0.75 | Excellent | Near-direct operationalisation of strategy |
+| 0.60–0.74 | Good | Clear strategic support |
+| 0.45–0.59 | Fair | Partial or indirect alignment |
+| < 0.45 | Poor / Orphan | Weak or no meaningful alignment |
+
+## Evaluation
+
+The system is evaluated against a **58-pair human-annotated ground truth** dataset using:
+
+- **Classification**: Precision, Recall, F1, Accuracy
+- **Regression**: MAE, RMSE, Pearson r, Spearman rho
+- **Ranking**: ROC curve, AUC
+- **Baselines**: TF-IDF cosine similarity, keyword overlap
+- **Statistical**: Paired t-tests for significance
 
 ## License
 

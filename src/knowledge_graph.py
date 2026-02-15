@@ -98,9 +98,8 @@ NODE_COLOURS: dict[str, str] = {
     "TimelineQuarter": "#9E9E9E",
 }
 
-# Alignment thresholds (mirrored from synchronization_analyzer)
-THRESHOLD_GOOD = 0.60
-THRESHOLD_FAIR = 0.45
+# Alignment thresholds (from shared config)
+from src.config import THRESHOLD_GOOD, THRESHOLD_FAIR  # noqa: E402
 
 # Deterministic layout seed
 RANDOM_SEED = 42
@@ -952,7 +951,7 @@ class KnowledgeGraphBuilder:
             self.G, pos, labels, ax=ax, font_size=6, font_weight="bold",
         )
 
-        ax.set_title("Strategy-Action Knowledge Graph — Nawaloka Hospital Negombo",
+        ax.set_title("Strategy-Action Knowledge Graph",
                       fontsize=14, fontweight="bold")
         ax.axis("off")
 

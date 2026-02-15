@@ -85,22 +85,18 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 DATA_DIR = PROJECT_ROOT / "data"
 REPORT_JSON = DATA_DIR / "alignment_report.json"
 
-# ── Classification thresholds ────────────────────────────────────────
-# Calibrated for all-MiniLM-L6-v2 on hospital-domain text.
-# See module docstring for rationale.
-THRESHOLD_EXCELLENT = 0.75
-THRESHOLD_GOOD = 0.60
-THRESHOLD_FAIR = 0.45
-ORPHAN_THRESHOLD = 0.45  # max similarity below this → orphan
+# ── Classification thresholds (from shared config) ──────────────────
+from src.config import (  # noqa: E402
+    THRESHOLD_EXCELLENT,
+    THRESHOLD_GOOD,
+    THRESHOLD_FAIR,
+    ORPHAN_THRESHOLD,
+)
 
-# Objective metadata (code → display name)
-OBJECTIVE_NAMES = {
-    "A": "Patient Care Excellence",
-    "B": "Digital Health Transformation",
-    "C": "Research & Innovation",
-    "D": "Workforce Development",
-    "E": "Community & Regional Health Expansion",
-}
+# Objective metadata — default display names.
+# These are used as fallbacks; the system derives names from the loaded
+# strategic plan data when available.
+OBJECTIVE_NAMES: dict[str, str] = {}
 
 STRATEGIC_JSON = DATA_DIR / "strategic_plan.json"
 ACTION_JSON = DATA_DIR / "action_plan.json"
@@ -280,7 +276,19 @@ class SynchronizationAnalyzer:
         self._action_data = self._load_json(ACTION_JSON)
         self._strategic_data = self._load_json(STRATEGIC_JSON)
 
+        # Build objective name lookup from loaded data
+        self._populate_objective_names()
+
         logger.info("SynchronizationAnalyzer initialised.")
+
+    def _populate_objective_names(self) -> None:
+        """Populate the module-level OBJECTIVE_NAMES from loaded strategic data."""
+        global OBJECTIVE_NAMES
+        for obj in self._strategic_data.get("objectives", []):
+            code = obj.get("code", "")
+            name = obj.get("name", "")
+            if code and name:
+                OBJECTIVE_NAMES[code] = name
 
     @staticmethod
     def _load_json(path: Path) -> dict[str, Any]:
@@ -646,7 +654,7 @@ class SynchronizationAnalyzer:
             "z": r.alignment_matrix,
             "x_labels": [f"Action {n}" for n in r.matrix_col_labels],
             "y_labels": [
-                f"{code}: {OBJECTIVE_NAMES[code]}"
+                f"{code}: {OBJECTIVE_NAMES.get(code, code)}"
                 for code in r.matrix_row_labels
             ],
             "x_ids": r.matrix_col_labels,
@@ -656,7 +664,7 @@ class SynchronizationAnalyzer:
         # ── Radar chart payload (per-objective mean similarity) ──────
         radar = {
             "categories": [
-                OBJECTIVE_NAMES[oa["code"]]
+                OBJECTIVE_NAMES.get(oa["code"], oa["code"])
                 for oa in r.objective_alignments
             ],
             "values": [
@@ -756,7 +764,7 @@ def main() -> None:
     # ── Print formatted report ───────────────────────────────────────
     print("\n" + "=" * 70)
     print("  SYNCHRONIZATION ANALYSIS REPORT")
-    print("  Nawaloka Hospital Negombo — Strategy vs. Action Plan")
+    print("  Strategy vs. Action Plan Alignment")
     print("=" * 70)
 
     print(f"\n{'OVERALL SYNCHRONIZATION':─^70}")

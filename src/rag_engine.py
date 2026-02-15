@@ -998,7 +998,7 @@ def main() -> None:
     # ── Print report ─────────────────────────────────────────────────
     print("\n" + "=" * 70)
     print("  RAG RECOMMENDATIONS REPORT")
-    print("  Nawaloka Hospital Negombo — AI-Generated Improvement Suggestions")
+    print("  AI-Generated Improvement Suggestions")
     print("=" * 70)
 
     print(f"\n{'SUMMARY':─^70}")

@@ -5,9 +5,9 @@
     "action_number": 1,
     "action_title": "Adjacent Land Acquisition Due Diligence & Negotiation",
     "declared_objective": "A",
-    "alignment_label": 0.4,
-    "label_text": "Weakly Aligned",
-    "rationale": "Land acquisition enables future hospital expansion but does not directly deliver patient care.",
+    "alignment_label": 0.8,
+    "label_text": "Aligned",
+    "rationale": "Land acquisition enables future hospital expansion and it supports capacity for patient care.",
     "is_declared_pair": true
   },
   {
@@ -49,9 +49,9 @@
     "action_number": 5,
     "action_title": "Aesthetic & Cosmetic Medicine Service Feasibility Study",
     "declared_objective": "A",
-    "alignment_label": 0.7,
-    "label_text": "Aligned",
-    "rationale": "Aesthetic medicine feasibility supports service diversification under patient care.",
+    "alignment_label": 0.4,
+    "label_text": "Weakly Aligned",
+    "rationale": "Aesthetic medicine does not directly support patient care.",
     "is_declared_pair": true
   },
   {

@@ -177,7 +177,6 @@ PIPELINE_STEPS = [
     ("3", "Ontology"),
     ("4", "KG Build"),
     ("5", "RAG"),
-    ("6", "Agent"),
 ]
 
 
@@ -666,100 +665,6 @@ def _render_ontology(data: dict) -> None:
 
 
 # ═══════════════════════════════════════════════════════════════════════
-# Render: Agent Insights
-# ═══════════════════════════════════════════════════════════════════════
-
-def _render_agent_insights(data: dict) -> None:
-    agent_recs = data["agent_recs"]
-    agent_trace = data["agent_trace"]
-
-    if not agent_recs:
-        st.info("Agent reasoning was not run. Run the full pipeline to see results here.")
-        return
-
-    meta = agent_recs.get("metadata", {})
-
-    cols = st.columns(4)
-    with cols[0]:
-        st.metric("Issues Diagnosed", meta.get("total_issues_diagnosed", 0))
-    with cols[1]:
-        st.metric("Recommendations", meta.get("total_recommendations", 0))
-    with cols[2]:
-        st.metric("Total Impact", f"{meta.get('total_impact_score', 0):.3f}")
-    with cols[3]:
-        st.metric("Iterations Run", meta.get("max_iterations", 0))
-
-    st.divider()
-
-    st.subheader("Diagnosed Issues (by priority)")
-    issues = agent_recs.get("diagnosed_issues_summary", [])
-    if issues:
-        df_issues = pd.DataFrame([{
-            "Issue ID": i["issue_id"],
-            "Type": i["type"],
-            "Priority": i["priority_score"],
-            "Objectives": ", ".join(i.get("affected_objectives", [])),
-            "Addressed": "Yes" if i.get("addressed") else "",
-        } for i in issues])
-        st.dataframe(df_issues, width='stretch', hide_index=True)
-
-    st.divider()
-
-    st.subheader("Agent Recommendations")
-    for rec in agent_recs.get("recommendations", []):
-        with st.expander(
-            f"{rec['rec_id']} — {rec['issue_type']} | "
-            f"Impact: {rec['impact_score']:.3f} | "
-            f"{rec.get('confidence', 'MEDIUM')}", expanded=False,
-        ):
-            st.markdown(f"**Root Cause:** {format_llm_response(rec.get('what_to_change', ''), max_length=300)}")
-            st.markdown(f"**Expected Outcome:** {format_llm_response(rec.get('why', ''), max_length=300)}")
-            st.markdown("**Recommended Actions:**")
-            for a in rec.get("actions", []):
-                st.markdown(f"- {format_llm_response(a, max_length=200)}")
-            st.markdown("**Proposed KPIs:**")
-            for k in rec.get("kpis", []):
-                st.markdown(f"- {format_llm_response(k, max_length=150)}")
-            cols = st.columns(3)
-            with cols[0]:
-                st.markdown(f"**Budget:** LKR {rec.get('estimated_budget', 0):.0f}M")
-            with cols[1]:
-                st.markdown(f"**Timeline:** {rec.get('estimated_timeline', 'N/A')[:60]}")
-            with cols[2]:
-                st.markdown(f"**Evidence:** {', '.join(rec.get('evidence_ids', [])[:5])}")
-
-    st.divider()
-    st.subheader("Reasoning Trace")
-    traces = agent_trace.get("traces", []) if agent_trace else []
-    for trace in traces:
-        issue_id = trace.get("issue_detected", {}).get("issue_id", "?")
-        trace_status = trace.get("final_decision", {}).get("status", "?")
-        st.markdown(
-            f'<div class="trace-step">'
-            f'<strong>Iteration {trace["iteration"]}</strong> — '
-            f'{issue_id} -> <strong>{trace_status}</strong></div>',
-            unsafe_allow_html=True,
-        )
-        with st.expander(f"Details: Iteration {trace['iteration']}", expanded=False):
-            st.markdown("**Investigation Plan:**")
-            for step in trace.get("investigation_plan", []):
-                st.markdown(f"- {step}")
-            st.markdown("**Reasoning Summary:**")
-            for bullet in trace.get("reasoning_summary", []):
-                st.markdown(f"- {bullet}")
-            st.markdown("**Tool Calls:**")
-            for tc in trace.get("tool_calls", []):
-                st.markdown(f"- `{tc.get('tool', '?')}` — {tc.get('purpose', tc.get('query', '')[:50])}")
-            critique = trace.get("critique_summary", {})
-            if critique:
-                st.markdown("**Critique:**")
-                for key in ("feasibility", "alignment_check", "risks", "missing_info"):
-                    val = critique.get(key, "")
-                    if val:
-                        st.markdown(f"- **{key.replace('_', ' ').title()}:** {val[:150]}")
-
-
-# ═══════════════════════════════════════════════════════════════════════
 # Render: Evaluation Metrics
 # ═══════════════════════════════════════════════════════════════════════
 
@@ -785,16 +690,6 @@ def _render_evaluation(data: dict) -> None:
             weak_actions.add(int(num_str))
     if weak_actions:
         methods["Ontology Mapping (Weak Actions)"] = weak_actions
-
-    agent_recs = data["agent_recs"]
-    agent_detected = set()
-    for issue in agent_recs.get("diagnosed_issues_summary", []):
-        if issue.get("type") == "orphan_action":
-            num_str = issue["issue_id"].replace("orphan_action_", "")
-            if num_str.isdigit():
-                agent_detected.add(int(num_str))
-    if agent_detected:
-        methods["Agent Reasoner (Orphan Detection)"] = agent_detected
 
     if weak_actions:
         combined = orphan_detected | weak_actions
@@ -858,7 +753,7 @@ def _run_upload_analysis(strategic_file, action_file, stepper_placeholder) -> No
     from src.dynamic_analyzer import run_dynamic_analysis
     from dashboard.pipeline_runner import (
         run_dynamic_ontology, run_dynamic_kg,
-        run_dynamic_rag, run_dynamic_agent,
+        run_dynamic_rag,
     )
 
     def _update(step: int) -> None:
@@ -893,14 +788,8 @@ def _run_upload_analysis(strategic_file, action_file, stepper_placeholder) -> No
         rag = run_dynamic_rag(report)
         st.session_state["dynamic_rag"] = rag
 
-        # Step 6: Agent
-        _update(6)
-        agent_recs, agent_trace = run_dynamic_agent(report, mappings, kg)
-        st.session_state["dynamic_agent_recs"] = agent_recs
-        st.session_state["dynamic_agent_trace"] = agent_trace
-
         # All done
-        _update(7)
+        _update(6)
         st.session_state["pipeline_done"] = True
         st.session_state.pop("pipeline_running", None)
         st.rerun()
@@ -952,11 +841,11 @@ def main() -> None:
         )
 
         @st.cache_data(ttl=60, show_spinner=False)
-        def _check_ollama():
-            from src.pdf_processor import check_ollama_available
-            return check_ollama_available()
+        def _check_llm():
+            from src.pdf_processor import check_llm_available
+            return check_llm_available()
 
-        ollama_ok = _check_ollama()
+        ollama_ok = _check_llm()
 
         with c_up1:
             if not ollama_ok:
@@ -1037,7 +926,7 @@ def main() -> None:
                 st.rerun()
 
         stepper_area = c_step.empty()
-        stepper_area.markdown(_build_stepper_html(7), unsafe_allow_html=True)
+        stepper_area.markdown(_build_stepper_html(6), unsafe_allow_html=True)
 
         with c_dl:
             from dashboard.data_adapter import build_data_dict
@@ -1065,7 +954,7 @@ def main() -> None:
 
         tabs = st.tabs([
             "Sync Analysis", "Recommendations", "Knowledge Graph",
-            "Ontology", "Agent Insights", "Evaluation",
+            "Ontology", "Evaluation",
         ])
         with tabs[0]:
             _render_sync_analysis(data)
@@ -1076,13 +965,11 @@ def main() -> None:
         with tabs[3]:
             _render_ontology(data)
         with tabs[4]:
-            _render_agent_insights(data)
-        with tabs[5]:
             _render_evaluation(data)
     else:
         tabs = st.tabs([
             "Sync Analysis", "Recommendations", "Knowledge Graph",
-            "Ontology", "Agent Insights", "Evaluation",
+            "Ontology", "Evaluation",
         ])
         for tab in tabs:
             with tab:

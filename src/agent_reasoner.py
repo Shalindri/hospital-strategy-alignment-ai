@@ -58,10 +58,8 @@ Created: 2025-01
 
 from __future__ import annotations
 
-import hashlib
 import json
 import logging
-import math
 import re
 import time
 from dataclasses import dataclass, field, asdict
@@ -70,7 +68,7 @@ from typing import Any
 
 import numpy as np
 
-from langchain_ollama import OllamaLLM
+from src.config import get_llm
 
 from src.vector_store import (
     VectorStore,
@@ -114,7 +112,6 @@ if not logger.handlers:
 # ---------------------------------------------------------------------------
 DATA_DIR = PROJECT_ROOT / "data"
 OUTPUT_DIR = PROJECT_ROOT / "outputs"
-CACHE_DIR = PROJECT_ROOT / "models"
 
 ALIGNMENT_JSON = DATA_DIR / "alignment_report.json"
 MAPPINGS_JSON = OUTPUT_DIR / "mappings.json"
@@ -124,17 +121,12 @@ ACTION_JSON = DATA_DIR / "action_plan.json"
 
 RECOMMENDATIONS_OUT = OUTPUT_DIR / "agent_recommendations.json"
 TRACE_OUT = OUTPUT_DIR / "agent_trace.json"
-CACHE_FILE = CACHE_DIR / "agent_cache.json"
 
-# LLM configuration (same model as rag_engine for consistency)
-OLLAMA_MODEL = "llama3.1:8b"
-LLM_TEMPERATURE = 0.2
-LLM_NUM_CTX = 4096
-MAX_RETRIES = 3
-RETRY_DELAYS = [1.0, 2.0, 4.0]
-
-# Agent guardrails
-MAX_ITERATIONS = 5
+# LLM configuration (provider set in src/config.py via .env)
+from src.config import (
+    OLLAMA_MODEL, LLM_TEMPERATURE, LLM_NUM_CTX,
+    MAX_RETRIES, RETRY_DELAYS, MAX_ITERATIONS,
+)
 MAX_TOOL_CALLS_PER_ITERATION = 8
 ISSUE_SCORE_THRESHOLD = 0.15
 MARGINAL_IMPROVEMENT_THRESHOLD = 0.05
@@ -284,35 +276,11 @@ class TraceEntry:
 
 
 # ---------------------------------------------------------------------------
-# LLM cache helpers
-# ---------------------------------------------------------------------------
-
-def _cache_key(text: str) -> str:
-    """SHA-256 hash of prompt text for deterministic caching."""
-    return hashlib.sha256(text.encode("utf-8")).hexdigest()[:16]
-
-
-def _load_cache(filepath: Path) -> dict[str, str]:
-    """Load the LLM response cache from disk."""
-    if filepath.exists():
-        with open(filepath, encoding="utf-8") as f:
-            return json.load(f)
-    return {}
-
-
-def _save_cache(cache: dict[str, str], filepath: Path) -> None:
-    """Persist the LLM response cache to disk."""
-    filepath.parent.mkdir(parents=True, exist_ok=True)
-    with open(filepath, "w", encoding="utf-8") as f:
-        json.dump(cache, f, indent=2, ensure_ascii=False)
-
-
-# ---------------------------------------------------------------------------
 # Prompt templates
 # ---------------------------------------------------------------------------
 
-DIAGNOSIS_PROMPT = """You are a hospital strategy consultant analyzing synchronization issues
-between a hospital's strategic plan and action plan.
+DIAGNOSE_AND_CRITIQUE_PROMPT = """You are a hospital strategy consultant analyzing synchronization issues
+between a hospital's strategic plan and action plan. You must both recommend AND self-critique.
 
 ISSUE TYPE: {issue_type}
 ISSUE DESCRIPTION: {issue_description}
@@ -328,7 +296,8 @@ RELEVANT ACTION CONTEXT:
 ONTOLOGY CONTEXT:
 {ontology_context}
 
-TASK: Analyze this issue and provide structured recommendations. Format your response EXACTLY as:
+TASK: Analyze this issue, provide recommendations, then critically evaluate them yourself.
+Format your response EXACTLY as shown below (including the separator line):
 
 ROOT_CAUSE: [1-2 sentences explaining why this misalignment exists]
 
@@ -347,25 +316,9 @@ BUDGET_ESTIMATE: [Estimated additional budget needed in LKR millions, or "No add
 
 EXPECTED_OUTCOME: [2-3 sentences describing the expected improvement]
 
-CONFIDENCE: [HIGH, MEDIUM, or LOW]"""
+CONFIDENCE: [HIGH, MEDIUM, or LOW]
 
-
-CRITIQUE_PROMPT = """You are a senior hospital administrator reviewing a consultant's recommendation
-for improving strategic plan alignment.
-
-ORIGINAL ISSUE: {issue_description}
-AFFECTED OBJECTIVES: {affected_objectives}
-
-PROPOSED RECOMMENDATIONS:
-{recommendations}
-
-PROPOSED KPIS:
-{kpis}
-
-BUDGET ESTIMATE: LKR {budget}M
-TIMELINE: {timeline}
-
-TASK: Critically evaluate this recommendation. Format your response EXACTLY as:
+--- SELF-CRITIQUE ---
 
 FEASIBILITY: [Is this achievable given typical hospital resources? 1-2 sentences]
 
@@ -420,16 +373,9 @@ class AgentReasoner:
         logger.info("Initialising vector store ...")
         self._vs = VectorStore()
 
-        # Initialise LLM
-        logger.info("Initialising LLM (%s) ...", ollama_model)
-        self._llm = OllamaLLM(
-            model=ollama_model,
-            temperature=LLM_TEMPERATURE,
-            num_ctx=LLM_NUM_CTX,
-        )
-
-        # Cache
-        self._cache = _load_cache(CACHE_FILE)
+        # Initialise LLM (provider selected via .env)
+        logger.info("Initialising LLM ...")
+        self._llm = get_llm(temperature=LLM_TEMPERATURE)
 
         # Build lookup indices
         self._action_by_num: dict[int, dict] = {
@@ -664,7 +610,7 @@ class AgentReasoner:
     # ------------------------------------------------------------------
 
     def _invoke_llm(self, prompt_text: str) -> str:
-        """Call the LLM with retry logic and caching.
+        """Call the LLM with retry logic.
 
         Args:
             prompt_text: The fully formatted prompt string.
@@ -675,19 +621,12 @@ class AgentReasoner:
         Raises:
             RuntimeError: If all retry attempts are exhausted.
         """
-        key = _cache_key(prompt_text)
-        if key in self._cache:
-            logger.info("Cache hit for key %s.", key)
-            return self._cache[key]
-
         last_error: Exception | None = None
         for attempt in range(MAX_RETRIES):
             try:
-                logger.info("LLM call attempt %d/%d (key=%s) ...",
-                            attempt + 1, MAX_RETRIES, key)
+                logger.info("LLM call attempt %d/%d ...",
+                            attempt + 1, MAX_RETRIES)
                 response = self._llm.invoke(prompt_text)
-                self._cache[key] = response
-                _save_cache(self._cache, CACHE_FILE)
                 return response
             except Exception as exc:
                 last_error = exc
@@ -911,11 +850,11 @@ class AgentReasoner:
     # Phase C: REASON (LLM-based recommendation generation)
     # ══════════════════════════════════════════════════════════════════
 
-    def _generate_recommendation(
+    def _generate_and_critique(
         self, issue: DiagnosedIssue, snippets: list[DocSnippet],
         ontology_info: dict[str, Any],
-    ) -> Recommendation:
-        """Generate a recommendation for a diagnosed issue via LLM.
+    ) -> tuple[Recommendation, CritiqueSummary]:
+        """Generate a recommendation AND self-critique in a single LLM call.
 
         Args:
             issue:         The issue to address.
@@ -923,7 +862,7 @@ class AgentReasoner:
             ontology_info: Ontology concept metadata.
 
         Returns:
-            A :class:`Recommendation` populated from LLM output.
+            Tuple of (Recommendation, CritiqueSummary).
         """
         # Build context strings
         strategic_ctx = "\n".join(
@@ -947,7 +886,7 @@ class AgentReasoner:
                 f"Keywords: {keywords}"
             )
 
-        prompt = DIAGNOSIS_PROMPT.format(
+        prompt = DIAGNOSE_AND_CRITIQUE_PROMPT.format(
             issue_type=issue.issue_type,
             issue_description=issue.description,
             affected_objectives=", ".join(
@@ -959,7 +898,23 @@ class AgentReasoner:
         )
 
         response = self._invoke_llm(prompt)
-        return self._parse_recommendation(response, issue, snippets)
+
+        # Split response into recommendation and critique parts
+        parts = response.split("--- SELF-CRITIQUE ---")
+        rec_text = parts[0]
+        critique_text = parts[1] if len(parts) > 1 else ""
+
+        rec = self._parse_recommendation(rec_text, issue, snippets)
+        critique = self._parse_critique(critique_text) if critique_text.strip() else CritiqueSummary(
+            feasibility="Not evaluated",
+            alignment_check="Not evaluated",
+            kpi_measurability="Not evaluated",
+            risks="Not evaluated",
+            missing_info="Not evaluated",
+            accepted=True,
+            revision_notes="Self-critique section missing; accepting by default.",
+        )
+        return rec, critique
 
     def _parse_recommendation(
         self, raw: str, issue: DiagnosedIssue, snippets: list[DocSnippet],
@@ -1211,9 +1166,9 @@ class AgentReasoner:
                 logger.warning("Tool call limit reached (%d). Proceeding with available evidence.",
                                MAX_TOOL_CALLS_PER_ITERATION)
 
-            # Phase C: Reason — generate recommendation
-            rec = self._generate_recommendation(issue, snippets, ontology_info)
-            trace.tool_calls.append({"tool": "llm_invoke", "purpose": "generate_recommendation"})
+            # Phase C+D: Reason + Critique in a single LLM call
+            rec, critique = self._generate_and_critique(issue, snippets, ontology_info)
+            trace.tool_calls.append({"tool": "llm_invoke", "purpose": "generate_and_critique"})
 
             trace.reasoning_summary = [
                 f"Identified {issue.issue_type}: {issue.description[:100]}",
@@ -1223,10 +1178,6 @@ class AgentReasoner:
                 f"Proposed {len(rec.kpis)} new KPIs",
                 f"Initial confidence: {rec.confidence}",
             ]
-
-            # Phase D: Critique
-            critique = self._critique_recommendation(rec)
-            trace.tool_calls.append({"tool": "llm_invoke", "purpose": "critique"})
             trace.critique_summary = asdict(critique)
 
             # Phase E: Refine

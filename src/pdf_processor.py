@@ -1,13 +1,13 @@
 """
 PDF Processor for the ISPS system.
 
-Extracts text from uploaded PDF files and uses Ollama (llama3.1:8b) to
-parse the content into the structured JSON schema expected by the
+Extracts text from uploaded PDF files and uses an LLM (Ollama or OpenAI)
+to parse the content into the structured JSON schema expected by the
 downstream embedding and alignment pipeline.
 
 Two LLM prompts are used:
-  1. Strategic plan extraction → objectives with goals, KPIs, etc.
-  2. Action plan extraction   → action items with titles, owners, budgets, etc.
+  1. Strategic plan extraction -> objectives with goals, KPIs, etc.
+  2. Action plan extraction   -> action items with titles, owners, budgets, etc.
 
 Typical usage (from the Streamlit dashboard)::
 
@@ -25,11 +25,20 @@ from __future__ import annotations
 import json
 import logging
 import re
+from pathlib import Path
 from typing import Any
 
 import pdfplumber
 
+from src.config import get_llm, LLM_PROVIDER, OLLAMA_MODEL, OLLAMA_BASE_URL
+
 logger = logging.getLogger("pdf_processor")
+
+# Maximum characters of PDF text to send to the LLM.
+# OpenAI models (gpt-4o-mini) have 128K context — we can send much more.
+# Ollama local models have smaller context windows.
+_MAX_TEXT_CHARS = 100_000 if LLM_PROVIDER == "openai" else 12_000
+
 
 # ---------------------------------------------------------------------------
 # PDF text extraction
@@ -61,28 +70,15 @@ def extract_text_from_pdf(pdf_bytes: bytes) -> str:
 
 
 # ---------------------------------------------------------------------------
-# Ollama LLM helper
+# LLM helper (provider-agnostic)
 # ---------------------------------------------------------------------------
 
-def _query_ollama(prompt: str, model: str = "llama3.1:8b") -> str:
-    """Send a prompt to the local Ollama API and return the response."""
-    import urllib.request
-
-    payload = json.dumps({
-        "model": model,
-        "prompt": prompt,
-        "stream": False,
-        "options": {"temperature": 0.1, "num_predict": 8192},
-    }).encode()
-
-    req = urllib.request.Request(
-        "http://localhost:11434/api/generate",
-        data=payload,
-        headers={"Content-Type": "application/json"},
-    )
-    with urllib.request.urlopen(req, timeout=600) as resp:
-        data = json.loads(resp.read().decode())
-    return data.get("response", "")
+def _query_llm(prompt: str) -> str:
+    """Send a prompt to the configured LLM and return the response."""
+    llm = get_llm(temperature=0.1)
+    logger.info("Calling LLM ...")
+    response = llm.invoke(prompt)
+    return response
 
 
 def _clean_json_string(raw: str) -> str:
@@ -241,37 +237,32 @@ DOCUMENT TEXT:
 
 def extract_strategic_plan_from_pdf(
     pdf_bytes: bytes,
-    model: str = "llama3.1:8b",
 ) -> dict[str, Any]:
     """Extract strategic plan structure from a PDF using LLM.
 
     Args:
         pdf_bytes: Raw PDF file content.
-        model:     Ollama model name.
 
     Returns:
-        Structured strategic plan dict matching the schema from
-        document_processor.py.
+        Structured strategic plan dict.
 
     Raises:
-        ConnectionError: If Ollama is not running.
-        ValueError:      If LLM output cannot be parsed as JSON.
+        ValueError: If LLM output cannot be parsed as JSON.
     """
     text = extract_text_from_pdf(pdf_bytes)
     if not text.strip():
         raise ValueError("PDF appears to be empty or image-only.")
 
-    # Truncate to ~6000 chars to fit model context
-    truncated = text[:6000]
+    truncated = text[:_MAX_TEXT_CHARS]
     prompt = _STRATEGIC_PROMPT.format(text=truncated)
 
-    logger.info("Sending strategic plan to LLM for parsing (%d chars)...",
-                len(truncated))
-    response = _query_ollama(prompt, model)
+    logger.info("Sending strategic plan to LLM for parsing (%d / %d chars)...",
+                len(truncated), len(text))
+    response = _query_llm(prompt)
     logger.info("LLM strategic plan response length: %d chars", len(response))
     result = _extract_json_from_response(response)
 
-    # Flexible key detection — LLM may use different key names
+    # Flexible key detection - LLM may use different key names
     objectives_list = None
     if isinstance(result, dict):
         for key in ("objectives", "strategic_objectives"):
@@ -306,37 +297,32 @@ def extract_strategic_plan_from_pdf(
 
 def extract_action_plan_from_pdf(
     pdf_bytes: bytes,
-    model: str = "llama3.1:8b",
 ) -> dict[str, Any]:
     """Extract action plan structure from a PDF using LLM.
 
     Args:
         pdf_bytes: Raw PDF file content.
-        model:     Ollama model name.
 
     Returns:
-        Structured action plan dict matching the schema from
-        document_processor.py.
+        Structured action plan dict.
 
     Raises:
-        ConnectionError: If Ollama is not running.
-        ValueError:      If LLM output cannot be parsed as JSON.
+        ValueError: If LLM output cannot be parsed as JSON.
     """
     text = extract_text_from_pdf(pdf_bytes)
     if not text.strip():
         raise ValueError("PDF appears to be empty or image-only.")
 
-    # Truncate to ~6000 chars to fit model context
-    truncated = text[:6000]
+    truncated = text[:_MAX_TEXT_CHARS]
     prompt = _ACTION_PROMPT.format(text=truncated)
 
-    logger.info("Sending action plan to LLM for parsing (%d chars)...",
-                len(truncated))
-    response = _query_ollama(prompt, model)
+    logger.info("Sending action plan to LLM for parsing (%d / %d chars)...",
+                len(truncated), len(text))
+    response = _query_llm(prompt)
     logger.info("LLM action plan response length: %d chars", len(response))
     result = _extract_json_from_response(response)
 
-    # Flexible key detection — LLM may use different key names
+    # Flexible key detection - LLM may use different key names
     actions_list = None
     if isinstance(result, dict):
         for key in ("actions", "action_items", "action_plan", "items"):
@@ -378,17 +364,21 @@ def extract_action_plan_from_pdf(
     )
 
 
-def check_ollama_available(model: str = "llama3.1:8b") -> bool:
-    """Check if Ollama is running and the model is available."""
-    import urllib.request
-    try:
-        req = urllib.request.Request(
-            "http://localhost:11434/api/tags",
-            headers={"Content-Type": "application/json"},
-        )
-        with urllib.request.urlopen(req, timeout=5) as resp:
-            data = json.loads(resp.read().decode())
-            models = [m["name"] for m in data.get("models", [])]
-            return any(model in m for m in models)
-    except Exception:
-        return False
+def check_llm_available() -> bool:
+    """Check if the configured LLM provider is available."""
+    if LLM_PROVIDER == "openai":
+        from src.config import OPENAI_API_KEY
+        return bool(OPENAI_API_KEY)
+    else:
+        import urllib.request
+        try:
+            req = urllib.request.Request(
+                f"{OLLAMA_BASE_URL}/api/tags",
+                headers={"Content-Type": "application/json"},
+            )
+            with urllib.request.urlopen(req, timeout=5) as resp:
+                data = json.loads(resp.read().decode())
+                models = [m["name"] for m in data.get("models", [])]
+                return any(OLLAMA_MODEL in m for m in models)
+        except Exception:
+            return False

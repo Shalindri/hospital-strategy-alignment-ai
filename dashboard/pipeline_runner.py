@@ -260,7 +260,8 @@ def run_dynamic_agent(
         Tuple of (agent_recs_dict, agent_trace_dict).
     """
     import shutil
-    from src.agent_reasoner import AgentReasoner, OLLAMA_MODEL, ISSUE_SCORE_THRESHOLD
+    from src.agent_reasoner import AgentReasoner, ISSUE_SCORE_THRESHOLD
+    from src.config import OLLAMA_MODEL
     from src.vector_store import VectorStore
 
     temp_dir = tempfile.mkdtemp(prefix="isps_agent_")
@@ -271,7 +272,8 @@ def run_dynamic_agent(
 
         # Create agent (skip __init__ to avoid file reads)
         agent = AgentReasoner.__new__(AgentReasoner)
-        agent.max_iterations = 5
+        from src.config import MAX_ITERATIONS
+        agent.max_iterations = MAX_ITERATIONS
 
         # Inject data
         data = build_data_dict(upload_report)
@@ -282,15 +284,9 @@ def run_dynamic_agent(
         agent._kg_data = kg_data
         agent._vs = vs
 
-        # Initialize LLM
-        from langchain_ollama import OllamaLLM
-        from src.agent_reasoner import LLM_TEMPERATURE, LLM_NUM_CTX, CACHE_FILE, _load_cache
-        agent._llm = OllamaLLM(
-            model=OLLAMA_MODEL,
-            temperature=LLM_TEMPERATURE,
-            num_ctx=LLM_NUM_CTX,
-        )
-        agent._cache = _load_cache(CACHE_FILE) if CACHE_FILE.exists() else {}
+        # Initialize LLM (provider selected via .env)
+        from src.config import get_llm, LLM_TEMPERATURE
+        agent._llm = get_llm(temperature=LLM_TEMPERATURE)
 
         # Build lookup indices
         agent._action_by_num = {

@@ -32,12 +32,10 @@ Architecture
                                                 │ + Cache          │
                                                 └──────────────────┘
 
-Retry & caching
----------------
+Retry
+-----
 LLM calls are wrapped with exponential-backoff retry (3 attempts,
-1s / 2s / 4s delays).  Successful responses are cached to a JSON file
-so that re-running the engine does not repeat expensive inference when
-the inputs have not changed.
+1s / 2s / 4s delays).
 
 Typical usage::
 
@@ -53,7 +51,6 @@ Created: 2025-01
 
 from __future__ import annotations
 
-import hashlib
 import json
 import logging
 import re
@@ -62,10 +59,10 @@ from dataclasses import dataclass, field, asdict
 from pathlib import Path
 from typing import Any
 
-from langchain_ollama import OllamaLLM
 from langchain_core.prompts import PromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 
+from src.config import get_llm, OLLAMA_MODEL
 from src.vector_store import VectorStore, STRATEGIC_COLLECTION
 from src.synchronization_analyzer import (
     SynchronizationAnalyzer,
@@ -89,19 +86,13 @@ logger = logging.getLogger("rag_engine")
 # ---------------------------------------------------------------------------
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 DATA_DIR = PROJECT_ROOT / "data"
-CACHE_DIR = PROJECT_ROOT / "models"
 RESULTS_JSON = DATA_DIR / "rag_recommendations.json"
-CACHE_FILE = CACHE_DIR / "rag_cache.json"
 
-# LLM configuration
-OLLAMA_MODEL = "llama3.1:8b"
+# LLM configuration (provider set in src/config.py via .env)
 LLM_TEMPERATURE = 0.3          # Low temperature for deterministic, focused output
-LLM_TOP_P = 0.9
-LLM_NUM_CTX = 4096             # Context window (tokens)
 
 # Retry configuration
-MAX_RETRIES = 3
-RETRY_DELAYS = [1.0, 2.0, 4.0]  # Exponential backoff in seconds
+from src.config import MAX_RETRIES, RETRY_DELAYS
 
 # Thresholds
 POOR_ALIGNMENT_THRESHOLD = 0.50   # Actions below this get improvement recs
@@ -389,52 +380,6 @@ def _parse_gap_response(raw: str, objective_code: str) -> list[dict[str, Any]]:
 
 
 # ---------------------------------------------------------------------------
-# Cache helpers
-# ---------------------------------------------------------------------------
-
-def _cache_key(prompt_text: str) -> str:
-    """Generate a deterministic SHA-256 cache key from prompt text.
-
-    Args:
-        prompt_text: The full formatted prompt string.
-
-    Returns:
-        A 16-character hex digest prefix.
-    """
-    return hashlib.sha256(prompt_text.encode("utf-8")).hexdigest()[:16]
-
-
-def _load_cache(cache_path: Path) -> dict[str, str]:
-    """Load the LLM response cache from disk.
-
-    Args:
-        cache_path: Path to the cache JSON file.
-
-    Returns:
-        A dict mapping cache keys to LLM response strings.
-    """
-    if cache_path.exists():
-        with open(cache_path, encoding="utf-8") as fh:
-            cache = json.load(fh)
-        logger.info("Loaded %d cached LLM responses from %s.", len(cache), cache_path)
-        return cache
-    return {}
-
-
-def _save_cache(cache: dict[str, str], cache_path: Path) -> None:
-    """Persist the LLM response cache to disk.
-
-    Args:
-        cache:      The cache dict to save.
-        cache_path: Destination file path.
-    """
-    cache_path.parent.mkdir(parents=True, exist_ok=True)
-    with open(cache_path, "w", encoding="utf-8") as fh:
-        json.dump(cache, fh, indent=2, ensure_ascii=False)
-    logger.info("Saved %d cached responses to %s.", len(cache), cache_path)
-
-
-# ---------------------------------------------------------------------------
 # RAG Engine
 # ---------------------------------------------------------------------------
 
@@ -449,13 +394,10 @@ class RAGEngine:
        target action/objective.
     3. Constructs structured prompts and queries the local LLM.
     4. Parses LLM responses into typed data structures.
-    5. Caches responses to avoid redundant computation.
 
     Attributes:
         vs:         The :class:`VectorStore` instance for retrieval.
-        llm:        The LangChain Ollama LLM wrapper.
-        chain:      The LangChain prompt → LLM → parser chain.
-        cache:      In-memory response cache (str → str).
+        llm:        The LangChain LLM wrapper.
         results:    The most recent :class:`RAGResults` (after :meth:`run`).
 
     Example::
@@ -481,19 +423,11 @@ class RAGEngine:
         """
         self.vs = vector_store or VectorStore()
 
-        # ── Initialise LLM via LangChain ─────────────────────────────
-        logger.info("Initialising Ollama LLM: %s", model_name)
-        self.llm = OllamaLLM(
-            model=model_name,
-            temperature=LLM_TEMPERATURE,
-            top_p=LLM_TOP_P,
-            num_ctx=LLM_NUM_CTX,
-        )
+        # ── Initialise LLM via config factory ─────────────────────────
+        logger.info("Initialising LLM ...")
+        self.llm = get_llm(temperature=LLM_TEMPERATURE)
         self.parser = StrOutputParser()
         self.model_name = model_name
-
-        # ── Load cache ───────────────────────────────────────────────
-        self.cache = _load_cache(CACHE_FILE)
 
         # ── Load data ────────────────────────────────────────────────
         self._strategic_data = self._load_json(DATA_DIR / "strategic_plan.json")
@@ -517,10 +451,9 @@ class RAGEngine:
     # ------------------------------------------------------------------
 
     def _invoke_llm(self, prompt_text: str) -> str:
-        """Call the LLM with retry logic and caching.
+        """Call the LLM with retry logic.
 
-        First checks the in-memory / on-disk cache.  On a cache miss,
-        invokes the LLM with exponential-backoff retry (up to 3
+        Invokes the LLM with exponential-backoff retry (up to 3
         attempts).
 
         Args:
@@ -532,26 +465,15 @@ class RAGEngine:
         Raises:
             RuntimeError: If all retry attempts are exhausted.
         """
-        # ── Check cache ──────────────────────────────────────────────
-        key = _cache_key(prompt_text)
-        if key in self.cache:
-            logger.info("Cache hit for key %s.", key)
-            return self.cache[key]
-
-        # ── Retry loop ───────────────────────────────────────────────
         last_error: Exception | None = None
         for attempt in range(MAX_RETRIES):
             try:
                 logger.info(
-                    "LLM call attempt %d/%d (key=%s) …",
+                    "LLM call attempt %d/%d …",
                     attempt + 1,
                     MAX_RETRIES,
-                    key,
                 )
                 response = self.llm.invoke(prompt_text)
-                # ── Cache successful response ────────────────────────
-                self.cache[key] = response
-                _save_cache(self.cache, CACHE_FILE)
                 return response
 
             except Exception as exc:

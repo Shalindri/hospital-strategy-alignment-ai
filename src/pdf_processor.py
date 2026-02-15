@@ -1,7 +1,7 @@
 """
 PDF Processor for the ISPS system.
 
-Extracts text from uploaded PDF files and uses an LLM (Ollama or OpenAI)
+Extracts text from uploaded PDF files and uses an LLM (OpenAI GPT-4o-mini)
 to parse the content into the structured JSON schema expected by the
 downstream embedding and alignment pipeline.
 
@@ -30,14 +30,13 @@ from typing import Any
 
 import pdfplumber
 
-from src.config import get_llm, LLM_PROVIDER, OLLAMA_MODEL, OLLAMA_BASE_URL
+from src.config import get_llm
 
 logger = logging.getLogger("pdf_processor")
 
 # Maximum characters of PDF text to send to the LLM.
-# OpenAI models (gpt-4o-mini) have 128K context — we can send much more.
-# Ollama local models have smaller context windows.
-_MAX_TEXT_CHARS = 100_000 if LLM_PROVIDER == "openai" else 12_000
+# GPT-4o-mini has a 128K context window — plenty for full documents.
+_MAX_TEXT_CHARS = 100_000
 
 
 # ---------------------------------------------------------------------------
@@ -365,20 +364,6 @@ def extract_action_plan_from_pdf(
 
 
 def check_llm_available() -> bool:
-    """Check if the configured LLM provider is available."""
-    if LLM_PROVIDER == "openai":
-        from src.config import OPENAI_API_KEY
-        return bool(OPENAI_API_KEY)
-    else:
-        import urllib.request
-        try:
-            req = urllib.request.Request(
-                f"{OLLAMA_BASE_URL}/api/tags",
-                headers={"Content-Type": "application/json"},
-            )
-            with urllib.request.urlopen(req, timeout=5) as resp:
-                data = json.loads(resp.read().decode())
-                models = [m["name"] for m in data.get("models", [])]
-                return any(OLLAMA_MODEL in m for m in models)
-        except Exception:
-            return False
+    """Check if the OpenAI API key is configured."""
+    from src.config import OPENAI_API_KEY
+    return bool(OPENAI_API_KEY)

@@ -799,7 +799,7 @@ def _run_upload_analysis(strategic_file, action_file, stepper_placeholder) -> No
         st.error(f"Parsing error: {e}")
     except ConnectionError:
         st.session_state.pop("pipeline_running", None)
-        st.error("Cannot connect to Ollama. Make sure it is running.")
+        st.error("Cannot connect to the LLM API. Check your API key.")
     except Exception as e:
         st.session_state.pop("pipeline_running", None)
         st.error(f"Analysis failed: {e}")
@@ -845,11 +845,11 @@ def main() -> None:
             from src.pdf_processor import check_llm_available
             return check_llm_available()
 
-        ollama_ok = _check_llm()
+        llm_ok = _check_llm()
 
         with c_up1:
-            if not ollama_ok:
-                st.error("Ollama not running.")
+            if not llm_ok:
+                st.error("OpenAI API key not set.")
             else:
                 strategic_file = st.file_uploader(
                     "strategy.pdf", type=["pdf"], key="strategic_pdf",
@@ -857,7 +857,7 @@ def main() -> None:
                 )
 
         with c_up2:
-            if ollama_ok:
+            if llm_ok:
                 action_file = st.file_uploader(
                     "action.pdf", type=["pdf"], key="action_pdf",
                     label_visibility="collapsed",

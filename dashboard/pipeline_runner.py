@@ -204,7 +204,7 @@ def run_dynamic_kg(
 
 
 # ──────────────────────────────────────────────────────────────────────
-# Tier 3: RAG Recommendations (requires Ollama LLM)
+# Tier 3: RAG Recommendations (requires OpenAI LLM)
 # ──────────────────────────────────────────────────────────────────────
 
 def run_dynamic_rag(upload_report: dict[str, Any]) -> dict[str, Any]:
@@ -241,7 +241,7 @@ def run_dynamic_rag(upload_report: dict[str, Any]) -> dict[str, Any]:
 
 
 # ──────────────────────────────────────────────────────────────────────
-# Tier 3: Agent Reasoner (requires Ollama LLM, heaviest)
+# Tier 3: Agent Reasoner (requires OpenAI LLM)
 # ──────────────────────────────────────────────────────────────────────
 
 def run_dynamic_agent(
@@ -261,7 +261,7 @@ def run_dynamic_agent(
     """
     import shutil
     from src.agent_reasoner import AgentReasoner, ISSUE_SCORE_THRESHOLD
-    from src.config import OLLAMA_MODEL
+    from src.config import OPENAI_MODEL
     from src.vector_store import VectorStore
 
     temp_dir = tempfile.mkdtemp(prefix="isps_agent_")
@@ -318,7 +318,7 @@ def run_dynamic_agent(
         # Build output dicts (same format as save_recommendations/save_trace)
         agent_recs = {
             "metadata": {
-                "agent_model": OLLAMA_MODEL,
+                "agent_model": OPENAI_MODEL,
                 "max_iterations": agent.max_iterations,
                 "issue_threshold": ISSUE_SCORE_THRESHOLD,
                 "total_issues_diagnosed": len(agent._issues),
@@ -343,7 +343,7 @@ def run_dynamic_agent(
         agent_trace = {
             "metadata": {
                 "total_iterations": len(agent._traces),
-                "agent_model": OLLAMA_MODEL,
+                "agent_model": OPENAI_MODEL,
             },
             "traces": [asdict(t) for t in agent._traces],
         }

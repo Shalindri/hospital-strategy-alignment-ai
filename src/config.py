@@ -16,8 +16,21 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 
-# Load .env from project root
+# Load .env from project root (ignored if not found, e.g. on Streamlit Cloud)
 load_dotenv(Path(__file__).resolve().parent.parent / ".env")
+
+# On Streamlit Cloud, secrets are set via the dashboard UI and exposed as
+# environment variables.  We also try st.secrets as a fallback.
+def _get_secret(key: str, default: str = "") -> str:
+    """Read a config value from env vars, falling back to st.secrets."""
+    val = os.getenv(key, "")
+    if val:
+        return val
+    try:
+        import streamlit as st
+        return st.secrets.get(key, default)
+    except Exception:
+        return default
 
 logger = logging.getLogger("config")
 
@@ -39,17 +52,13 @@ ORPHAN_THRESHOLD = 0.45      # Below this for ALL objectives → orphan
 DEFAULT_HOSPITAL_NAME = "Hospital"
 
 # ---------------------------------------------------------------------------
-# LLM Provider Configuration
+# OpenAI LLM Configuration
 # ---------------------------------------------------------------------------
-LLM_PROVIDER = os.getenv("LLM_PROVIDER", "ollama")         # "ollama" or "openai"
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
-OPENAI_MODEL = os.getenv("OPENAI_MODEL", "gpt-4o-mini")
-OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "llama3.1:8b")
-OLLAMA_BASE_URL = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")
+OPENAI_API_KEY = _get_secret("OPENAI_API_KEY", "")
+OPENAI_MODEL = _get_secret("OPENAI_MODEL", "gpt-4o-mini")
 
 # Shared LLM parameters
 LLM_TEMPERATURE = 0.2
-LLM_NUM_CTX = 4096
 
 # Agent configuration
 MAX_ITERATIONS = 3
@@ -73,31 +82,21 @@ class _OpenAIWrapper:
 
 
 def get_llm(temperature: float = LLM_TEMPERATURE):
-    """Return a LangChain-compatible LLM based on LLM_PROVIDER env var.
+    """Return a LangChain ChatOpenAI wrapper.
 
-    Both Ollama and OpenAI objects expose ``.invoke(prompt_str) -> str``.
+    The returned object exposes ``.invoke(prompt_str) -> str``.
     """
-    if LLM_PROVIDER == "openai":
-        from langchain_openai import ChatOpenAI
+    from langchain_openai import ChatOpenAI
 
-        if not OPENAI_API_KEY:
-            raise RuntimeError(
-                "LLM_PROVIDER is 'openai' but OPENAI_API_KEY is not set. "
-                "Add it to your .env file."
-            )
-        logger.info("Using OpenAI model: %s", OPENAI_MODEL)
-        llm = ChatOpenAI(
-            model=OPENAI_MODEL,
-            api_key=OPENAI_API_KEY,
-            temperature=temperature,
+    if not OPENAI_API_KEY:
+        raise RuntimeError(
+            "OPENAI_API_KEY is not set. "
+            "Add it to your .env file or Streamlit Cloud secrets."
         )
-        return _OpenAIWrapper(llm)
-    else:
-        from langchain_ollama import OllamaLLM
-
-        logger.info("Using Ollama model: %s", OLLAMA_MODEL)
-        return OllamaLLM(
-            model=OLLAMA_MODEL,
-            temperature=temperature,
-            num_ctx=LLM_NUM_CTX,
-        )
+    logger.info("Using OpenAI model: %s", OPENAI_MODEL)
+    llm = ChatOpenAI(
+        model=OPENAI_MODEL,
+        api_key=OPENAI_API_KEY,
+        temperature=temperature,
+    )
+    return _OpenAIWrapper(llm)

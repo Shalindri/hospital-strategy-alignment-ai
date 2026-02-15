@@ -3,8 +3,8 @@ RAG Engine for Hospital Strategy–Action Plan Alignment System (ISPS).
 
 This module implements a Retrieval-Augmented Generation (RAG) pipeline
 that takes the alignment analysis results (from
-:mod:`synchronization_analyzer`) and uses a local LLM (Ollama /
-``llama3.1:8b``) to generate:
+:mod:`synchronization_analyzer`) and uses an LLM (OpenAI GPT-4o-mini)
+to generate:
 
 1. **Improvement recommendations** for poorly-aligned actions — concrete
    suggestions to strengthen the link between an operational action and
@@ -23,13 +23,13 @@ Architecture
     └────────────────┘     └──────────────┘     └───────┬──────────┘
                                                         │
                                                 ┌───────▼──────────┐
-                                                │ Ollama LLM       │
-                                                │ (llama3.1:8b)    │
+                                                │ OpenAI LLM       │
+                                                │ (GPT-4o-mini)    │
                                                 └───────┬──────────┘
                                                         │
                                                 ┌───────▼──────────┐
                                                 │ Response Parser  │
-                                                │ + Cache          │
+                                                │                  │
                                                 └──────────────────┘
 
 Retry
@@ -62,7 +62,7 @@ from typing import Any
 from langchain_core.prompts import PromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 
-from src.config import get_llm, OLLAMA_MODEL
+from src.config import get_llm, OPENAI_MODEL
 from src.vector_store import VectorStore, STRATEGIC_COLLECTION
 from src.synchronization_analyzer import (
     SynchronizationAnalyzer,
@@ -276,7 +276,7 @@ class RAGResults:
     improvements: list[dict] = field(default_factory=list)
     new_action_suggestions: list[dict] = field(default_factory=list)
     summary: dict[str, Any] = field(default_factory=dict)
-    model_used: str = OLLAMA_MODEL
+    model_used: str = OPENAI_MODEL
 
 
 # ---------------------------------------------------------------------------
@@ -397,7 +397,7 @@ class RAGEngine:
 
     Attributes:
         vs:         The :class:`VectorStore` instance for retrieval.
-        llm:        The LangChain LLM wrapper.
+        llm:        The LangChain OpenAI LLM wrapper.
         results:    The most recent :class:`RAGResults` (after :meth:`run`).
 
     Example::
@@ -411,15 +411,15 @@ class RAGEngine:
     def __init__(
         self,
         vector_store: VectorStore | None = None,
-        model_name: str = OLLAMA_MODEL,
+        model_name: str = OPENAI_MODEL,
     ) -> None:
         """Initialise the RAG engine with LLM and vector store.
 
         Args:
             vector_store: An existing :class:`VectorStore`. If ``None``,
                           a new one is created with default paths.
-            model_name:   Ollama model identifier (default
-                          ``"llama3.1:8b"``).
+            model_name:   OpenAI model identifier (default
+                          ``"gpt-4o-mini"``).
         """
         self.vs = vector_store or VectorStore()
 

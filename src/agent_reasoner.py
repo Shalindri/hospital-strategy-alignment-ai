@@ -122,9 +122,9 @@ ACTION_JSON = DATA_DIR / "action_plan.json"
 RECOMMENDATIONS_OUT = OUTPUT_DIR / "agent_recommendations.json"
 TRACE_OUT = OUTPUT_DIR / "agent_trace.json"
 
-# LLM configuration (provider set in src/config.py via .env)
+# LLM configuration (set in src/config.py via .env)
 from src.config import (
-    OLLAMA_MODEL, LLM_TEMPERATURE, LLM_NUM_CTX,
+    OPENAI_MODEL, LLM_TEMPERATURE,
     MAX_RETRIES, RETRY_DELAYS, MAX_ITERATIONS,
 )
 MAX_TOOL_CALLS_PER_ITERATION = 8
@@ -352,13 +352,11 @@ class AgentReasoner:
 
     Args:
         max_iterations:  Maximum agent loop iterations.
-        ollama_model:    Ollama model identifier.
     """
 
     def __init__(
         self,
         max_iterations: int = MAX_ITERATIONS,
-        ollama_model: str = OLLAMA_MODEL,
     ) -> None:
         self.max_iterations = max_iterations
 
@@ -1242,7 +1240,7 @@ class AgentReasoner:
 
         data = {
             "metadata": {
-                "agent_model": OLLAMA_MODEL,
+                "agent_model": OPENAI_MODEL,
                 "max_iterations": self.max_iterations,
                 "issue_threshold": ISSUE_SCORE_THRESHOLD,
                 "total_issues_diagnosed": len(self._issues),
@@ -1285,7 +1283,7 @@ class AgentReasoner:
         data = {
             "metadata": {
                 "total_iterations": len(self._traces),
-                "agent_model": OLLAMA_MODEL,
+                "agent_model": OPENAI_MODEL,
             },
             "traces": [asdict(t) for t in self._traces],
         }
